@@ -12,15 +12,26 @@ repositories {
 	mavenCentral()
 }
 
-subprojects {
+allprojects {
 	apply(plugin = "java-library")
 	apply(plugin = "org.springframework.boot")
 	apply(plugin = "io.spring.dependency-management")
+	apply(plugin = "kotlin")
+	apply(plugin = "kotlin-spring")
 
 	group = "co.bearus"
 	version = "0.0.1-SNAPSHOT"
 	java.sourceCompatibility = JavaVersion.VERSION_17
 
+	tasks.withType<KotlinCompile> {
+		kotlinOptions {
+			freeCompilerArgs = listOf("-Xjsr305=strict")
+			jvmTarget = "17"
+		}
+	}
+}
+
+subprojects {
 	repositories {
 		mavenCentral()
 	}
@@ -37,13 +48,6 @@ subprojects {
 		implementation("org.springframework:spring-jdbc")
 		testImplementation("org.springframework.boot:spring-boot-starter-test")
 		testImplementation("io.projectreactor:reactor-test")
-	}
-
-	tasks.withType<KotlinCompile> {
-		kotlinOptions {
-			freeCompilerArgs = listOf("-Xjsr305=strict")
-			jvmTarget = "17"
-		}
 	}
 
 	tasks.withType<Test> {

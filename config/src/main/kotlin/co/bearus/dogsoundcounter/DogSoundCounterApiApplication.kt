@@ -1,11 +1,11 @@
-package co.bearus.dogsoundcounterapi
+package co.bearus.dogsoundcounter
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class DogsoundCounterApiApplication
+class DogSoundCounterApiApplication
 
 fun main(args: Array<String>) {
-	runApplication<DogsoundCounterApiApplication>(*args)
+    runApplication<DogSoundCounterApiApplication>(*args)
 }
