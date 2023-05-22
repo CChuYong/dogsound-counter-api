@@ -70,6 +70,7 @@ project(":use-case") {
 project(":infrastructure") {
 	dependencies {
 		api(project(":use-case"))
+		api("org.springframework.boot:spring-boot-starter-data-r2dbc")
 		//DB
 	}
 }
