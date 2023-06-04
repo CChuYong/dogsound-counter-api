@@ -5,8 +5,10 @@ package co.bearus.dogsoundcounter.entities
  */
 data class Violent(
     val violentId: String,
+    val roomId: String,
     val name: String,
     val description: String,
     val violentPrice: Int,
+    val createdUserId: String,
     val createdAtTs: Long,
 )

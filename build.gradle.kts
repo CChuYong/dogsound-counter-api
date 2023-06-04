@@ -37,7 +37,6 @@ subprojects {
 	}
 
 	dependencies {
-		implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
 		implementation("org.springframework.boot:spring-boot-starter-webflux")
 		implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 		implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
@@ -70,7 +69,8 @@ project(":use-case") {
 project(":infrastructure") {
 	dependencies {
 		api(project(":use-case"))
-		api("org.springframework.boot:spring-boot-starter-data-r2dbc")
+		//api("org.springframework.boot:spring-boot-starter-data-r2dbc")
+		api("org.springframework.boot:spring-boot-starter-data-cassandra-reactive")
 		api("com.github.f4b6a3:ulid-creator:5.2.0")
 		//DB
 	}

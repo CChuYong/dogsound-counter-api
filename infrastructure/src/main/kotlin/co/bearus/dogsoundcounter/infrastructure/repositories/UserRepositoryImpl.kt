@@ -1,0 +1,21 @@
+package co.bearus.dogsoundcounter.infrastructure.repositories
+
+import co.bearus.dogsoundcounter.entities.User
+import co.bearus.dogsoundcounter.infrastructure.entities.CassandraUserEntity
+import co.bearus.dogsoundcounter.usecases.user.UserRepository
+import org.springframework.stereotype.Repository
+
+@Repository
+class UserRepositoryImpl(
+    private val cassandraUserRepository: CassandraUserRepository,
+): UserRepository {
+    override suspend fun findUserByEmail(email: String): User? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun persist(user: User): User {
+        return cassandraUserRepository.save(
+            CassandraUserEntity.fromDomain(user)
+        ).toDomain()
+    }
+}
