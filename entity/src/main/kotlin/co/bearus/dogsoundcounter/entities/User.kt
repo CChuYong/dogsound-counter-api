@@ -1,19 +1,22 @@
 package co.bearus.dogsoundcounter.entities
 
 data class User(
-    val identity: Identity,
+    val userId: String,
     val email: String,
     val encodedPassword: String,
+    val createdAtTs: Long,
 ){
     companion object{
         fun newInstance(
+            userId: String,
             email: String,
             encodedPassword: String
         ): User {
             return User(
-                identity = Identity.NOTHING,
+                userId = userId,
                 email = email,
                 encodedPassword = encodedPassword,
+                createdAtTs = System.currentTimeMillis(),
             )
         }
     }

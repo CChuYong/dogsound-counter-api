@@ -2,10 +2,12 @@ package co.bearus.dogsoundcounter.usecases.user
 
 import co.bearus.dogsoundcounter.entities.User
 import co.bearus.dogsoundcounter.entities.exception.user.UserAlreadyExistsException
+import co.bearus.dogsoundcounter.usecases.IdentityGenerator
 import co.bearus.dogsoundcounter.usecases.UseCase
 
 class CreateNewUserUseCase(
     private val userRepository: UserRepository,
+    private val identityGenerator: IdentityGenerator,
 ) : UseCase<CreateNewUserUseCase.Input, User> {
     data class Input(
         val email: String,
@@ -17,7 +19,11 @@ class CreateNewUserUseCase(
         val previousUser = userRepository.findUserByEmail(input.email)
         if (previousUser != null) throw UserAlreadyExistsException()
 
-        val newUser = User.newInstance(input.email, input.password)
+        val newUser = User.newInstance(
+            userId = identityGenerator.createIdentity(),
+            email = input.email,
+            encodedPassword = input.password,
+        )
         return userRepository.persist(newUser)
     }
 }

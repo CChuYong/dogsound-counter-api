@@ -71,6 +71,7 @@ project(":infrastructure") {
 	dependencies {
 		api(project(":use-case"))
 		api("org.springframework.boot:spring-boot-starter-data-r2dbc")
+		api("com.github.f4b6a3:ulid-creator:5.2.0")
 		//DB
 	}
 }

@@ -1,12 +1,14 @@
 package co.bearus.dogsoundcounter.entities
 
-import java.time.LocalDateTime
-
 data class Message(
-    val identity: Identity,
+    val messageId: String,
+    val roomId: String,
+
     val content: String,
-    val speaker: User,
-    val victim: User,
-    val capturedReason: CapturedReason,
-    val createdAt: LocalDateTime,
+    val violentId: String,
+    val violentPrice: Int,
+
+    val speakerId: String,
+    val catcherId: String,
+    val createdAtTs: Long,
 )

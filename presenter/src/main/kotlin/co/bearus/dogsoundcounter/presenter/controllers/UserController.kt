@@ -27,7 +27,7 @@ class UserController(
             email = request.email,
             password = request.password,
         ),
-        mappingFunction = UserResponse::from
+        mappingFunction = UserResponse::from,
     )
 
     @GetMapping(params = ["email"])
@@ -38,6 +38,6 @@ class UserController(
         param = GetUserByEmailUseCase.Input(
             email = email,
         ),
-        mappingFunction = UserResponse::from
+        mappingFunction = UserResponse::from,
     )
 }
