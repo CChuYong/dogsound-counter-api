@@ -22,7 +22,6 @@ class CreateNewUserUseCase(
         val newUser = User.newInstance(
             userId = identityGenerator.createIdentity(),
             email = input.email,
-            encodedPassword = input.password,
         )
         return userRepository.persist(newUser)
     }

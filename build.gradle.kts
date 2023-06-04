@@ -62,25 +62,27 @@ subprojects {
 
 project(":use-case") {
 	dependencies {
-		api(project(":entity"))
+		implementation(project(":entity"))
 	}
 }
 
 project(":infrastructure") {
 	dependencies {
-		api(project(":use-case"))
+		implementation(project(":entity"))
+		implementation(project(":use-case"))
 		//api("org.springframework.boot:spring-boot-starter-data-r2dbc")
-		api("org.springframework.boot:spring-boot-starter-data-cassandra-reactive")
-		api("com.github.f4b6a3:ulid-creator:5.2.0")
+		implementation("org.springframework.boot:spring-boot-starter-data-cassandra-reactive")
+		implementation("com.github.f4b6a3:ulid-creator:5.2.0")
 		//DB
 	}
 }
 
 project(":presenter") {
 	dependencies {
-		api(project(":use-case"))
-		api("org.springframework.boot:spring-boot-starter-webflux")
-		api("org.springframework.boot:spring-boot-starter-validation")
+		implementation(project(":entity"))
+		implementation(project(":use-case"))
+		implementation("org.springframework.boot:spring-boot-starter-webflux")
+		implementation("org.springframework.boot:spring-boot-starter-validation")
 	}
 }
 
@@ -92,12 +94,12 @@ project(":config") {
 	jar.enabled = true
 
 	dependencies {
-		api(project(":entity"))
-		api(project(":use-case"))
-		api(project(":presenter"))
-		api(project(":infrastructure"))
+		implementation(project(":entity"))
+		implementation(project(":use-case"))
+		implementation(project(":presenter"))
+		implementation(project(":infrastructure"))
 
-		api("org.springframework.boot:spring-boot-starter-webflux")
+		implementation("org.springframework.boot:spring-boot-starter-webflux")
 		testImplementation("org.springframework.boot:spring-boot-starter-test")
 	}
 }
