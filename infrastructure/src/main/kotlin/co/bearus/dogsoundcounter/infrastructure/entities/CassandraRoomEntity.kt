@@ -4,6 +4,7 @@ import co.bearus.dogsoundcounter.entities.Room
 import org.springframework.data.cassandra.core.mapping.Column
 import org.springframework.data.cassandra.core.mapping.PrimaryKey
 import org.springframework.data.cassandra.core.mapping.Table
+import java.sql.Timestamp
 
 @Table("room")
 data class CassandraRoomEntity(
@@ -17,13 +18,13 @@ data class CassandraRoomEntity(
     val ownerId: String,
 
     @field:Column("created_at")
-    val createdAtTs: Long,
+    val createdAtTs: Timestamp,
 ) {
     fun toDomain() = Room(
         roomId = roomId,
         roomName = roomName,
         ownerId = ownerId,
-        createdAtTs = createdAtTs,
+        createdAtTs = createdAtTs.time,
     )
 
     companion object {
@@ -31,7 +32,7 @@ data class CassandraRoomEntity(
             roomId = room.roomId,
             roomName = room.roomName,
             ownerId = room.ownerId,
-            createdAtTs = room.createdAtTs,
+            createdAtTs = Timestamp(room.createdAtTs),
         )
     }
 }

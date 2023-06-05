@@ -6,6 +6,7 @@ import co.bearus.dogsoundcounter.usecases.message.MessageRepository
 import co.bearus.dogsoundcounter.usecases.room.CreateNewRoomUseCase
 import co.bearus.dogsoundcounter.usecases.room.GetRoomByIdUseCase
 import co.bearus.dogsoundcounter.usecases.room.RoomRepository
+import co.bearus.dogsoundcounter.usecases.user.CreateNewUserUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserByEmailUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
 import co.bearus.dogsoundcounter.usecases.user.UserRepository
@@ -85,5 +86,14 @@ class UseCaseImplementer {
     ) = CreateNewViolentUseCase(
         identityGenerator,
         violentRepository,
+    )
+
+    @Bean
+    fun createNewUser(
+        userRepository: UserRepository,
+        identityGenerator: IdentityGenerator,
+    ) = CreateNewUserUseCase(
+        userRepository,
+        identityGenerator,
     )
 }

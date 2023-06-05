@@ -4,6 +4,7 @@ import co.bearus.dogsoundcounter.entities.Message
 import org.springframework.data.cassandra.core.mapping.Column
 import org.springframework.data.cassandra.core.mapping.PrimaryKey
 import org.springframework.data.cassandra.core.mapping.Table
+import java.sql.Timestamp
 
 @Table("message")
 data class CassandraMessageEntity(
@@ -29,7 +30,7 @@ data class CassandraMessageEntity(
     val catcherId: String,
 
     @field:Column("created_at")
-    val createdAtTs: Long,
+    val createdAtTs: Timestamp,
 ) {
     fun toDomain() = Message(
         messageId = messageId,
@@ -39,7 +40,7 @@ data class CassandraMessageEntity(
         violentPrice = violentPrice,
         speakerId = speakerId,
         catcherId = catcherId,
-        createdAtTs = createdAtTs,
+        createdAtTs = createdAtTs.time,
     )
 
     companion object {
@@ -51,7 +52,7 @@ data class CassandraMessageEntity(
             violentPrice = message.violentPrice,
             speakerId = message.speakerId,
             catcherId = message.catcherId,
-            createdAtTs = message.createdAtTs,
+            createdAtTs = Timestamp(message.createdAtTs),
         )
     }
 }

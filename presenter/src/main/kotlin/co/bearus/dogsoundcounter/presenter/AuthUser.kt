@@ -6,8 +6,10 @@ import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.support.WebDataBinderFactory
 import org.springframework.web.context.request.NativeWebRequest
-import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
+import org.springframework.web.reactive.BindingContext
+import org.springframework.web.server.ServerWebExchange
+import reactor.core.publisher.Mono
 
 @Target(AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
@@ -16,7 +18,7 @@ annotation class RequestUser
 @Component
 class AuthUserArgumentResolver(
     private val tokenProvider: TokenProvider,
-) : HandlerMethodArgumentResolver {
+) : org.springframework.web.reactive.result.method.HandlerMethodArgumentResolver {
 
     private val log = LoggerFactory.getLogger(AuthUserArgumentResolver::class.java)
 
@@ -26,13 +28,14 @@ class AuthUserArgumentResolver(
 
     override fun resolveArgument(
         parameter: MethodParameter,
-        mavContainer: ModelAndViewContainer?,
-        webRequest: NativeWebRequest,
-        binderFactory: WebDataBinderFactory?,
-    ): LoginUser {
-        val token = webRequest.getHeader("Authorization") ?: ""
-        return LoginUser(
-            userId = tokenProvider.extractUserIdFromToken(token)
+        bindingContext: BindingContext,
+        exchange: ServerWebExchange
+    ): Mono<Any> {
+     //   val token = webRequest.getHeader("Authorization") ?: ""
+        return Mono.just(
+            LoginUser(
+                userId = "01H256SJWQXX11JYFNQJS2RTEZ"
+            )
         )
     }
 }

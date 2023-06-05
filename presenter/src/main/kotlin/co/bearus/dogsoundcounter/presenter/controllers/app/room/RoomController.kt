@@ -5,6 +5,7 @@ import co.bearus.dogsoundcounter.presenter.RequestUser
 import co.bearus.dogsoundcounter.presenter.dto.CreateNewRoomRequest
 import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.room.CreateNewRoomUseCase
+import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/app/rooms")
 class RoomController(
     private val createNewRoom: CreateNewRoomUseCase,
+    private val getUserById: GetUserByIdUseCase,
 ) {
     @PostMapping
     suspend fun createNewRoom(
@@ -23,7 +25,10 @@ class RoomController(
         useCase = createNewRoom,
         param = CreateNewRoomUseCase.Input(
             roomName = body.roomName,
-            ownerId = user.userId,
+            owner = withUseCase(
+                useCase = getUserById,
+                param = user.userId,
+            )
         ),
     )
 }

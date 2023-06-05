@@ -4,6 +4,7 @@ import co.bearus.dogsoundcounter.entities.Violent
 import org.springframework.data.cassandra.core.mapping.Column
 import org.springframework.data.cassandra.core.mapping.PrimaryKey
 import org.springframework.data.cassandra.core.mapping.Table
+import java.sql.Timestamp
 
 @Table("violent")
 data class CassandraViolentEntity(
@@ -26,7 +27,7 @@ data class CassandraViolentEntity(
     val createdUserId: String,
 
     @field:Column("created_at")
-    val createdAtTs: Long,
+    val createdAtTs: Timestamp,
 ) {
     fun toDomain() = Violent(
         violentId = violentId,
@@ -35,7 +36,7 @@ data class CassandraViolentEntity(
         description = description,
         violentPrice = violentPrice,
         createdUserId = createdUserId,
-        createdAtTs = createdAtTs,
+        createdAtTs = createdAtTs.time,
     )
 
     companion object {
@@ -46,7 +47,7 @@ data class CassandraViolentEntity(
             description = violent.description,
             violentPrice = violent.violentPrice,
             createdUserId = violent.createdUserId,
-            createdAtTs = violent.createdAtTs,
+            createdAtTs = Timestamp(violent.createdAtTs),
         )
     }
 }
