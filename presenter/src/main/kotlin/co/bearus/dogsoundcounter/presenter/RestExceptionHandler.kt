@@ -22,6 +22,7 @@ class RestExceptionHandler {
 
     @ExceptionHandler(Exception::class)
     fun handleUnhandledException(exception: Exception): ResponseEntity<ErrorResponse> {
+        exception.printStackTrace()
         return ResponseEntity.badRequest().body(
             ErrorResponse(
                 code = ErrorCode.UNKNOWN_ERROR.code,

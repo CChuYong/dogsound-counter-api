@@ -10,7 +10,7 @@ class UserRepositoryImpl(
     private val cassandraUserRepository: CassandraUserRepository,
 ): UserRepository {
     override suspend fun findUserByEmail(email: String): User? {
-        TODO("Not yet implemented")
+        return cassandraUserRepository.findFirstByEmail(email)?.toDomain()
     }
 
     override suspend fun persist(user: User): User {

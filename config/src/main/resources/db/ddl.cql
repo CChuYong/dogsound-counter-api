@@ -37,6 +37,8 @@ CREATE TABLE user (
     PRIMARY KEY (user_id)
 ) WITH COMMENT = 'user table';
 
+CREATE INDEX user_idx1 ON test.user ( email );
+
 CREATE TABLE violent (
     violent_id text,
     room_id text,

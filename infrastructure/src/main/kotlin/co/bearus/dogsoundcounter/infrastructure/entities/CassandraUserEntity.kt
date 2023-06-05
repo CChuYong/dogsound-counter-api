@@ -4,26 +4,27 @@ import co.bearus.dogsoundcounter.entities.User
 import org.springframework.data.cassandra.core.mapping.Column
 import org.springframework.data.cassandra.core.mapping.PrimaryKey
 import org.springframework.data.cassandra.core.mapping.Table
+import java.sql.Timestamp
 
 @Table("user")
 data class CassandraUserEntity(
-    @PrimaryKey("user_id")
+    @field:PrimaryKey("user_id")
     val userId: String,
 
-    @Column("email")
+    @field:Column("email")
     val email: String,
 
-    @Column("nickname")
+    @field:Column("nickname")
     val nickname: String,
 
-    @Column("created_at")
-    val createdAtTs: Long,
+    @field:Column("created_at")
+    val createdAtTs: Timestamp,
 ) {
     fun toDomain() = User(
         userId = userId,
         email = email,
         nickname = nickname,
-        createdAtTs = createdAtTs,
+        createdAtTs = createdAtTs.time,
     )
 
     companion object {
@@ -31,7 +32,7 @@ data class CassandraUserEntity(
             userId = user.userId,
             email = user.email,
             nickname = user.nickname,
-            createdAtTs = user.createdAtTs,
+            createdAtTs = Timestamp(user.createdAtTs),
         )
     }
 }
