@@ -13,6 +13,7 @@ import co.bearus.dogsoundcounter.usecases.user.oauth.AuthUserWithProviderUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.OAuthFactory
 import co.bearus.dogsoundcounter.usecases.user.oauth.SocialLoginRepository
 import co.bearus.dogsoundcounter.usecases.user.oauth.TokenProvider
+import co.bearus.dogsoundcounter.usecases.violent.CreateNewViolentUseCase
 import co.bearus.dogsoundcounter.usecases.violent.GetViolentByIdUseCase
 import co.bearus.dogsoundcounter.usecases.violent.ViolentRepository
 import org.springframework.context.annotation.Bean
@@ -75,5 +76,14 @@ class UseCaseImplementer {
     ) = CreateNewMessageUseCase(
         identityGenerator,
         messageRepository,
+    )
+
+    @Bean
+    fun createNewViolent(
+        identityGenerator: IdentityGenerator,
+        violentRepository: ViolentRepository,
+    ) = CreateNewViolentUseCase(
+        identityGenerator,
+        violentRepository,
     )
 }
