@@ -7,16 +7,16 @@ import org.springframework.data.cassandra.core.mapping.Table
 
 @Table("room")
 data class CassandraRoomEntity(
-    @PrimaryKey("roomId")
+    @PrimaryKey("room_id")
     val roomId: String,
 
-    @Column("roomName")
+    @Column("room_nm")
     val roomName: String,
 
-    @Column("ownerId")
+    @Column("owner_id")
     val ownerId: String,
 
-    @Column("createdAtTs")
+    @Column("created_at")
     val createdAtTs: Long,
 ) {
     fun toDomain() = Room(

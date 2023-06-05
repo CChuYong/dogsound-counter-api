@@ -8,13 +8,13 @@ import org.springframework.data.cassandra.core.mapping.Table
 
 @Table("user_social")
 data class CassandraSocialLoginUserEntity(
-    @PrimaryKey("userId")
+    @PrimaryKey("user_id")
     val userId: String,
 
     @Column("provider")
     val provider: String,
 
-    @Column("providerKey")
+    @Column("provider_key")
     val providerKey: String,
 ) {
     fun toDomain() = SocialLoginUser(

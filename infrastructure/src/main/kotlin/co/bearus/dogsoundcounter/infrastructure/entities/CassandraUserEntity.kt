@@ -7,7 +7,7 @@ import org.springframework.data.cassandra.core.mapping.Table
 
 @Table("user")
 data class CassandraUserEntity(
-    @PrimaryKey("userId")
+    @PrimaryKey("user_id")
     val userId: String,
 
     @Column("email")
@@ -16,7 +16,7 @@ data class CassandraUserEntity(
     @Column("nickname")
     val nickname: String,
 
-    @Column("createdAtTs")
+    @Column("created_at")
     val createdAtTs: Long,
 ) {
     fun toDomain() = User(
