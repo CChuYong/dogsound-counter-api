@@ -31,7 +31,12 @@ class AppUserController(
     suspend fun testAuth() = withUseCase(
         useCase = getUserById,
         param = "01H256SJWQXX11JYFNQJS2RTEZ",
-        mappingFunction = tokenProvider::createRefreshToken,
+        mappingFunction = {
+            AuthenticationResultResponse(
+                accessToken = tokenProvider.createAccessToken(it),
+                refreshToken = tokenProvider.createRefreshToken(it),
+            )
+        },
     )
 
     @GetMapping("/me")
