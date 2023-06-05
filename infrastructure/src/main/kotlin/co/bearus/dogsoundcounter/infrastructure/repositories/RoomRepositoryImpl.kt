@@ -14,4 +14,8 @@ class RoomRepositoryImpl(
             CassandraRoomEntity.fromDomain(room)
         ).toDomain()
     }
+
+    override suspend fun getById(roomId: String): Room {
+        return cassandraRoomRepository.getByRoomId(roomId).toDomain()
+    }
 }

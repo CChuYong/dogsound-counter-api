@@ -30,9 +30,7 @@ class AppUserController(
         @RequestUser user: LoginUser,
     ) = withUseCase(
         useCase = getUserById,
-        param = GetUserByIdUseCase.Input(
-            userId = user.userId,
-        ),
+        param = user.userId,
         mappingFunction = UserResponse::from,
     )
 }
