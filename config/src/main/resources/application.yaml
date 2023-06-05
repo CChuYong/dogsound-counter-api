@@ -4,7 +4,7 @@ spring:
     port: 9042
     local-datacenter: datacenter1
 app:
-  appTokens:
+  app-tokens:
     secret: asdfsdfsdf
     refreshTokenValidity: 86400
     accessTokenValidity: 3600

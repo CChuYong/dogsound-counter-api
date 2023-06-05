@@ -7,7 +7,7 @@ import kotlin.properties.Delegates
 
 @Configuration
 @EnableConfigurationProperties
-@ConfigurationProperties("app.appTokens")
+@ConfigurationProperties("app.app-tokens")
 class JWTTokenProperties {
     lateinit var secret: String
     var refreshTokenValidity by Delegates.notNull<Long>()
