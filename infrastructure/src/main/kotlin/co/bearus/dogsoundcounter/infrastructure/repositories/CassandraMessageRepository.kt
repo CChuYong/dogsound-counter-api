@@ -1,0 +1,6 @@
+package co.bearus.dogsoundcounter.infrastructure.repositories
+
+import co.bearus.dogsoundcounter.infrastructure.entities.CassandraMessageEntity
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
+
+interface CassandraMessageRepository : CoroutineCrudRepository<CassandraMessageEntity, String>
