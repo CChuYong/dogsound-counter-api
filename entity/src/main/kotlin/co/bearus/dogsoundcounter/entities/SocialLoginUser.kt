@@ -17,7 +17,3 @@ data class SocialLoginUser(
         )
     }
 }
-
-enum class UserProvider {
-    KAKAO, GOOGLE, APPLE
-}

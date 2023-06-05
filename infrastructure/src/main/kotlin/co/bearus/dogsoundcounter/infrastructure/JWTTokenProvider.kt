@@ -14,7 +14,7 @@ class JWTTokenProvider(
     private val properties: JWTTokenProperties,
 ) : TokenProvider {
     val signKey: Key = properties.secret.toByteArray().let { SecretKeySpec(it, SignatureAlgorithm.HS256.jcaName) }
-    override suspend fun createAccessToken(user: User): String {
+    override fun createAccessToken(user: User): String {
         return Jwts.builder()
             .setHeader(buildHeader())
             .setClaims(buildPayLoad(user))
@@ -23,13 +23,18 @@ class JWTTokenProvider(
             .compact()
     }
 
-    override suspend fun createRefreshToken(user: User): String {
+    override fun createRefreshToken(user: User): String {
         return Jwts.builder()
             .setHeader(buildHeader())
             .setClaims(buildPayLoad(user))
             .setExpiration(generateRefreshTokenExpiration())
             .signWith(signKey, SignatureAlgorithm.HS256)
             .compact()
+    }
+
+    override fun extractUserIdFromToken(token: String): String {
+        return Jwts.parserBuilder().setSigningKey(signKey).build()
+            .parseClaimsJws(token).body["id"] as String
     }
 
     private fun buildHeader() =
