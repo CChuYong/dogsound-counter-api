@@ -3,3 +3,14 @@ spring:
     keyspace-name: test
     port: 9042
     local-datacenter: datacenter1
+app:
+  appTokens:
+    secret: asdfsdfsdf
+    refreshTokenValidity: 86400
+    accessTokenValidity: 3600
+
+  webclients:
+    apple-oauth:
+      baseUrl: https://appleid.apple.com/
+    kakao-oauth:
+      baseUrl: https://kapi.kakao.com/

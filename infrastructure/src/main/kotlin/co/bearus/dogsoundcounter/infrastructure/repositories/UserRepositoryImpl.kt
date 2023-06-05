@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository
 class UserRepositoryImpl(
     private val cassandraUserRepository: CassandraUserRepository,
 ): UserRepository {
+    override suspend fun getById(id: String): User {
+        return cassandraUserRepository.getByUserId(id).toDomain()
+    }
+
     override suspend fun findUserByEmail(email: String): User? {
         return cassandraUserRepository.findFirstByEmail(email)?.toDomain()
     }
