@@ -14,4 +14,8 @@ class MessageRepositoryImpl(
             CassandraMessageEntity.fromDomain(message)
         ).toDomain()
     }
+
+    override suspend fun findMessageByRoomId(roomId: String): List<Message> {
+        return cassandraMessageRepository.findAllByRoomId(roomId).map { it.toDomain() }
+    }
 }

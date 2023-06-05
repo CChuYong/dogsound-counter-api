@@ -14,6 +14,8 @@ CREATE TABLE message
     PRIMARY KEY (message_id)
 ) WITH COMMENT = 'message table';
 
+CREATE INDEX message_idx1 ON test.message (room_id);
+
 CREATE TABLE room
 (
     room_id    text,
@@ -54,3 +56,4 @@ CREATE TABLE violent
     created_at      timestamp,
     PRIMARY KEY (violent_id)
 ) WITH COMMENT = 'user table';
+CREATE INDEX violent_idx1 ON test.violent (room_id);

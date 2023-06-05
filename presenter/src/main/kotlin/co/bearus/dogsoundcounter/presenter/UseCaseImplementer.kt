@@ -2,6 +2,7 @@ package co.bearus.dogsoundcounter.presenter
 
 import co.bearus.dogsoundcounter.usecases.IdentityGenerator
 import co.bearus.dogsoundcounter.usecases.message.CreateNewMessageUseCase
+import co.bearus.dogsoundcounter.usecases.message.GetMessagesByRoomUseCase
 import co.bearus.dogsoundcounter.usecases.message.MessageRepository
 import co.bearus.dogsoundcounter.usecases.room.CreateNewRoomUseCase
 import co.bearus.dogsoundcounter.usecases.room.GetRoomByIdUseCase
@@ -95,5 +96,12 @@ class UseCaseImplementer {
     ) = CreateNewUserUseCase(
         userRepository,
         identityGenerator,
+    )
+
+    @Bean
+    fun getMessageByRoom(
+        messageRepository: MessageRepository,
+    ) = GetMessagesByRoomUseCase(
+        messageRepository,
     )
 }

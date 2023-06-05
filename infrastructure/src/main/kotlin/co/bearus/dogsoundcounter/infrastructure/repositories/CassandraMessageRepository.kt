@@ -5,4 +5,6 @@ import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface CassandraMessageRepository : CoroutineCrudRepository<CassandraMessageEntity, String>
+interface CassandraMessageRepository : CoroutineCrudRepository<CassandraMessageEntity, String> {
+    suspend fun findAllByRoomId(roomId: String): List<CassandraMessageEntity>
+}
