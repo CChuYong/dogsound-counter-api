@@ -4,9 +4,11 @@ import co.bearus.dogsoundcounter.presenter.LoginUser
 import co.bearus.dogsoundcounter.presenter.RequestUser
 import co.bearus.dogsoundcounter.presenter.dto.CreateNewViolentRequest
 import co.bearus.dogsoundcounter.presenter.withUseCase
+import co.bearus.dogsoundcounter.usecases.message.GetMessagesByRoomUseCase
 import co.bearus.dogsoundcounter.usecases.room.GetRoomByIdUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
 import co.bearus.dogsoundcounter.usecases.violent.CreateNewViolentUseCase
+import co.bearus.dogsoundcounter.usecases.violent.GetViolentsByRoomUseCase
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -15,6 +17,7 @@ class ViolentController(
     private val getRoomById: GetRoomByIdUseCase,
     private val getUserById: GetUserByIdUseCase,
     private val createNewViolent: CreateNewViolentUseCase,
+    private val getViolentsByRoom: GetViolentsByRoomUseCase,
 ) {
     @PostMapping
     suspend fun createViolent(
@@ -34,6 +37,19 @@ class ViolentController(
             createUser = withUseCase(
                 useCase = getUserById,
                 param = user.userId,
+            ),
+        )
+    )
+
+    @GetMapping
+    suspend fun getViolents(
+        @PathVariable roomId: String,
+    ) = withUseCase(
+        useCase = getViolentsByRoom,
+        param = GetMessagesByRoomUseCase.Input(
+            room = withUseCase(
+                useCase = getRoomById,
+                param = roomId,
             ),
         )
     )

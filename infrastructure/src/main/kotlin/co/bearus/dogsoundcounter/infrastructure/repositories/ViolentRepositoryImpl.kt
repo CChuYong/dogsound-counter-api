@@ -13,6 +13,10 @@ class ViolentRepositoryImpl(
         return cassandraViolentRepository.getByViolentId(violentId).toDomain()
     }
 
+    override suspend fun findAllByRoomId(roomId: String): List<Violent> {
+        return cassandraViolentRepository.findAllByRoomId(roomId).map { it.toDomain() }
+    }
+
     override suspend fun persist(violent: Violent): Violent {
         return cassandraViolentRepository.save(
             CassandraViolentEntity.fromDomain(violent)

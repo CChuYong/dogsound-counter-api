@@ -17,6 +17,7 @@ import co.bearus.dogsoundcounter.usecases.user.oauth.SocialLoginRepository
 import co.bearus.dogsoundcounter.usecases.user.oauth.TokenProvider
 import co.bearus.dogsoundcounter.usecases.violent.CreateNewViolentUseCase
 import co.bearus.dogsoundcounter.usecases.violent.GetViolentByIdUseCase
+import co.bearus.dogsoundcounter.usecases.violent.GetViolentsByRoomUseCase
 import co.bearus.dogsoundcounter.usecases.violent.ViolentRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component
@@ -103,5 +104,12 @@ class UseCaseImplementer {
         messageRepository: MessageRepository,
     ) = GetMessagesByRoomUseCase(
         messageRepository,
+    )
+
+    @Bean
+    fun getViolentsByRoom(
+        violentRepository: ViolentRepository,
+    ) = GetViolentsByRoomUseCase(
+        violentRepository,
     )
 }

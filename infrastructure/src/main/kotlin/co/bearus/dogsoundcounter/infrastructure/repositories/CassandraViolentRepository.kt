@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CassandraViolentRepository : CoroutineCrudRepository<CassandraViolentEntity, String> {
     suspend fun getByViolentId(violentId: String): CassandraViolentEntity
+    suspend fun findAllByRoomId(roomId: String): List<CassandraViolentEntity>
 }
