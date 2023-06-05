@@ -1,4 +1,4 @@
-package co.bearus.dogsoundcounter.presenter.controllers
+package co.bearus.dogsoundcounter.presenter.controllers.app
 
 import co.bearus.dogsoundcounter.presenter.LoginUser
 import co.bearus.dogsoundcounter.presenter.RequestUser
