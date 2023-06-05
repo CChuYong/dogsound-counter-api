@@ -7,28 +7,28 @@ import org.springframework.data.cassandra.core.mapping.Table
 
 @Table("message")
 data class CassandraMessageEntity(
-    @PrimaryKey("message_id")
+    @field:PrimaryKey("message_id")
     val messageId: String,
 
-    @Column("room_id")
+    @field:Column("room_id")
     val roomId: String,
 
-    @Column("content")
+    @field:Column("content")
     val content: String,
 
-    @Column("violent_id")
+    @field:Column("violent_id")
     val violentId: String,
 
-    @Column("violent_price")
+    @field:Column("violent_price")
     val violentPrice: Int,
 
-    @Column("speaker_id")
+    @field:Column("speaker_id")
     val speakerId: String,
 
-    @Column("catcher_id")
+    @field:Column("catcher_id")
     val catcherId: String,
 
-    @Column("created_at")
+    @field:Column("created_at")
     val createdAtTs: Long,
 ) {
     fun toDomain() = Message(

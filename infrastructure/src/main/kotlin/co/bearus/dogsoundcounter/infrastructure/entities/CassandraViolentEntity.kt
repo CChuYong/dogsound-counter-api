@@ -7,25 +7,25 @@ import org.springframework.data.cassandra.core.mapping.Table
 
 @Table("violent")
 data class CassandraViolentEntity(
-    @PrimaryKey("violent_id")
+    @field:PrimaryKey("violent_id")
     val violentId: String,
 
-    @Column("room_id")
+    @field:Column("room_id")
     val roomId: String,
 
-    @Column("name")
+    @field:Column("name")
     val name: String,
 
-    @Column("description")
+    @field:Column("description")
     val description: String,
 
-    @Column("violent_price")
+    @field:Column("violent_price")
     val violentPrice: Int,
 
-    @Column("created_user_id")
+    @field:Column("created_user_id")
     val createdUserId: String,
 
-    @Column("created_at")
+    @field:Column("created_at")
     val createdAtTs: Long,
 ) {
     fun toDomain() = Violent(
