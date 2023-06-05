@@ -4,5 +4,8 @@ import co.bearus.dogsoundcounter.infrastructure.entities.CassandraSocialLoginUse
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 
 interface CassandraSocialLoginRepository : CoroutineCrudRepository<CassandraSocialLoginUserEntity, String> {
-    suspend fun findFirstByProviderAndProviderKey(provider: String, providerKey: String): CassandraSocialLoginUserEntity?
+    suspend fun findFirstByProviderAndProviderKey(
+        provider: String,
+        providerKey: String,
+    ): CassandraSocialLoginUserEntity?
 }

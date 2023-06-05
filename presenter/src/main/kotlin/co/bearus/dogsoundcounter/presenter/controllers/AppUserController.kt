@@ -8,11 +8,7 @@ import co.bearus.dogsoundcounter.presenter.dto.UserResponse
 import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.AuthUserWithProviderUseCase
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/app/users")
@@ -22,7 +18,7 @@ class AppUserController(
 ) {
     @PostMapping("/oauth")
     suspend fun authenticateUser(
-        @RequestBody request: AuthenticationRequest
+        @RequestBody request: AuthenticationRequest,
     ) = withUseCase(
         useCase = authUserWithProvider,
         param = request.to(),

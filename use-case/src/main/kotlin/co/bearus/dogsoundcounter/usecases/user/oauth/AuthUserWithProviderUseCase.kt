@@ -14,7 +14,7 @@ class AuthUserWithProviderUseCase(
     private val userRepository: UserRepository,
     private val identityGenerator: IdentityGenerator,
     private val tokenProvider: TokenProvider,
-): UseCase<AuthUserWithProviderUseCase.Input, AuthUserWithProviderUseCase.Output> {
+) : UseCase<AuthUserWithProviderUseCase.Input, AuthUserWithProviderUseCase.Output> {
     data class Input(
         val provider: UserProvider,
         val token: String,

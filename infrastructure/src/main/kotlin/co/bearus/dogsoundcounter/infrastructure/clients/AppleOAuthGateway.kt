@@ -46,7 +46,7 @@ class AppleOAuthGateway(
 
     data class Key(val kty: String, val kid: String, val use: String, val alg: String, val n: String, val e: String)
     data class KeyResponse(
-        val keys: List<Key>
+        val keys: List<Key>,
     )
 
     data class JWTTokenHeader(var kid: String, val alr: String)

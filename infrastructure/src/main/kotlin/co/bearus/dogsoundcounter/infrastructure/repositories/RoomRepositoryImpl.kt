@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class RoomRepositoryImpl(
     private val cassandraRoomRepository: CassandraRoomRepository,
-): RoomRepository {
+) : RoomRepository {
     override suspend fun persist(room: Room): Room {
         return cassandraRoomRepository.save(
             CassandraRoomEntity.fromDomain(room)

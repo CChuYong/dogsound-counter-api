@@ -5,9 +5,9 @@ import co.bearus.dogsoundcounter.usecases.UseCase
 
 class GetUserByIdUseCase(
     private val userRepository: UserRepository,
-): UseCase<GetUserByIdUseCase.Input, User> {
+) : UseCase<GetUserByIdUseCase.Input, User> {
     data class Input(
-        val userId: String
+        val userId: String,
     )
 
     override suspend fun execute(input: Input): User {

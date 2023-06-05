@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component
 class OAuthFactoryImpl(
     private val appleOAuthGateway: AppleOAuthGateway,
     private val kakaoOAuthGateway: KakaoOAuthGateway,
-): OAuthFactory {
+) : OAuthFactory {
     override fun of(userProvider: UserProvider): OAuthGateway {
-        return when(userProvider) {
+        return when (userProvider) {
             UserProvider.KAKAO -> kakaoOAuthGateway
             UserProvider.APPLE -> appleOAuthGateway
             else -> TODO()

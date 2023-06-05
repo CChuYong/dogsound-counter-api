@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class SocialLoginRepositoryImpl(
     private val cassandraSocialLoginRepository: CassandraSocialLoginRepository,
-): SocialLoginRepository {
+) : SocialLoginRepository {
     override suspend fun findByProvider(provider: UserProvider, providerKey: String): SocialLoginUser? {
         return cassandraSocialLoginRepository.findFirstByProviderAndProviderKey(
             provider = provider.name,

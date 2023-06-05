@@ -33,13 +33,13 @@ class KakaoOAuthGateway(
     data class KakaoUserResponse(
         val id: Long,
         val connected_at: String,
-        val kakao_account: KakaoEmailAccount?
+        val kakao_account: KakaoEmailAccount?,
     )
 
     data class KakaoEmailAccount(
         val email: String?,
         val email_needs_agreement: Boolean?,
         val is_email_valid: Boolean?,
-        val is_email_verified: Boolean?
+        val is_email_verified: Boolean?,
     )
 }

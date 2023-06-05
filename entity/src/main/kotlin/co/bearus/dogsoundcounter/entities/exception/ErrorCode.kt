@@ -3,7 +3,7 @@ package co.bearus.dogsoundcounter.entities.exception
 enum class ErrorCode(
     val code: String,
     val message: String,
-){
+) {
     USER_NOT_FOUND("UN0001", "사용자를 찾을 수 없습니다"),
     USER_ALREADY_EXISTS("UA0001", "이미 존재하는 사용자입니다"),
     ILLEGAL_TOKEN("IT0001", "인증 정보가 유효하지 않습니다"),
