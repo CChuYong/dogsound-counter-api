@@ -39,4 +39,5 @@ dependencies {
     implementation("org.springframework:spring-jdbc")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
+    implementation("org.springframework.boot:spring-boot-starter-security")
 }

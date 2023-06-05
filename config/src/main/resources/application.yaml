@@ -5,7 +5,7 @@ spring:
     local-datacenter: datacenter1
 app:
   app-tokens:
-    secret: asdfsdfsdf
+    secret: thisisverysecretkeysoshouldreplaced
     refreshTokenValidity: 86400
     accessTokenValidity: 3600
 

@@ -32,9 +32,13 @@ class JWTTokenProvider(
             .compact()
     }
 
-    override fun extractUserIdFromToken(token: String): String {
-        return Jwts.parserBuilder().setSigningKey(signKey).build()
-            .parseClaimsJws(token).body["id"] as String
+    override fun extractUserIdFromToken(token: String): String? {
+        return try {
+            Jwts.parserBuilder().setSigningKey(signKey).build()
+                .parseClaimsJws(token).body["id"] as String
+        } catch (e: Exception){
+            null
+        }
     }
 
     private fun buildHeader() =

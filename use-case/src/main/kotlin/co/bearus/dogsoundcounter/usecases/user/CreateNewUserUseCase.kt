@@ -12,6 +12,7 @@ class CreateNewUserUseCase(
     data class Input(
         val email: String,
     )
+
     override suspend fun execute(input: Input): User {
         // #1. Check user with given email already exists
         val previousUser = userRepository.findUserByEmail(input.email)
