@@ -8,4 +8,19 @@ data class Room(
     val roomName: String,
     val ownerId: String,
     val createdAtTs: Long,
-)
+) {
+    companion object {
+        fun newInstance(
+            roomId: String,
+            roomName: String,
+            ownerId: String,
+        ): Room {
+            return Room(
+                roomId = roomId,
+                roomName = roomName,
+                ownerId = ownerId,
+                createdAtTs = System.currentTimeMillis(),
+            )
+        }
+    }
+}
