@@ -5,6 +5,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.0"
     kotlin("jvm") version "1.7.22"
     kotlin("plugin.spring") version "1.7.22"
+    id("com.google.cloud.tools.jib") version "3.3.2"
 }
 apply(plugin = "java-library")
 apply(plugin = "org.springframework.boot")
@@ -40,4 +41,34 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
     implementation("org.springframework.boot:spring-boot-starter-security")
+}
+
+val activeProfile: String? = System.getProperty("spring.profiles.active")
+val repoURL: String? = System.getProperty("repoURL")
+val imageTag: String? = System.getProperty("imageTag")
+
+jib {
+    from {
+        image = "amazoncorretto:17-alpine3.17-jdk"
+    }
+    to {
+        image = repoURL
+        tags = setOf(imageTag)
+    }
+    container {
+        jvmFlags = listOf(
+            "-Dspring.profiles.active=${activeProfile}",
+            "-Dserver.port=8080",
+            "-Djava.security.egd=file:/dev/./urandom",
+            "-Dfile.encoding=UTF-8",
+            "-XX:+UseZGC",
+            "-XX:+UnlockExperimentalVMOptions",
+            "-XX:+UseContainerSupport",
+            "-Xms4G", //min
+            "-Xmx4G", //max
+            "-XX:+DisableExplicitGC", //System.gc() 방어
+            "-server",
+        )
+        ports = listOf("8080")
+    }
 }
