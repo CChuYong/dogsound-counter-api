@@ -5,6 +5,7 @@ import co.bearus.dogsoundcounter.entities.UserProvider
 import org.springframework.data.cassandra.core.mapping.Column
 import org.springframework.data.cassandra.core.mapping.PrimaryKey
 import org.springframework.data.cassandra.core.mapping.Table
+import java.sql.Timestamp
 
 @Table("user_social")
 data class CassandraSocialLoginUserEntity(
@@ -16,11 +17,15 @@ data class CassandraSocialLoginUserEntity(
 
     @field:Column("provider_key")
     val providerKey: String,
+
+    @field:Column("created_at")
+    val createdAt: Timestamp,
 ) {
     fun toDomain() = SocialLoginUser(
         userId = userId,
         provider = UserProvider.valueOf(provider),
         providerKey = providerKey,
+        createdAtTs = createdAt.time,
     )
 
     companion object {
@@ -28,6 +33,7 @@ data class CassandraSocialLoginUserEntity(
             userId = socialLoginUser.userId,
             provider = socialLoginUser.provider.name,
             providerKey = socialLoginUser.providerKey,
+            createdAt = Timestamp(socialLoginUser.createdAtTs),
         )
     }
 }

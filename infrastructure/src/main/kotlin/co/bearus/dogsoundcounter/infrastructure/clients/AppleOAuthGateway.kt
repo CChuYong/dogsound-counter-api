@@ -18,7 +18,7 @@ class AppleOAuthGateway(
     private val objectMapper: ObjectMapper,
 ) : OAuthGateway {
     override suspend fun authenticate(token: String): OAuthResult {
-        return webClient.post()
+        return webClient.get()
             .uri("auth/keys")
             .headers {
                 it.set("Content-type", "application/x-www-form-urlencoded;charset=utf-8")
@@ -49,5 +49,5 @@ class AppleOAuthGateway(
         val keys: List<Key>,
     )
 
-    data class JWTTokenHeader(var kid: String, val alr: String)
+    data class JWTTokenHeader(var kid: String, val alg: String)
 }

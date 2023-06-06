@@ -34,6 +34,9 @@ CREATE TABLE user_social
     PRIMARY KEY (user_id)
 ) WITH COMMENT = 'user social table';
 
+CREATE INDEX user_social_idx1 ON test.user_social (provider);
+CREATE INDEX user_social_idx2 ON test.user_social (provider_key);
+
 CREATE TABLE user
 (
     user_id    text,
