@@ -4,9 +4,11 @@ import co.bearus.dogsoundcounter.presenter.LoginUser
 import co.bearus.dogsoundcounter.presenter.RequestUser
 import co.bearus.dogsoundcounter.presenter.dto.AuthenticationRequest
 import co.bearus.dogsoundcounter.presenter.dto.AuthenticationResultResponse
+import co.bearus.dogsoundcounter.presenter.dto.RefreshTokenRequest
 import co.bearus.dogsoundcounter.presenter.dto.UserResponse
 import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
+import co.bearus.dogsoundcounter.usecases.user.RefreshUserWithTokenUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.AuthUserWithProviderUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.TokenProvider
 import org.springframework.web.bind.annotation.*
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*
 class AppUserController(
     private val authUserWithProvider: AuthUserWithProviderUseCase,
     private val getUserById: GetUserByIdUseCase,
+    private val refreshUserWithToken: RefreshUserWithTokenUseCase,
     private val tokenProvider: TokenProvider,
 ) {
     @PostMapping("/oauth")
@@ -46,5 +49,13 @@ class AppUserController(
         useCase = getUserById,
         param = user.userId,
         mappingFunction = UserResponse::from,
+    )
+
+    @PostMapping("/refresh")
+    suspend fun refresh(
+        @RequestBody dto: RefreshTokenRequest,
+    ) = withUseCase(
+        useCase = refreshUserWithToken,
+        param = dto.to()
     )
 }

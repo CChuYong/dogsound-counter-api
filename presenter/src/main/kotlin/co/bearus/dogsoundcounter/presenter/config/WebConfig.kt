@@ -33,6 +33,7 @@ class WebConfig(
             .csrf().disable()
             .authorizeExchange()
             .pathMatchers("/app/users/oauth/**").permitAll()
+            .pathMatchers("/app/users/refresh").permitAll()
             .pathMatchers("/actuator/**").permitAll()
             .anyExchange().authenticated()
             .and()

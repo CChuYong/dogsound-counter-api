@@ -1,6 +1,7 @@
 package co.bearus.dogsoundcounter.presenter.dto
 
 import co.bearus.dogsoundcounter.entities.UserProvider
+import co.bearus.dogsoundcounter.usecases.user.RefreshUserWithTokenUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.AuthUserWithProviderUseCase
 
 data class AuthenticationResultResponse(
@@ -22,5 +23,13 @@ data class AuthenticationRequest(
     fun to() = AuthUserWithProviderUseCase.Input(
         provider = provider,
         token = token,
+    )
+}
+
+data class RefreshTokenRequest(
+    val refreshToken: String,
+) {
+    fun to() = RefreshUserWithTokenUseCase.Input(
+        refreshToken = refreshToken,
     )
 }

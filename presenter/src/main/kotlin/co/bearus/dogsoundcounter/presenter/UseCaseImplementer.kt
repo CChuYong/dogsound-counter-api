@@ -7,10 +7,7 @@ import co.bearus.dogsoundcounter.usecases.message.MessageRepository
 import co.bearus.dogsoundcounter.usecases.room.CreateNewRoomUseCase
 import co.bearus.dogsoundcounter.usecases.room.GetRoomByIdUseCase
 import co.bearus.dogsoundcounter.usecases.room.RoomRepository
-import co.bearus.dogsoundcounter.usecases.user.CreateNewUserUseCase
-import co.bearus.dogsoundcounter.usecases.user.GetUserByEmailUseCase
-import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
-import co.bearus.dogsoundcounter.usecases.user.UserRepository
+import co.bearus.dogsoundcounter.usecases.user.*
 import co.bearus.dogsoundcounter.usecases.user.oauth.AuthUserWithProviderUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.OAuthFactory
 import co.bearus.dogsoundcounter.usecases.user.oauth.SocialLoginRepository
@@ -111,5 +108,14 @@ class UseCaseImplementer {
         violentRepository: ViolentRepository,
     ) = GetViolentsByRoomUseCase(
         violentRepository,
+    )
+
+    @Bean
+    fun refreshUserWithToken(
+        tokenProvider: TokenProvider,
+        userRepository: UserRepository,
+    ) = RefreshUserWithTokenUseCase(
+        tokenProvider,
+        userRepository,
     )
 }
