@@ -14,7 +14,7 @@ class TokenValidator(
     override fun convert(exchange: ServerWebExchange?): Mono<Authentication> {
         return Mono.justOrEmpty(exchange)
             .mapNotNull { serverWebExchange ->
-                serverWebExchange.request.headers["Authorization"]
+                serverWebExchange.request.headers["X-BCA-APP-TOKEN"]
             }
             .mapNotNull { headerValues ->
                 if (headerValues.isNotEmpty()) {
