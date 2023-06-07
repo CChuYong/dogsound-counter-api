@@ -28,7 +28,7 @@ jobs:
 
       - name: 환경변수 출력하기
         id: setup-env
-        run: |
+        run: |쉬
           echo "java-module-name=$JAVA_MODULE_NAME" >> $GITHUB_OUTPUT
           echo "github-environment-name=$GITHUB_ENVIRONMENT_NAME" >> $GITHUB_OUTPUT
           echo "ecr-repository-name=$ECR_REPOSITORY_NAME" >> $GITHUB_OUTPUT
@@ -39,7 +39,7 @@ jobs:
   call-build-workflow:
     if: github.event_name == 'push'
     needs: [prepare-variables]
-    name: 빌드 및 배포하기
+    name: 이미지 빌드 & 푸쉬
     uses: ./.github/workflows/build.yaml
     permissions:
       id-token: write

@@ -2,7 +2,8 @@ spring:
   cassandra:
     keyspace-name: test
     port: 9042
-    local-datacenter: datacenter1
+    local-datacenter: ap-northeast-1
+    contact-points: scylla-db-client.scylla.svc.cluster.local
 app:
   app-tokens:
     secret: thisisverysecretkeysoshouldreplaced

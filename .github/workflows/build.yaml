@@ -1,4 +1,4 @@
-name: 빌드 후 배포하기
+name: 이미지 빌드 & 푸쉬
 on:
   workflow_call:
     inputs:
