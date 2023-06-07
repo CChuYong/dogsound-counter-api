@@ -9,7 +9,6 @@ app:
     secret: thisisverysecretkeysoshouldreplaced
     refreshTokenValidity: 86400
     accessTokenValidity: 3600
-
   webclients:
     apple-oauth:
       baseUrl: https://appleid.apple.com/
