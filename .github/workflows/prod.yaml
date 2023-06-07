@@ -1,0 +1,57 @@
+name: API 빌드 후 배포하기
+on:
+  push:
+    branches: [ 'main' ]
+
+env:
+  JAVA_MODULE_NAME: config
+  GITHUB_ENVIRONMENT_NAME: prod
+  ECR_REPOSITORY_NAME: badsound-counter-api
+  SPRING_PROFILE: prod
+
+concurrency:
+  group: api
+
+jobs:
+  prepare-variables:
+    name: 환경변수 준비하기
+    runs-on: ubuntu-latest
+    outputs:
+      java-module-name: ${{ steps.setup-env.outputs.java-module-name }}
+      github-environment-name: ${{ steps.setup-env.outputs.github-environment-name }}
+      ecr-repository-name: ${{ steps.setup-env.outputs.ecr-repository-name }}
+      image-tag: ${{ steps.setup-env.outputs.image-tag }}
+      local-test: ${{ steps.setup-env.outputs.local-test }}
+    steps:
+      - name: GitHub 에서 레포 받아오기
+        uses: actions/checkout@v3
+
+      - name: 환경변수 출력하기
+        id: setup-env
+        run: |
+          echo "java-module-name=$JAVA_MODULE_NAME" >> $GITHUB_OUTPUT
+          echo "github-environment-name=$GITHUB_ENVIRONMENT_NAME" >> $GITHUB_OUTPUT
+          echo "ecr-repository-name=$ECR_REPOSITORY_NAME" >> $GITHUB_OUTPUT
+          echo "image-tag=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "local-test=$ACT" >> $GITHUB_OUTPUT
+          echo "spring-profile=$SPRING_PROFILE" >> $GITHUB_OUTPUT
+
+  call-build-workflow:
+    if: github.event_name == 'push'
+    needs: [prepare-variables]
+    name: 빌드 및 배포하기
+    uses: ./.github/workflows/build.yaml
+    permissions:
+      id-token: write
+      contents: read
+    with:
+      environment: ${{ needs.prepare-variables.outputs.github-environment-name }}
+      java-module-name: ${{ needs.prepare-variables.outputs.java-module-name }}
+      ecr-repository-name: ${{ needs.prepare-variables.outputs.ecr-repository-name }}
+      image-tag: ${{ needs.prepare-variables.outputs.image-tag }}
+      local: ${{ needs.prepare-variables.outputs.local-test != '' }} # 로컬 테스트인 경우 로컬 도커로 업로드
+      spring-profile: ${{ needs.prepare-variables.outputs.spring-profile }}
+    secrets:
+      AWS_ASSUME_ROLE_ARN: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
+      AWS_ECR_REGISTRY_URL: ${{ secrets.AWS_ECR_REGISTRY_URL }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}

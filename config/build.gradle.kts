@@ -44,7 +44,7 @@ dependencies {
 }
 
 val activeProfile: String? = System.getProperty("spring.profiles.active")
-val repoURL: String? = System.getProperty("repoURL")
+val repoURL: String? = System.getProperty("imageName")
 val imageTag: String? = System.getProperty("imageTag")
 
 jib {
