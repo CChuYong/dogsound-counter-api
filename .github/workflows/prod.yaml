@@ -64,7 +64,7 @@ jobs:
       AWS_REGION: ${{ secrets.AWS_REGION }}
 
   call-deploy-workflow:
-    needs: [call-build-workflow]
+    needs: [prepare-variables, call-build-workflow]
     name: ArgoCD로 배포하기
     uses: ./.github/workflows/argocd.yaml
     with:
