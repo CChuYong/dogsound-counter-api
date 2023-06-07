@@ -61,11 +61,10 @@ jib {
             "-Dserver.port=8080",
             "-Djava.security.egd=file:/dev/./urandom",
             "-Dfile.encoding=UTF-8",
-            "-XX:+UseZGC",
             "-XX:+UnlockExperimentalVMOptions",
             "-XX:+UseContainerSupport",
-            "-Xms4G", //min
-            "-Xmx4G", //max
+            "-Xms1G", //min
+            "-Xmx1G", //max
             "-XX:+DisableExplicitGC", //System.gc() 방어
             "-server",
         )

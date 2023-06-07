@@ -8,6 +8,8 @@ env:
   GITHUB_ENVIRONMENT_NAME: prod
   ECR_REPOSITORY_NAME: badsound-counter-api
   SPRING_PROFILE: prod
+  ARGOCD_SERVICE_NAME: bsc-backend-api
+  ARGOCD_REPO_NAME: CChuYong/bsc-argocd-manifest
 
 concurrency:
   group: api
@@ -23,6 +25,8 @@ jobs:
       image-tag: ${{ steps.setup-env.outputs.image-tag }}
       local-test: ${{ steps.setup-env.outputs.local-test }}
       spring-profile: ${{ steps.setup-env.outputs.spring-profile }}
+      argocd-service-name: ${{ steps.setup-env.outputs.argocd-service-name }}
+      argocd-repo-name: ${{ steps.setup-env.outputs.argocd-repo-name }}
     steps:
       - name: GitHub 에서 레포 받아오기
         uses: actions/checkout@v3
@@ -36,11 +40,13 @@ jobs:
           echo "image-tag=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "local-test=$ACT" >> $GITHUB_OUTPUT
           echo "spring-profile=$SPRING_PROFILE" >> $GITHUB_OUTPUT
+          echo "argocd-service-name=$ARGOCD_SERVICE_NAME" >> $GITHUB_OUTPUT
+          echo "argocd-repo-name=$ARGOCD_REPO_NAME" >> $GITHUB_OUTPUT
 
   call-build-workflow:
     if: github.event_name == 'push'
     needs: [prepare-variables]
-    name: 이미지 빌드 & 푸ㄴ
+    name: 이미지 빌드 & 푸쉬
     uses: ./.github/workflows/build.yaml
     permissions:
       id-token: write
@@ -56,3 +62,14 @@ jobs:
       AWS_ASSUME_ROLE_ARN: ${{ secrets.AWS_ASSUME_ROLE_ARN }}
       AWS_ECR_REGISTRY_URL: ${{ secrets.AWS_ECR_REGISTRY_URL }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
+
+  call-deploy-workflow:
+    needs: [call-build-workflow]
+    name: ArgoCD로 배포하기
+    uses: ./.github/workflows/argocd.yaml
+    with:
+      argocd-repo-name: ${{ needs.prepare-variables.outputs.argocd-repo-name }}
+      overlay-name: ${{ needs.prepare-variables.outputs.spring-profile }}
+      service-name: ${{ needs.prepare-variables.outputs.argocd-service-name }}
+      image-url: '${{ secrets.AWS_ECR_REGISTRY_URL }}/${{ needs.prepare-variables.outputs.ecr-repository-name }}:${{ needs.prepare-variables.outputs.image-tag }}'
+      environment: ${{ needs.prepare-variables.outputs.github-environment-name }}
