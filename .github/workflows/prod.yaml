@@ -28,7 +28,7 @@ jobs:
 
       - name: 환경변수 출력하기
         id: setup-env
-        run: |쉬
+        run: |
           echo "java-module-name=$JAVA_MODULE_NAME" >> $GITHUB_OUTPUT
           echo "github-environment-name=$GITHUB_ENVIRONMENT_NAME" >> $GITHUB_OUTPUT
           echo "ecr-repository-name=$ECR_REPOSITORY_NAME" >> $GITHUB_OUTPUT
