@@ -11,12 +11,15 @@ on:
       service-name:
         required: true
         type: string
-      image-url:
+      image-name:
         required: true
         type: string
       environment:
         required: true
         type: string
+    secrets:
+      AWS_ECR_REGISTRY_URL:
+        required: true
 
 jobs:
   build:
@@ -37,7 +40,7 @@ jobs:
       - name: 이미지 태그 변경 후 배포하기
         run: |
           cd ${{ inputs.service-name }}/overlays/${{ inputs.overlay-name }}
-          kustomize edit set image ${{ inputs.image-url }}
+          kustomize edit set image ${{ secrets.AWS_ECR_REGISTRY_URL }}/${{ inputs.image-name }}
           cat kustomization.yaml
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
@@ -49,5 +52,5 @@ jobs:
         with:
           tag: ${{ inputs.service-name }}:${{ github.sha }}
           name: ${{ inputs.service-name }}:${{ github.sha }}
-          body: "${{ inputs.image-url }}"
+          body: "${{ secrets.AWS_ECR_REGISTRY_URL }}/${{ inputs.image-name }}"
           commit: ${{ github.sha }}

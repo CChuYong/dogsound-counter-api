@@ -71,5 +71,7 @@ jobs:
       argocd-repo-name: ${{ needs.prepare-variables.outputs.argocd-repo-name }}
       overlay-name: ${{ needs.prepare-variables.outputs.spring-profile }}
       service-name: ${{ needs.prepare-variables.outputs.argocd-service-name }}
-      image-url: '${{ secrets.AWS_ECR_REGISTRY_URL }}/${{ needs.prepare-variables.outputs.ecr-repository-name }}:${{ needs.prepare-variables.outputs.image-tag }}'
+      image-name: '${{ needs.prepare-variables.outputs.ecr-repository-name }}:${{ needs.prepare-variables.outputs.image-tag }}'
       environment: ${{ needs.prepare-variables.outputs.github-environment-name }}
+    secrets:
+      AWS_ECR_REGISTRY_URL: ${{ secrets.AWS_ECR_REGISTRY_URL }}
