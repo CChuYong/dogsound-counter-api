@@ -22,6 +22,7 @@ jobs:
       ecr-repository-name: ${{ steps.setup-env.outputs.ecr-repository-name }}
       image-tag: ${{ steps.setup-env.outputs.image-tag }}
       local-test: ${{ steps.setup-env.outputs.local-test }}
+      spring-profile: ${{ steps.setup-env.outputs.spring-profile }}
     steps:
       - name: GitHub 에서 레포 받아오기
         uses: actions/checkout@v3
@@ -39,7 +40,7 @@ jobs:
   call-build-workflow:
     if: github.event_name == 'push'
     needs: [prepare-variables]
-    name: 이미지 빌드 & 푸쉬
+    name: 이미지 빌드 & 푸ㄴ
     uses: ./.github/workflows/build.yaml
     permissions:
       id-token: write
