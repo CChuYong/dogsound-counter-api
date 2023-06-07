@@ -75,6 +75,7 @@ jobs:
       service-name: ${{ needs.prepare-variables.outputs.argocd-service-name }}
       image-name: '${{ needs.prepare-variables.outputs.ecr-repository-name }}:${{ needs.prepare-variables.outputs.image-tag }}'
       environment: ${{ needs.prepare-variables.outputs.github-environment-name }}
+      release-tag: ${{ needs.prepare-variables.outputs.image-tag }}
     secrets:
       AWS_ECR_REGISTRY_URL: ${{ secrets.AWS_ECR_REGISTRY_URL }}
       PAT_TOKEN: ${{ secrets.PAT_TOKEN }}

@@ -17,6 +17,9 @@ on:
       environment:
         required: true
         type: string
+      release-tag:
+        required: true
+        type: string
     secrets:
       AWS_ECR_REGISTRY_URL:
         required: true
@@ -53,7 +56,7 @@ jobs:
       - name: GitHub 에 릴리즈 태그 생성하기
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ inputs.service-name }}_${{ github.sha }}
-          name: ${{ inputs.service-name }}:${{ github.sha }}
+          tag: ${{ inputs.service-name }}_${{ inputs.release-tag }}
+          name: ${{ inputs.image-name }}
           body: "${{ secrets.AWS_ECR_REGISTRY_URL }}/${{ inputs.image-name }}"
           commit: ${{ github.sha }}
