@@ -50,7 +50,7 @@ jobs:
           cat kustomization.yaml
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -am "release(${{ inputs.service-name }}): 자동배포 ${{ github.sha }}"
+          git commit -am "release(${{ inputs.service-name }}): 자동배포 ${{ inputs.image-name }}"
           git push -u origin main
 
       - name: GitHub 에 릴리즈 태그 생성하기
