@@ -67,6 +67,8 @@ jobs:
     needs: [prepare-variables, call-build-workflow]
     name: ArgoCD로 배포하기
     uses: ./.github/workflows/argocd.yaml
+    permissions:
+      contents: write
     with:
       argocd-repo-name: ${{ needs.prepare-variables.outputs.argocd-repo-name }}
       overlay-name: ${{ needs.prepare-variables.outputs.spring-profile }}
