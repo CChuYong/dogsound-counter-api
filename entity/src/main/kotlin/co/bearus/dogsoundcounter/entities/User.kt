@@ -3,7 +3,7 @@ package co.bearus.dogsoundcounter.entities
 data class User(
     val userId: String,
     val email: String,
-    val nickname: String = "",
+    val nickname: String = MockNickGenerator.generate(),
     val createdAtTs: Long,
 ) {
     companion object {
