@@ -9,11 +9,15 @@ data class CreateNewUserRequest(
 data class UserResponse(
     val id: String,
     val email: String,
+    val nickname: String,
+    val createdAtTs: Long,
 ) {
     companion object {
         fun from(user: User) = UserResponse(
             id = user.userId,
-            email = user.email
+            email = user.email,
+            nickname = user.nickname,
+            createdAtTs = user.createdAtTs,
         )
     }
 }
