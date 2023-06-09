@@ -8,6 +8,7 @@ import co.bearus.dogsoundcounter.presenter.dto.RefreshTokenRequest
 import co.bearus.dogsoundcounter.presenter.dto.UserResponse
 import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
+import co.bearus.dogsoundcounter.usecases.user.GetUserDashboardUseCase
 import co.bearus.dogsoundcounter.usecases.user.RefreshUserWithTokenUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.AuthUserWithProviderUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.TokenProvider
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*
 class AppUserController(
     private val authUserWithProvider: AuthUserWithProviderUseCase,
     private val getUserById: GetUserByIdUseCase,
+    private val getUserDashboard: GetUserDashboardUseCase,
     private val refreshUserWithToken: RefreshUserWithTokenUseCase,
     private val tokenProvider: TokenProvider,
 ) {
@@ -49,6 +51,19 @@ class AppUserController(
         useCase = getUserById,
         param = user.userId,
         mappingFunction = UserResponse::from,
+    )
+
+    @GetMapping("/dashboard")
+    suspend fun getDashboard(
+        @RequestUser user: LoginUser,
+    ) = withUseCase(
+        useCase = getUserDashboard,
+        param = GetUserDashboardUseCase.Input(
+            withUseCase(
+                useCase = getUserById,
+                param = user.userId,
+            )
+        ),
     )
 
     @PostMapping("/refresh")

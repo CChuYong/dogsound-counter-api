@@ -118,4 +118,11 @@ class UseCaseImplementer {
         tokenProvider,
         userRepository,
     )
+
+    @Bean
+    fun getUserDashBoard(
+        userRepository: UserRepository,
+    ) = GetUserDashboardUseCase(
+        userRepository,
+    )
 }
