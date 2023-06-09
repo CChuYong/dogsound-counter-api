@@ -9,6 +9,7 @@ import co.bearus.dogsoundcounter.presenter.dto.UserResponse
 import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserDashboardUseCase
+import co.bearus.dogsoundcounter.usecases.user.GetUserRoomsUseCase
 import co.bearus.dogsoundcounter.usecases.user.RefreshUserWithTokenUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.AuthUserWithProviderUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.TokenProvider
@@ -21,6 +22,7 @@ class AppUserController(
     private val getUserById: GetUserByIdUseCase,
     private val getUserDashboard: GetUserDashboardUseCase,
     private val refreshUserWithToken: RefreshUserWithTokenUseCase,
+    private val getUserRooms: GetUserRoomsUseCase,
     private val tokenProvider: TokenProvider,
 ) {
     @PostMapping("/oauth")
@@ -72,5 +74,18 @@ class AppUserController(
     ) = withUseCase(
         useCase = refreshUserWithToken,
         param = dto.to()
+    )
+
+    @GetMapping("/rooms")
+    suspend fun getRooms(
+        @RequestUser user: LoginUser,
+    ) = withUseCase(
+        useCase = getUserRooms,
+        param = GetUserRoomsUseCase.Input(
+            withUseCase(
+                useCase = getUserById,
+                param = user.userId,
+            )
+        ),
     )
 }

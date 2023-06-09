@@ -1,6 +1,7 @@
 package co.bearus.dogsoundcounter.usecases.room
 
 import co.bearus.dogsoundcounter.entities.Room
+import co.bearus.dogsoundcounter.entities.RoomUser
 import co.bearus.dogsoundcounter.entities.User
 import co.bearus.dogsoundcounter.usecases.IdentityGenerator
 import co.bearus.dogsoundcounter.usecases.UseCase
@@ -8,6 +9,7 @@ import co.bearus.dogsoundcounter.usecases.UseCase
 class CreateNewRoomUseCase(
     private val identityGenerator: IdentityGenerator,
     private val roomRepository: RoomRepository,
+    private val roomUserRepository: RoomUserRepository,
 ) : UseCase<CreateNewRoomUseCase.Input, Room> {
     data class Input(
         val roomName: String,
@@ -20,6 +22,16 @@ class CreateNewRoomUseCase(
             roomName = input.roomName,
             ownerId = input.owner.userId,
         )
+
+        val roomUser = RoomUser.newInstance(
+            roomUserId = identityGenerator.createIdentity(),
+            roomId = newRoom.roomId,
+            userId = input.owner.userId,
+            nickname = input.owner.nickname,
+            invitedBy = input.owner.userId,
+        )
+        roomUserRepository.persist(roomUser)
+
         return roomRepository.persist(newRoom)
     }
 }

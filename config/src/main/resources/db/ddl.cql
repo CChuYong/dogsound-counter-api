@@ -60,3 +60,16 @@ CREATE TABLE violent
     PRIMARY KEY (violent_id)
 ) WITH COMMENT = 'user table';
 CREATE INDEX violent_idx1 ON test.violent (room_id);
+
+CREATE TABLE room_user
+(
+    room_user_id text,
+    room_id      text,
+    user_id      text,
+    nickname     text,
+    invited_by   text,
+    created_at   timestamp,
+    PRIMARY KEY (room_user_id)
+) WITH COMMENT = 'room user table';
+CREATE INDEX room_user_idx1 ON test.room_user (room_id);
+CREATE INDEX room_user_idx2 ON test.room_user (user_id);
