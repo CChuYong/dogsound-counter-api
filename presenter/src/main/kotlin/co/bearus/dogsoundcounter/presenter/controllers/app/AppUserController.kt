@@ -87,5 +87,6 @@ class AppUserController(
                 param = user.userId,
             )
         ),
+        mappingFunction = { it.list }
     )
 }
