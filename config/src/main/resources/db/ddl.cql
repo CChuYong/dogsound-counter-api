@@ -12,10 +12,8 @@ CREATE TABLE message
     speaker_id    text,
     catcher_id    text,
     created_at    timestamp,
-    PRIMARY KEY (message_id)
+    PRIMARY KEY (room_id, message_id)
 ) WITH COMMENT = 'message table';
-
-CREATE INDEX message_idx1 ON test.message (room_id);
 
 CREATE TABLE room
 (

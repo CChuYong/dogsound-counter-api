@@ -40,7 +40,7 @@ class AppUserController(
     @PostMapping("/oauth/test")
     suspend fun testAuth() = withUseCase(
         useCase = getUserById,
-        param = "01H256SJWQXX11JYFNQJS2RTEZ",
+        param = "test",
         mappingFunction = {
             AuthenticationResultResponse(
                 accessToken = tokenProvider.createAccessToken(it),
@@ -106,6 +106,8 @@ class AppUserController(
                     unreadMessageCount = unreadMessageCount,
                     createdAtTs = room.createdAtTs
                 )
+            }.sortedByDescending { detail ->
+                detail.lastMessageAtTs
             }
         }
     )
