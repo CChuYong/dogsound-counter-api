@@ -6,6 +6,7 @@ data class RoomUser(
     val userId: String,
     val nickname: String,
     val invitedBy: String,
+    val lastReadMessageId: String?,
     val createdAtTs: Long,
 ) {
     companion object {
@@ -21,6 +22,7 @@ data class RoomUser(
             userId = userId,
             nickname = nickname,
             invitedBy = invitedBy,
+            lastReadMessageId = null,
             createdAtTs = System.currentTimeMillis(),
         )
     }

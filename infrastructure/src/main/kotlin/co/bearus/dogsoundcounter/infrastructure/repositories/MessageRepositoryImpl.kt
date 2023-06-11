@@ -18,4 +18,8 @@ class MessageRepositoryImpl(
     override suspend fun findMessageByRoomId(roomId: String): List<Message> {
         return cassandraMessageRepository.findAllByRoomId(roomId).map { it.toDomain() }
     }
+
+    override suspend fun countUnreadMessage(roomId: String, messageId: String): Long {
+        return cassandraMessageRepository.countByMessageIdGreaterThanAndRoomId(messageId, roomId)
+    }
 }

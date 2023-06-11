@@ -68,6 +68,7 @@ CREATE TABLE room_user
     user_id      text,
     nickname     text,
     invited_by   text,
+    last_read_message_id text,
     created_at   timestamp,
     PRIMARY KEY (room_user_id)
 ) WITH COMMENT = 'room user table';

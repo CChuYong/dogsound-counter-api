@@ -23,6 +23,9 @@ data class CassandraRoomUserEntity(
     @field:Column("invited_by")
     val invitedBy: String,
 
+    @field:Column("last_read_message_id")
+    val lastReadMessageId: String?,
+
     @field:Column("created_at")
     val createdAtTs: Timestamp,
 ) {
@@ -32,6 +35,7 @@ data class CassandraRoomUserEntity(
         userId = userId,
         nickname = nickname,
         invitedBy = invitedBy,
+        lastReadMessageId = lastReadMessageId,
         createdAtTs = createdAtTs.time,
     )
 
@@ -42,6 +46,7 @@ data class CassandraRoomUserEntity(
             userId = roomUser.userId,
             nickname = roomUser.nickname,
             invitedBy = roomUser.invitedBy,
+            lastReadMessageId = roomUser.lastReadMessageId,
             createdAtTs = Timestamp(roomUser.createdAtTs),
         )
     }
