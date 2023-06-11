@@ -8,10 +8,7 @@ import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.message.MessageRepository
 import co.bearus.dogsoundcounter.usecases.room.RoomRepository
 import co.bearus.dogsoundcounter.usecases.room.RoomUserRepository
-import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
-import co.bearus.dogsoundcounter.usecases.user.GetUserDashboardUseCase
-import co.bearus.dogsoundcounter.usecases.user.GetUserRoomsUseCase
-import co.bearus.dogsoundcounter.usecases.user.RefreshUserWithTokenUseCase
+import co.bearus.dogsoundcounter.usecases.user.*
 import co.bearus.dogsoundcounter.usecases.user.oauth.AuthUserWithProviderUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.TokenProvider
 import org.springframework.web.bind.annotation.*
@@ -24,6 +21,7 @@ class AppUserController(
     private val getUserDashboard: GetUserDashboardUseCase,
     private val refreshUserWithToken: RefreshUserWithTokenUseCase,
     private val getUserRooms: GetUserRoomsUseCase,
+    private val updateNickname: UpdateNicknameUseCase,
     private val tokenProvider: TokenProvider,
     private val messageRepository: MessageRepository,
     private val roomRepository: RoomRepository,
@@ -56,6 +54,22 @@ class AppUserController(
         useCase = getUserById,
         param = user.userId,
         mappingFunction = UserResponse::from,
+    )
+
+    @PostMapping("/nickname")
+    suspend fun updateNickname(
+        @RequestUser user: LoginUser,
+        @RequestBody dto: UpdateUserNicknameRequest,
+    ) = withUseCase(
+        useCase = updateNickname,
+        param = UpdateNicknameUseCase.Input(
+            user = withUseCase(
+                useCase = getUserById,
+                param = user.userId,
+            ),
+            newNickName = dto.newNickname,
+        ),
+        mappingFunction = UserResponse::from
     )
 
     @GetMapping("/dashboard")
@@ -101,6 +115,7 @@ class AppUserController(
                 RoomDetailResponse(
                     roomId = room.roomId,
                     roomName = room.roomName,
+
                     ownerId = room.ownerId,
                     lastMessageAtTs = lastMessage?.createdAtTs ?: room.createdAtTs,
                     unreadMessageCount = unreadMessageCount,

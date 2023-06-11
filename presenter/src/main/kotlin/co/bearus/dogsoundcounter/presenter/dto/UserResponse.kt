@@ -6,6 +6,10 @@ data class CreateNewUserRequest(
     val email: String,
 )
 
+data class UpdateUserNicknameRequest(
+    val newNickname: String,
+)
+
 data class UserResponse(
     val id: String,
     val email: String,

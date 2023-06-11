@@ -137,4 +137,11 @@ class UseCaseImplementer {
         roomUserRepository,
         roomRepository,
     )
+
+    @Bean
+    fun updateNickname(
+        userRepository: UserRepository,
+    ) = UpdateNicknameUseCase(
+        userRepository,
+    )
 }
