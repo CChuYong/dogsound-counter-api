@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CassandraMessageRepository : CoroutineCrudRepository<CassandraMessageEntity, String> {
     suspend fun findAllByRoomId(roomId: String): List<CassandraMessageEntity>
-    suspend fun countByMessageIdGreaterThanAndRoomId(messageId: String, roomId: String): Long
+    suspend fun countByRoomIdAndMessageIdGreaterThan(roomId: String, messageId: String): Long
+    suspend fun findFirstByRoomIdOrderByMessageIdDesc(roomId: String): CassandraMessageEntity?
 }

@@ -1,6 +1,6 @@
 package co.bearus.dogsoundcounter.usecases.user
 
-import co.bearus.dogsoundcounter.entities.Room
+import co.bearus.dogsoundcounter.entities.RoomUser
 import co.bearus.dogsoundcounter.entities.User
 import co.bearus.dogsoundcounter.usecases.UseCase
 import co.bearus.dogsoundcounter.usecases.room.RoomRepository
@@ -15,12 +15,12 @@ class GetUserRoomsUseCase(
     )
 
     data class Output(
-        val list: List<Room>
+        val list: List<RoomUser>
     )
 
     override suspend fun execute(input: Input): Output {
         return Output(
-            roomUserRepository.findByUserId(input.user.userId).map { roomRepository.getById(it.roomId) }
+            roomUserRepository.findByUserId(input.user.userId)
         )
     }
 }

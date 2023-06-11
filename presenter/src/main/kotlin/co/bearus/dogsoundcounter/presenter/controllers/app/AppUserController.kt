@@ -2,11 +2,12 @@ package co.bearus.dogsoundcounter.presenter.controllers.app
 
 import co.bearus.dogsoundcounter.presenter.LoginUser
 import co.bearus.dogsoundcounter.presenter.RequestUser
-import co.bearus.dogsoundcounter.presenter.dto.AuthenticationRequest
-import co.bearus.dogsoundcounter.presenter.dto.AuthenticationResultResponse
-import co.bearus.dogsoundcounter.presenter.dto.RefreshTokenRequest
-import co.bearus.dogsoundcounter.presenter.dto.UserResponse
+import co.bearus.dogsoundcounter.presenter.dto.*
+import co.bearus.dogsoundcounter.presenter.parallelMap
 import co.bearus.dogsoundcounter.presenter.withUseCase
+import co.bearus.dogsoundcounter.usecases.message.MessageRepository
+import co.bearus.dogsoundcounter.usecases.room.RoomRepository
+import co.bearus.dogsoundcounter.usecases.room.RoomUserRepository
 import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserDashboardUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserRoomsUseCase
@@ -24,6 +25,8 @@ class AppUserController(
     private val refreshUserWithToken: RefreshUserWithTokenUseCase,
     private val getUserRooms: GetUserRoomsUseCase,
     private val tokenProvider: TokenProvider,
+    private val messageRepository: MessageRepository,
+    private val roomRepository: RoomRepository,
 ) {
     @PostMapping("/oauth")
     suspend fun authenticateUser(
@@ -87,6 +90,23 @@ class AppUserController(
                 param = user.userId,
             )
         ),
-        mappingFunction = { it.list }
+        mappingFunction = {
+            it.list.parallelMap { roomUser ->
+                val room = roomRepository.getById(roomUser.roomId)
+                val lastMessage = messageRepository.getLastMessage(roomUser.roomId)
+                val unreadMessageCount = messageRepository.countUnreadMessage(
+                    roomId = room.roomId,
+                    messageId = roomUser.lastReadMessageId ?: "",
+                )
+                RoomDetailResponse(
+                    roomId = room.roomId,
+                    roomName = room.roomName,
+                    ownerId = room.ownerId,
+                    lastMessageAtTs = lastMessage?.createdAtTs ?: room.createdAtTs,
+                    unreadMessageCount = unreadMessageCount,
+                    createdAtTs = room.createdAtTs
+                )
+            }
+        }
     )
 }

@@ -20,6 +20,10 @@ class MessageRepositoryImpl(
     }
 
     override suspend fun countUnreadMessage(roomId: String, messageId: String): Long {
-        return cassandraMessageRepository.countByMessageIdGreaterThanAndRoomId(messageId, roomId)
+        return cassandraMessageRepository.countByRoomIdAndMessageIdGreaterThan(roomId, messageId = messageId)
+    }
+
+    override suspend fun getLastMessage(roomId: String): Message? {
+        return cassandraMessageRepository.findFirstByRoomIdOrderByMessageIdDesc(roomId)?.toDomain()
     }
 }
