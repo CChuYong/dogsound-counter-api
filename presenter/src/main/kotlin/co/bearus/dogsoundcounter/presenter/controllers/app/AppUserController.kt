@@ -35,6 +35,15 @@ class AppUserController(
         mappingFunction = AuthenticationResultResponse::from,
     )
 
+    @GetMapping("/{userId}")
+    suspend fun getUser(
+        @PathVariable userId: String,
+    ) = withUseCase(
+        useCase = getUserById,
+        param = userId,
+        mappingFunction = UserResponse::from,
+    )
+
     @PostMapping("/oauth/test")
     suspend fun testAuth() = withUseCase(
         useCase = getUserById,
