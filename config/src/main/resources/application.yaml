@@ -1,9 +1,14 @@
 spring:
+  rsocket:
+    server:
+      port: 7007
+      transport: websocket
   cassandra:
     keyspace-name: test
     port: 9042
     local-datacenter: ap-northeast-2
     contact-points: scylla-db-client.scylla.svc.cluster.local
+
 app:
   app-tokens:
     secret: thisisverysecretkeysoshouldreplaced

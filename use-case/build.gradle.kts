@@ -10,4 +10,5 @@ repositories {
 
 dependencies {
     implementation(project(":entity"))
+    implementation("io.projectreactor:reactor-core:3.5.4")
 }

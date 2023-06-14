@@ -35,6 +35,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("com.github.f4b6a3:ulid-creator:5.2.0")
     implementation("org.springframework.boot:spring-boot-starter-data-cassandra-reactive")
+    implementation("io.projectreactor.kafka:reactor-kafka:1.3.18")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
