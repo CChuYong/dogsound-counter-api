@@ -59,4 +59,40 @@ class MessageController(
             ),
         )
     )
+
+    @GetMapping(params = ["fetchType=FORWARD", "baseId"])
+    suspend fun getMessagesAfter(
+        @PathVariable roomId: String,
+        @RequestParam baseId: String,
+    ) = withUseCase(
+        useCase = getMessagesByRoom,
+        param = GetMessagesByRoomUseCase.Input(
+            room = withUseCase(
+                useCase = getRoomById,
+                param = roomId,
+            ),
+            queryMode = GetMessagesByRoomUseCase.QueryMode(
+                baseMessageId = baseId,
+                fetchForward = true,
+            )
+        )
+    )
+
+    @GetMapping(params = ["fetchType=BACKWARD", "baseId"])
+    suspend fun getMessagesBefore(
+        @PathVariable roomId: String,
+        @RequestParam baseId: String,
+    ) = withUseCase(
+        useCase = getMessagesByRoom,
+        param = GetMessagesByRoomUseCase.Input(
+            room = withUseCase(
+                useCase = getRoomById,
+                param = roomId,
+            ),
+            queryMode = GetMessagesByRoomUseCase.QueryMode(
+                baseMessageId = baseId,
+                fetchForward = false,
+            )
+        )
+    )
 }

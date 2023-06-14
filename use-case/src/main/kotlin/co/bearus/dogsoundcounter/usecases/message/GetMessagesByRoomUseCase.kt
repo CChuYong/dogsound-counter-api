@@ -9,9 +9,27 @@ class GetMessagesByRoomUseCase(
 ): UseCase<GetMessagesByRoomUseCase.Input, List<Message>> {
     data class Input(
         val room: Room,
+        val queryMode: QueryMode? = null,
+    )
+
+    data class QueryMode(
+        val baseMessageId: String,
+        val fetchForward: Boolean,
     )
 
     override suspend fun execute(input: Input): List<Message> {
-        return messageRepository.findMessageByRoomId(input.room.roomId)
+        return if (input.queryMode == null) messageRepository.findMessageByRoomId(input.room.roomId)
+        else {
+            if(input.queryMode.fetchForward) messageRepository.findMessageByRoomIdAfter(
+                input.room.roomId,
+                input.queryMode.baseMessageId,
+                20
+            )
+            else messageRepository.findMessageByRoomIdBefore(
+                input.room.roomId,
+                input.queryMode.baseMessageId,
+                20
+            )
+        }
     }
 }
