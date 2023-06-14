@@ -46,7 +46,7 @@ class ViolentController(
         @PathVariable roomId: String,
     ) = withUseCase(
         useCase = getViolentsByRoom,
-        param = GetMessagesByRoomUseCase.Input(
+        param = GetViolentsByRoomUseCase.Input(
             room = withUseCase(
                 useCase = getRoomById,
                 param = roomId,

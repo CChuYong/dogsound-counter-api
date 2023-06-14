@@ -7,12 +7,12 @@ import co.bearus.dogsoundcounter.usecases.message.GetMessagesByRoomUseCase
 
 class GetViolentsByRoomUseCase(
     private val violentRepository: ViolentRepository,
-): UseCase<GetMessagesByRoomUseCase.Input, List<Violent>> {
+): UseCase<GetViolentsByRoomUseCase.Input, List<Violent>> {
     data class Input(
         val room: Room,
     )
 
-    override suspend fun execute(input: GetMessagesByRoomUseCase.Input): List<Violent> {
+    override suspend fun execute(input: GetViolentsByRoomUseCase.Input): List<Violent> {
         return violentRepository.findAllByRoomId(input.room.roomId)
     }
 }

@@ -13,6 +13,10 @@ class RoomUserRepositoryImpl(
         return cassandraRoomUserRepository.findAllByUserId(userId).map { it.toDomain() }
     }
 
+    override suspend fun findByRoomId(roomId: String): List<RoomUser> {
+        return cassandraRoomUserRepository.findAllByRoomId(roomId).map { it.toDomain() }
+    }
+
     override suspend fun persist(roomUser: RoomUser): RoomUser {
         return cassandraRoomUserRepository.save(
             CassandraRoomUserEntity.fromDomain(roomUser)
