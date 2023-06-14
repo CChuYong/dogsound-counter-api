@@ -14,6 +14,7 @@ data class UserResponse(
     val id: String,
     val email: String,
     val nickname: String,
+    val profileImgUrl: String,
     val createdAtTs: Long,
 ) {
     companion object {
@@ -21,6 +22,7 @@ data class UserResponse(
             id = user.userId,
             email = user.email,
             nickname = user.nickname,
+            profileImgUrl = user.profileImgUrl,
             createdAtTs = user.createdAtTs,
         )
     }
