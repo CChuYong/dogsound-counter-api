@@ -50,6 +50,7 @@ class MessageController(
     @GetMapping
     suspend fun getMessages(
         @PathVariable roomId: String,
+        @RequestParam(required = false) limit: Int?,
     ) = withUseCase(
         useCase = getMessagesByRoom,
         param = GetMessagesByRoomUseCase.Input(
@@ -57,6 +58,7 @@ class MessageController(
                 useCase = getRoomById,
                 param = roomId,
             ),
+            limit = limit ?: 100,
         )
     )
 
@@ -64,6 +66,7 @@ class MessageController(
     suspend fun getMessagesAfter(
         @PathVariable roomId: String,
         @RequestParam baseId: String,
+        @RequestParam(required = false) limit: Int?,
     ) = withUseCase(
         useCase = getMessagesByRoom,
         param = GetMessagesByRoomUseCase.Input(
@@ -74,7 +77,8 @@ class MessageController(
             queryMode = GetMessagesByRoomUseCase.QueryMode(
                 baseMessageId = baseId,
                 fetchForward = true,
-            )
+            ),
+            limit = limit ?: 100,
         )
     )
 
@@ -82,6 +86,7 @@ class MessageController(
     suspend fun getMessagesBefore(
         @PathVariable roomId: String,
         @RequestParam baseId: String,
+        @RequestParam(required = false) limit: Int?,
     ) = withUseCase(
         useCase = getMessagesByRoom,
         param = GetMessagesByRoomUseCase.Input(
@@ -92,7 +97,8 @@ class MessageController(
             queryMode = GetMessagesByRoomUseCase.QueryMode(
                 baseMessageId = baseId,
                 fetchForward = false,
-            )
+            ),
+            limit = limit ?: 100,
         )
     )
 }

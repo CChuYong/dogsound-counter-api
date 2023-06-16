@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CassandraMessageRepository : CoroutineCrudRepository<CassandraMessageEntity, String> {
-    suspend fun findAllByRoomId(roomId: String): List<CassandraMessageEntity>
+    suspend fun findAllByRoomId(roomId: String, page: Pageable): List<CassandraMessageEntity>
     suspend fun findAllByRoomIdAndMessageIdGreaterThan(
         roomId: String,
         messageId: String,

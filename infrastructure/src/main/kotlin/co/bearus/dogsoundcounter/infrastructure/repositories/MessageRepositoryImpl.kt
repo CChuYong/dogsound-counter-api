@@ -16,8 +16,8 @@ class MessageRepositoryImpl(
         ).toDomain()
     }
 
-    override suspend fun findMessageByRoomId(roomId: String): List<Message> {
-        return cassandraMessageRepository.findAllByRoomId(roomId).map { it.toDomain() }
+    override suspend fun findMessageByRoomId(roomId: String, limit: Int): List<Message> {
+        return cassandraMessageRepository.findAllByRoomId(roomId, PageRequest.of(0, limit)).map { it.toDomain() }
     }
 
     override suspend fun findMessageByRoomIdAfter(roomId: String, messageId: String, limit: Int): List<Message> {
