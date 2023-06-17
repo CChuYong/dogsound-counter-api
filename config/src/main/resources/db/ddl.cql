@@ -49,6 +49,17 @@ CREATE TABLE user
 
 CREATE INDEX user_idx1 ON test.user (email);
 
+CREATE TABLE user_device
+(
+    user_id text,
+    fcm_token text,
+    device_info text,
+    created_at timestamp,
+    PRIMARY KEY (user_id, fcm_token),
+) WITH COMMENT = 'user device table';
+CREATE INDEX user_device_idx1 ON test.user_device (user_id);
+
+
 CREATE TABLE violent
 (
     violent_id      text,
@@ -75,3 +86,4 @@ CREATE TABLE room_user
 ) WITH COMMENT = 'room user table';
 CREATE INDEX room_user_idx1 ON test.room_user (room_id);
 CREATE INDEX room_user_idx2 ON test.room_user (user_id);
+

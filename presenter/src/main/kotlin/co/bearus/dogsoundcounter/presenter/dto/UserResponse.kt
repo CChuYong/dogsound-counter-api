@@ -10,6 +10,11 @@ data class UpdateUserNicknameRequest(
     val newNickname: String,
 )
 
+data class UpdateDeviceInfoRequest(
+    val fcmToken: String,
+    val deviceInfo: String,
+)
+
 data class UserResponse(
     val id: String,
     val email: String,

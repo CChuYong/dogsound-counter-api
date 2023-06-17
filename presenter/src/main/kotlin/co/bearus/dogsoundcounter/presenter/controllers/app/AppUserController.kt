@@ -22,6 +22,7 @@ class AppUserController(
     private val refreshUserWithToken: RefreshUserWithTokenUseCase,
     private val getUserRooms: GetUserRoomsUseCase,
     private val updateNickname: UpdateNicknameUseCase,
+    private val createUserDevice: CreateUserDeviceUseCase,
     private val tokenProvider: TokenProvider,
     private val messageRepository: MessageRepository,
     private val roomRepository: RoomRepository,
@@ -100,6 +101,22 @@ class AppUserController(
     ) = withUseCase(
         useCase = refreshUserWithToken,
         param = dto.to()
+    )
+
+    @PostMapping("/device")
+    suspend fun registerDevice(
+        @RequestUser user: LoginUser,
+        @RequestBody dto: UpdateDeviceInfoRequest,
+    ) = withUseCase(
+        useCase = createUserDevice,
+        param = CreateUserDeviceUseCase.Input(
+            user = withUseCase(
+                useCase = getUserById,
+                param = user.userId,
+            ),
+            fcmToken = dto.fcmToken,
+            deviceInfo = dto.deviceInfo,
+        )
     )
 
     @GetMapping("/rooms")

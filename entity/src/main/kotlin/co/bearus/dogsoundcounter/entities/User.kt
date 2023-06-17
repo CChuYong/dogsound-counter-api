@@ -3,7 +3,7 @@ package co.bearus.dogsoundcounter.entities
 data class User(
     val userId: String,
     val email: String,
-    val nickname: String = MockNickGenerator.generate(),
+    val nickname: String,
     val profileImgUrl: String = "https://bsc-assets.s3.ap-northeast-2.amazonaws.com/default_profile_img.webp",
     val lastSeenAtTs: Long,
     val createdAtTs: Long,
@@ -12,10 +12,12 @@ data class User(
         fun newInstance(
             userId: String,
             email: String,
+            nickname: String? = null,
         ): User {
             return User(
                 userId = userId,
                 email = email,
+                nickname = nickname ?: MockNickGenerator.generate(),
                 lastSeenAtTs = System.currentTimeMillis(),
                 createdAtTs = System.currentTimeMillis(),
             )

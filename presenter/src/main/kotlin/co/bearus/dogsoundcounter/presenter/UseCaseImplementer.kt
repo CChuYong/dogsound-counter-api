@@ -154,4 +154,11 @@ class UseCaseImplementer {
     ) = UpdateRoomUserLastMessageIdUseCase(
         roomUserRepository,
     )
+
+    @Bean
+    fun createUserDevice(
+        userDeviceRepository: UserDeviceRepository,
+    ) = CreateUserDeviceUseCase(
+        userDeviceRepository,
+    )
 }
