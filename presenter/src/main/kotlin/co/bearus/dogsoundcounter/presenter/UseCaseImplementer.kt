@@ -4,10 +4,7 @@ import co.bearus.dogsoundcounter.usecases.IdentityGenerator
 import co.bearus.dogsoundcounter.usecases.message.CreateNewMessageUseCase
 import co.bearus.dogsoundcounter.usecases.message.GetMessagesByRoomUseCase
 import co.bearus.dogsoundcounter.usecases.message.MessageRepository
-import co.bearus.dogsoundcounter.usecases.room.CreateNewRoomUseCase
-import co.bearus.dogsoundcounter.usecases.room.GetRoomByIdUseCase
-import co.bearus.dogsoundcounter.usecases.room.RoomRepository
-import co.bearus.dogsoundcounter.usecases.room.RoomUserRepository
+import co.bearus.dogsoundcounter.usecases.room.*
 import co.bearus.dogsoundcounter.usecases.user.*
 import co.bearus.dogsoundcounter.usecases.user.oauth.AuthUserWithProviderUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.OAuthFactory
@@ -143,5 +140,12 @@ class UseCaseImplementer {
         userRepository: UserRepository,
     ) = UpdateNicknameUseCase(
         userRepository,
+    )
+
+    @Bean
+    fun updateRoomUserLastMessageId(
+        roomUserRepository: RoomUserRepository,
+    ) = UpdateRoomUserLastMessageIdUseCase(
+        roomUserRepository,
     )
 }

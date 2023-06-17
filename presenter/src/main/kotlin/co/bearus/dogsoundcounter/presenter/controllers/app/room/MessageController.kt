@@ -1,14 +1,16 @@
 package co.bearus.dogsoundcounter.presenter.controllers.app.room
 
+import co.bearus.dogsoundcounter.entities.Message
+import co.bearus.dogsoundcounter.presenter.LoginUser
+import co.bearus.dogsoundcounter.presenter.RequestUser
 import co.bearus.dogsoundcounter.presenter.dto.CreateNewMessageRequest
 import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.message.CreateNewMessageUseCase
 import co.bearus.dogsoundcounter.usecases.message.GetMessagesByRoomUseCase
 import co.bearus.dogsoundcounter.usecases.room.GetRoomByIdUseCase
 import co.bearus.dogsoundcounter.usecases.room.RoomUserRepository
+import co.bearus.dogsoundcounter.usecases.room.UpdateRoomUserLastMessageIdUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
-import co.bearus.dogsoundcounter.usecases.violent.GetViolentByIdUseCase
-import co.bearus.dogsoundcounter.usecases.violent.GetViolentsByRoomUseCase
 import co.bearus.dogsoundcounter.usecases.violent.ViolentRepository
 import org.springframework.web.bind.annotation.*
 
@@ -21,6 +23,7 @@ class MessageController(
     private val getMessagesByRoom: GetMessagesByRoomUseCase,
     private val roomUserRepository: RoomUserRepository,
     private val violentRepository: ViolentRepository,
+    private val updateRoomUserLastMessageId: UpdateRoomUserLastMessageIdUseCase,
 ) {
     @PostMapping
     suspend fun createMessage(
@@ -51,6 +54,7 @@ class MessageController(
     suspend fun getMessages(
         @PathVariable roomId: String,
         @RequestParam(required = false) limit: Int?,
+        @RequestUser user: LoginUser,
     ) = withUseCase(
         useCase = getMessagesByRoom,
         param = GetMessagesByRoomUseCase.Input(
@@ -60,13 +64,14 @@ class MessageController(
             ),
             limit = limit ?: 100,
         )
-    )
+    ).updateUserLastIndex(roomId, user.userId)
 
     @GetMapping(params = ["fetchType=FORWARD", "baseId"])
     suspend fun getMessagesAfter(
         @PathVariable roomId: String,
         @RequestParam baseId: String,
         @RequestParam(required = false) limit: Int?,
+        @RequestUser user: LoginUser,
     ) = withUseCase(
         useCase = getMessagesByRoom,
         param = GetMessagesByRoomUseCase.Input(
@@ -80,13 +85,14 @@ class MessageController(
             ),
             limit = limit ?: 100,
         )
-    )
+    ).updateUserLastIndex(roomId, user.userId)
 
     @GetMapping(params = ["fetchType=BACKWARD", "baseId"])
     suspend fun getMessagesBefore(
         @PathVariable roomId: String,
         @RequestParam baseId: String,
         @RequestParam(required = false) limit: Int?,
+        @RequestUser user: LoginUser,
     ) = withUseCase(
         useCase = getMessagesByRoom,
         param = GetMessagesByRoomUseCase.Input(
@@ -100,5 +106,17 @@ class MessageController(
             ),
             limit = limit ?: 100,
         )
-    )
+    ).updateUserLastIndex(roomId, user.userId)
+
+    private suspend fun List<Message>.updateUserLastIndex(roomId: String, userId: String): List<Message> {
+        val maxId = maxOf { it.messageId }
+        withUseCase(
+            useCase = updateRoomUserLastMessageId,
+            param = UpdateRoomUserLastMessageIdUseCase.Input(
+                roomUser = roomUserRepository.findRoomUser(roomId, userId),
+                newLastIndex = maxId,
+            )
+        )
+        return this
+    }
 }
