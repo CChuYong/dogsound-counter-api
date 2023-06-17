@@ -20,6 +20,7 @@ class FirebaseMessagePublisher(
     }
 
     fun sendNotification(fcmToken: String, title: String, description: String): String? {
+        println("FWD ${fcmToken} -> $title")
         val message: Message = Message.builder()
             .setNotification(Notification.builder().setTitle(title).setBody(description).build())
             .setToken(fcmToken)
