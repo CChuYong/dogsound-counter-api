@@ -109,14 +109,16 @@ class MessageController(
     ).updateUserLastIndex(roomId, user.userId)
 
     private suspend fun List<Message>.updateUserLastIndex(roomId: String, userId: String): List<Message> {
-        val maxId = maxOf { it.messageId }
-        withUseCase(
-            useCase = updateRoomUserLastMessageId,
-            param = UpdateRoomUserLastMessageIdUseCase.Input(
-                roomUser = roomUserRepository.findRoomUser(roomId, userId),
-                newLastIndex = maxId,
+        if(isNotEmpty()) {
+            val maxId = maxOf { it.messageId }
+            withUseCase(
+                useCase = updateRoomUserLastMessageId,
+                param = UpdateRoomUserLastMessageIdUseCase.Input(
+                    roomUser = roomUserRepository.findRoomUser(roomId, userId),
+                    newLastIndex = maxId,
+                )
             )
-        )
+        }
         return this
     }
 }

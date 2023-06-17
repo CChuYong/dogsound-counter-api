@@ -12,3 +12,10 @@ data class RoomDetailResponse(
     val unreadMessageCount: Long,
     val createdAtTs: Long,
 )
+
+data class RoomResponse(
+    val roomId: String,
+    val roomName: String,
+    val ownerId: String,
+    val createdAtTs: Long,
+)
