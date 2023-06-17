@@ -11,4 +11,6 @@ repositories {
 dependencies {
     implementation(project(":entity"))
     implementation("io.projectreactor:reactor-core:3.5.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 }

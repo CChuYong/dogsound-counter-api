@@ -20,6 +20,9 @@ data class CassandraUserEntity(
     @field:Column("profile_img_url")
     val profileImgUrl: String,
 
+    @field:Column("last_seen_at")
+    val lastSeenAtTs: Timestamp,
+
     @field:Column("created_at")
     val createdAtTs: Timestamp,
 ) {
@@ -28,6 +31,7 @@ data class CassandraUserEntity(
         email = email,
         nickname = nickname,
         profileImgUrl = profileImgUrl,
+        lastSeenAtTs = createdAtTs.time,
         createdAtTs = createdAtTs.time,
     )
 
@@ -37,6 +41,7 @@ data class CassandraUserEntity(
             email = user.email,
             nickname = user.nickname,
             profileImgUrl = user.profileImgUrl,
+            lastSeenAtTs = Timestamp(user.lastSeenAtTs),
             createdAtTs = Timestamp(user.createdAtTs),
         )
     }

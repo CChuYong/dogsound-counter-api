@@ -42,6 +42,7 @@ CREATE TABLE user
     email      text,
     nickname   text,
     profile_img_url text,
+    last_seen_at timestamp,
     created_at timestamp,
     PRIMARY KEY (user_id)
 ) WITH COMMENT = 'user table';

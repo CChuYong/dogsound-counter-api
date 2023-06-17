@@ -5,6 +5,7 @@ data class User(
     val email: String,
     val nickname: String = MockNickGenerator.generate(),
     val profileImgUrl: String = "https://bsc-assets.s3.ap-northeast-2.amazonaws.com/default_profile_img.webp",
+    val lastSeenAtTs: Long,
     val createdAtTs: Long,
 ) {
     companion object {
@@ -15,6 +16,7 @@ data class User(
             return User(
                 userId = userId,
                 email = email,
+                lastSeenAtTs = System.currentTimeMillis(),
                 createdAtTs = System.currentTimeMillis(),
             )
         }
