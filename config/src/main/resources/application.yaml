@@ -19,3 +19,5 @@ app:
       baseUrl: https://appleid.apple.com/
     kakao-oauth:
       baseUrl: https://kapi.kakao.com/
+    google-oauth:
+      baseUrl: https://openidconnect.googleapis.com/

@@ -9,11 +9,13 @@ import org.springframework.stereotype.Component
 class OAuthFactoryImpl(
     private val appleOAuthGateway: AppleOAuthGateway,
     private val kakaoOAuthGateway: KakaoOAuthGateway,
+    private val googleOAuthGateway: GoogleOAuthGateway,
 ) : OAuthFactory {
     override fun of(userProvider: UserProvider): OAuthGateway {
         return when (userProvider) {
             UserProvider.KAKAO -> kakaoOAuthGateway
             UserProvider.APPLE -> appleOAuthGateway
+            UserProvider.GOOGLE -> googleOAuthGateway
             else -> TODO()
         }
     }

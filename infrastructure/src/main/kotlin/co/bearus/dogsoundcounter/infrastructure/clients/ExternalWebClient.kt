@@ -14,6 +14,9 @@ class ExternalWebClient(
     @Bean("appleOAuthClient")
     fun appleOAuthClient() = buildClient("apple-oauth")
 
+    @Bean("googleOAuthClient")
+    fun googleOAuthClient() = buildClient("google-oauth")
+
     fun buildClient(clientName: String): WebClient {
         val property = webClientProperties.getClientConfig(clientName) ?: throw RuntimeException()
         return WebClient.builder()
