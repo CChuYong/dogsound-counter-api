@@ -44,7 +44,7 @@ class CreateNewMessageUseCase(
                         packetType = PacketType.MESSAGE_RECEIVED,
                         payload = objectSerializer.serialize(newMessage)
                     )
-                ).subscribe()
+                )
             }
         }
 

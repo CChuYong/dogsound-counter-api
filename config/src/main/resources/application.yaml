@@ -10,6 +10,7 @@ spring:
     contact-points: scylla-db-client.scylla.svc.cluster.local
 
 app:
+  firebase-token: ${GOOGLE_FIREBASE_TOKEN}
   app-tokens:
     secret: thisisverysecretkeysoshouldreplaced
     refreshTokenValidity: 86400

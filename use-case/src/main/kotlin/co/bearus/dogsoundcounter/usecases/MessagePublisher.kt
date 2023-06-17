@@ -4,5 +4,5 @@ import co.bearus.dogsoundcounter.entities.ClientPacket
 import reactor.core.publisher.Mono
 
 interface MessagePublisher {
-    fun publishMessage(userId: String, message: ClientPacket): Mono<Boolean>
+    suspend fun publishMessage(userId: String, message: ClientPacket): Boolean
 }

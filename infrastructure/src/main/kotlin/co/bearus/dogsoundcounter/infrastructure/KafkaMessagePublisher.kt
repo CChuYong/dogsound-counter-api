@@ -3,6 +3,7 @@ package co.bearus.dogsoundcounter.infrastructure
 import co.bearus.dogsoundcounter.entities.ClientPacket
 import co.bearus.dogsoundcounter.usecases.MessagePublisher
 import com.fasterxml.jackson.databind.ObjectMapper
+import kotlinx.coroutines.reactor.awaitSingle
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.IntegerDeserializer
@@ -27,12 +28,13 @@ class KafkaMessagePublisher(
         ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
     )
 
-    override fun publishMessage(userId: String, message: ClientPacket): Mono<Boolean> {
+    override suspend fun publishMessage(userId: String, message: ClientPacket): Boolean {
         val data = objectMapper.writeValueAsString(message)
         return producerOpts.createOutbound()
             .send(Mono.just(ProducerRecord("messages:$userId", data)))
             .then()
             .map { true }
             .onErrorResume { Mono.just(false) }
+            .awaitSingle()
     }
 }
