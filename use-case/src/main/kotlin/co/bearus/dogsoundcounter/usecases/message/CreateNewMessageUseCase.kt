@@ -23,7 +23,9 @@ class CreateNewMessageUseCase(
         val violent = input.violents.firstOrNull() { input.content.contains(it.name) }
         val roomUserIds = input.roomUsers.map { it.roomUserId }.toMutableSet()
 
-        val price = (violent?.violentPrice ?: 0) / (roomUserIds.size - 1)
+        val price = if(roomUserIds.size > 1)
+            (violent?.violentPrice ?: 0) / (roomUserIds.size - 1)
+        else 0 //혼자 있는 방이면 나쁜말 불가?
         val newMessage = Message.newInstance(
             messageId = identityGenerator.createIdentity(),
             roomId = input.room.roomId,
