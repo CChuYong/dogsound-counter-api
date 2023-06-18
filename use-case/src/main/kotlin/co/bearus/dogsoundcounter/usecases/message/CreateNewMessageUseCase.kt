@@ -37,7 +37,7 @@ class CreateNewMessageUseCase(
             content = input.content,
         )
         CoroutineScope(Dispatchers.IO).launch {
-            roomUserIds.forEach { id ->
+            input.roomUsers.map { it.userId }.forEach { id ->
                 val device = userDeviceRepository.getUserDevices(id)
                 val notification = Notification(
                     title = input.room.roomName,
