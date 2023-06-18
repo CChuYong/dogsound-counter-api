@@ -27,6 +27,7 @@ class FirebaseNotificationGateway(
     }
 
     override fun sendMulti(fcmTokens: List<String>, notification: Notification) {
+        if(fcmTokens.isEmpty()) return
         val message: MulticastMessage = MulticastMessage.builder()
             .setNotification(com.google.firebase.messaging.Notification.builder().setTitle(notification.title).setBody(notification.body).build())
             .addAllTokens(fcmTokens)
