@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class ViolentRepositoryImpl(
     private val cassandraViolentRepository: CassandraViolentRepository,
-): ViolentRepository {
+) : ViolentRepository {
     override suspend fun getById(violentId: String): Violent {
         return cassandraViolentRepository.getByViolentId(violentId).toDomain()
     }

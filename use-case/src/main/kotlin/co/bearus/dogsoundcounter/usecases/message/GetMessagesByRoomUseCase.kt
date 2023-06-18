@@ -6,7 +6,7 @@ import co.bearus.dogsoundcounter.usecases.UseCase
 
 class GetMessagesByRoomUseCase(
     private val messageRepository: MessageRepository,
-): UseCase<GetMessagesByRoomUseCase.Input, List<Message>> {
+) : UseCase<GetMessagesByRoomUseCase.Input, List<Message>> {
     data class Input(
         val room: Room,
         val queryMode: QueryMode? = null,

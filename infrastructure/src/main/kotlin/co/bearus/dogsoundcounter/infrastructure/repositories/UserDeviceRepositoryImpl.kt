@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class UserDeviceRepositoryImpl(
     private val cassandraUserDeviceRepository: CassandraUserDeviceRepository,
-): UserDeviceRepository {
+) : UserDeviceRepository {
     override suspend fun getUserDevices(userId: String): List<UserDevice> {
         return cassandraUserDeviceRepository.findAllByUserId(userId)
             .map { it.toDomain() }

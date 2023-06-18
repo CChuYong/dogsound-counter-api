@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository
 interface CassandraRoomUserRepository : CoroutineCrudRepository<CassandraRoomUserEntity, String> {
     suspend fun findAllByRoomId(roomId: String): List<CassandraRoomUserEntity>
     suspend fun findAllByUserId(userId: String): List<CassandraRoomUserEntity>
+
     @AllowFiltering
     suspend fun findByRoomIdAndUserId(roomId: String, userId: String): CassandraRoomUserEntity
 }

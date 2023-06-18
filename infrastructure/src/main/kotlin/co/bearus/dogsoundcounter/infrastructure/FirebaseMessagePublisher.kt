@@ -4,7 +4,10 @@ import co.bearus.dogsoundcounter.entities.ClientPacket
 import co.bearus.dogsoundcounter.usecases.MessagePublisher
 import co.bearus.dogsoundcounter.usecases.user.UserDeviceRepository
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.google.firebase.messaging.*
+import com.google.firebase.messaging.ApnsConfig
+import com.google.firebase.messaging.Aps
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.MulticastMessage
 import org.springframework.stereotype.Component
 
 
@@ -13,7 +16,7 @@ class FirebaseMessagePublisher(
     private val userDeviceRepository: UserDeviceRepository,
     private val objectMapper: ObjectMapper,
     private val firebaseMessaging: FirebaseMessaging,
-): MessagePublisher {
+) : MessagePublisher {
     override suspend fun publishMessage(userId: String, message: ClientPacket): Boolean {
         val devices = userDeviceRepository.getUserDevices(userId)
         sendDataMulti(devices.map { it.fcmToken }, message)

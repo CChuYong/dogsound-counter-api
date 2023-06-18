@@ -17,7 +17,7 @@ class WebConfig(
     private val resolver: AuthUserArgumentResolver,
     private val authManager: APIAuthenticationManager,
     private val tokenValidator: TokenValidator,
-): WebFluxConfigurer {
+) : WebFluxConfigurer {
     override fun configureArgumentResolvers(configurer: ArgumentResolverConfigurer) {
         configurer.addCustomResolver(resolver)
     }

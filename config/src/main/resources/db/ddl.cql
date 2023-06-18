@@ -1,5 +1,7 @@
-DROP KEYSPACE test;
-CREATE KEYSPACE test
+DROP
+KEYSPACE test;
+CREATE
+KEYSPACE test
             WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 3};
 
 CREATE TABLE message
@@ -38,12 +40,12 @@ CREATE INDEX user_social_idx2 ON test.user_social (provider_key);
 
 CREATE TABLE user
 (
-    user_id    text,
-    email      text,
-    nickname   text,
+    user_id         text,
+    email           text,
+    nickname        text,
     profile_img_url text,
-    last_seen_at timestamp,
-    created_at timestamp,
+    last_seen_at    timestamp,
+    created_at      timestamp,
     PRIMARY KEY (user_id)
 ) WITH COMMENT = 'user table';
 
@@ -51,10 +53,10 @@ CREATE INDEX user_idx1 ON test.user (email);
 
 CREATE TABLE user_device
 (
-    user_id text,
-    fcm_token text,
+    user_id     text,
+    fcm_token   text,
     device_info text,
-    created_at timestamp,
+    created_at  timestamp,
     PRIMARY KEY (user_id, fcm_token),
 ) WITH COMMENT = 'user device table';
 CREATE INDEX user_device_idx1 ON test.user_device (user_id);
@@ -75,13 +77,13 @@ CREATE INDEX violent_idx1 ON test.violent (room_id);
 
 CREATE TABLE room_user
 (
-    room_user_id text,
-    room_id      text,
-    user_id      text,
-    nickname     text,
-    invited_by   text,
+    room_user_id         text,
+    room_id              text,
+    user_id              text,
+    nickname             text,
+    invited_by           text,
     last_read_message_id text,
-    created_at   timestamp,
+    created_at           timestamp,
     PRIMARY KEY (room_user_id)
 ) WITH COMMENT = 'room user table';
 CREATE INDEX room_user_idx1 ON test.room_user (room_id);

@@ -1,6 +1,5 @@
 package co.bearus.dogsoundcounter.presenter
 
-import org.slf4j.LoggerFactory
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.BindingContext
@@ -12,7 +11,7 @@ import reactor.core.publisher.Mono
 annotation class RequestUser
 
 @Component
-class AuthUserArgumentResolver: org.springframework.web.reactive.result.method.HandlerMethodArgumentResolver {
+class AuthUserArgumentResolver : org.springframework.web.reactive.result.method.HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         return parameter.getParameterAnnotation(RequestUser::class.java) != null
     }

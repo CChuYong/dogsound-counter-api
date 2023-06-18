@@ -6,7 +6,7 @@ import co.bearus.dogsoundcounter.usecases.UseCase
 
 class CreateUserDeviceUseCase(
     private val userDeviceRepository: UserDeviceRepository,
-): UseCase<CreateUserDeviceUseCase.Input, UserDevice> {
+) : UseCase<CreateUserDeviceUseCase.Input, UserDevice> {
     data class Input(
         val user: User,
         val fcmToken: String,
@@ -15,7 +15,7 @@ class CreateUserDeviceUseCase(
 
     override suspend fun execute(input: Input): UserDevice {
         val previousDevice = userDeviceRepository.findUserDevice(input.user.userId, input.fcmToken)
-        if(previousDevice != null) return previousDevice
+        if (previousDevice != null) return previousDevice
 
         val userDevice = UserDevice(
             userId = input.user.userId,

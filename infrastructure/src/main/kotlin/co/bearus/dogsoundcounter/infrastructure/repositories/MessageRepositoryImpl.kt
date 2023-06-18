@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class MessageRepositoryImpl(
     private val cassandraMessageRepository: CassandraMessageRepository,
-): MessageRepository {
+) : MessageRepository {
     override suspend fun persist(message: Message): Message {
         return cassandraMessageRepository.save(
             CassandraMessageEntity.fromDomain(message)

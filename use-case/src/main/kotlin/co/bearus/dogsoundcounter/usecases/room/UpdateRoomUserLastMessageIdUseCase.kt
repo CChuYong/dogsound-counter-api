@@ -5,7 +5,7 @@ import co.bearus.dogsoundcounter.usecases.UseCase
 
 class UpdateRoomUserLastMessageIdUseCase(
     private val roomUserRepository: RoomUserRepository,
-): UseCase<UpdateRoomUserLastMessageIdUseCase.Input, RoomUser> {
+) : UseCase<UpdateRoomUserLastMessageIdUseCase.Input, RoomUser> {
     data class Input(
         val roomUser: RoomUser,
         val newLastIndex: String,

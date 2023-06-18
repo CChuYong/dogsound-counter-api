@@ -1,6 +1,6 @@
 package co.bearus.dogsoundcounter.entities
 
-data class ClientPacket (
+data class ClientPacket(
     val packetType: PacketType,
     val payload: Any,
 )

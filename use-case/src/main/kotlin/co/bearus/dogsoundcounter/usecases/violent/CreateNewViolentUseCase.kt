@@ -9,7 +9,7 @@ import co.bearus.dogsoundcounter.usecases.UseCase
 class CreateNewViolentUseCase(
     private val identityGenerator: IdentityGenerator,
     private val violentRepository: ViolentRepository,
-): UseCase<CreateNewViolentUseCase.Input, Violent> {
+) : UseCase<CreateNewViolentUseCase.Input, Violent> {
     data class Input(
         val room: Room,
         val name: String,

@@ -16,7 +16,7 @@ import reactor.kafka.sender.SenderOptions
 @Component
 class KafkaMessagePublisher(
     private val objectMapper: ObjectMapper,
-): MessagePublisher{
+) : MessagePublisher {
     val producerOpts = SenderOptions.create<Int, String>(getProps())
         .maxInFlight(1024).let {
             KafkaSender.create(it)

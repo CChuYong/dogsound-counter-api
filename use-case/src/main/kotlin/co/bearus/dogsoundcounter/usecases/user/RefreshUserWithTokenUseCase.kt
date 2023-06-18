@@ -6,7 +6,7 @@ import co.bearus.dogsoundcounter.usecases.user.oauth.TokenProvider
 class RefreshUserWithTokenUseCase(
     private val tokenProvider: TokenProvider,
     private val userRepository: UserRepository,
-): UseCase<RefreshUserWithTokenUseCase.Input, RefreshUserWithTokenUseCase.Output> {
+) : UseCase<RefreshUserWithTokenUseCase.Input, RefreshUserWithTokenUseCase.Output> {
 
     data class Input(
         val refreshToken: String,

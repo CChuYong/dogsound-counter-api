@@ -3,7 +3,6 @@ package co.bearus.dogsoundcounter.presenter
 import co.bearus.dogsoundcounter.usecases.IdentityGenerator
 import co.bearus.dogsoundcounter.usecases.MessagePublisherFactory
 import co.bearus.dogsoundcounter.usecases.NotificationGateway
-import co.bearus.dogsoundcounter.usecases.ObjectSerializer
 import co.bearus.dogsoundcounter.usecases.message.CreateNewMessageUseCase
 import co.bearus.dogsoundcounter.usecases.message.GetMessagesByRoomUseCase
 import co.bearus.dogsoundcounter.usecases.message.MessageRepository

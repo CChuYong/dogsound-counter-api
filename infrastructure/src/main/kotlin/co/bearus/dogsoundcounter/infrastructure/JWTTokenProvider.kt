@@ -36,7 +36,7 @@ class JWTTokenProvider(
         return try {
             Jwts.parserBuilder().setSigningKey(signKey).build()
                 .parseClaimsJws(token).body["id"] as String
-        } catch (e: Exception){
+        } catch (e: Exception) {
             null
         }
     }

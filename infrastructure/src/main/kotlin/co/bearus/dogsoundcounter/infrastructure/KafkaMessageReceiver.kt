@@ -14,7 +14,7 @@ import reactor.kafka.receiver.ReceiverOptions
 @Component
 class KafkaMessageReceiver(
     private val objectMapper: ObjectMapper,
-): MessageReceiver{
+) : MessageReceiver {
     override fun createChannel(userId: String): Flux<ClientPacket> {
         val receiverOpts = ReceiverOptions.create<Int, String>(getProps())
             .subscription(listOf("messages:$userId"))

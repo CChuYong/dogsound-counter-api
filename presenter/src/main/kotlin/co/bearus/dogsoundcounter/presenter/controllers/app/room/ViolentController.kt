@@ -4,7 +4,6 @@ import co.bearus.dogsoundcounter.presenter.LoginUser
 import co.bearus.dogsoundcounter.presenter.RequestUser
 import co.bearus.dogsoundcounter.presenter.dto.CreateNewViolentRequest
 import co.bearus.dogsoundcounter.presenter.withUseCase
-import co.bearus.dogsoundcounter.usecases.message.GetMessagesByRoomUseCase
 import co.bearus.dogsoundcounter.usecases.room.GetRoomByIdUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
 import co.bearus.dogsoundcounter.usecases.violent.CreateNewViolentUseCase

@@ -12,7 +12,7 @@ import java.util.*
 
 class GetUserDashboardUseCase(
     private val userRepository: UserRepository,
-): UseCase<GetUserDashboardUseCase.Input, GetUserDashboardUseCase.Output> {
+) : UseCase<GetUserDashboardUseCase.Input, GetUserDashboardUseCase.Output> {
     data class Input(
         val user: User,
     )

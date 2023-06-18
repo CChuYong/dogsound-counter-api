@@ -5,7 +5,7 @@ import co.bearus.dogsoundcounter.usecases.UseCase
 
 class GetRoomByIdUseCase(
     private val roomRepository: RoomRepository,
-): UseCase<String, Room> {
+) : UseCase<String, Room> {
     override suspend fun execute(input: String): Room {
         return roomRepository.getById(input)
     }

@@ -9,7 +9,7 @@ import co.bearus.dogsoundcounter.usecases.room.RoomUserRepository
 class GetUserRoomsUseCase(
     private val roomUserRepository: RoomUserRepository,
     private val roomRepository: RoomRepository,
-): UseCase<GetUserRoomsUseCase.Input, GetUserRoomsUseCase.Output> {
+) : UseCase<GetUserRoomsUseCase.Input, GetUserRoomsUseCase.Output> {
     data class Input(
         val user: User,
     )

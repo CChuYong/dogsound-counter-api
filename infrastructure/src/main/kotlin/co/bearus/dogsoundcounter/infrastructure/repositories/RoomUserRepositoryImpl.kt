@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class RoomUserRepositoryImpl(
     private val cassandraRoomUserRepository: CassandraRoomUserRepository,
-): RoomUserRepository {
+) : RoomUserRepository {
     override suspend fun findByUserId(userId: String): List<RoomUser> {
         return cassandraRoomUserRepository.findAllByUserId(userId).map { it.toDomain() }
     }

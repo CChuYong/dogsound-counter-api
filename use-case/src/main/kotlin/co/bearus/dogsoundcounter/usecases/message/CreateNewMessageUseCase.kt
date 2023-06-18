@@ -3,7 +3,9 @@ package co.bearus.dogsoundcounter.usecases.message
 import co.bearus.dogsoundcounter.entities.*
 import co.bearus.dogsoundcounter.usecases.*
 import co.bearus.dogsoundcounter.usecases.user.UserDeviceRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class CreateNewMessageUseCase(
     private val identityGenerator: IdentityGenerator,
@@ -25,7 +27,7 @@ class CreateNewMessageUseCase(
         val violent = input.violents.firstOrNull() { input.content.contains(it.name) }
         val roomUserIds = input.roomUsers.map { it.roomUserId }.toMutableSet()
 
-        val price = if(roomUserIds.size > 1)
+        val price = if (roomUserIds.size > 1)
             (violent?.violentPrice ?: 0) / (roomUserIds.size - 1)
         else 0 //혼자 있는 방이면 나쁜말 불가?
         val newMessage = Message.newInstance(
@@ -41,9 +43,10 @@ class CreateNewMessageUseCase(
             input.roomUsers.map { it.userId }.forEach { id ->
                 val device = userDeviceRepository.getUserDevices(id)
                 val publisher = messagePublisherFactory.getSuitableFactory(id)
-                publisher.publishMessage(id, ClientPacket(
-                    packetType = PacketType.MESSAGE_RECEIVED,
-                    payload = newMessage,
+                publisher.publishMessage(
+                    id, ClientPacket(
+                        packetType = PacketType.MESSAGE_RECEIVED,
+                        payload = newMessage,
                     )
                 )
 

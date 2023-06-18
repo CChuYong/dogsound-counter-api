@@ -1,11 +1,7 @@
 package co.bearus.dogsoundcounter.presenter
 
 import co.bearus.dogsoundcounter.usecases.UseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.withContext
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.*
 
 suspend fun <F, T, R> withUseCase(useCase: UseCase<F, T>, param: F, mappingFunction: suspend (T) -> R): R {
     withContext(Dispatchers.Default) {

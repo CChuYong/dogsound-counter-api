@@ -7,7 +7,6 @@ import co.bearus.dogsoundcounter.presenter.parallelMap
 import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.message.MessageRepository
 import co.bearus.dogsoundcounter.usecases.room.RoomRepository
-import co.bearus.dogsoundcounter.usecases.room.RoomUserRepository
 import co.bearus.dogsoundcounter.usecases.user.*
 import co.bearus.dogsoundcounter.usecases.user.oauth.AuthUserWithProviderUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.TokenProvider
