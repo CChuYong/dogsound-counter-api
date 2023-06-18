@@ -16,15 +16,16 @@ class FirebaseMessagePublisher(
 ): MessagePublisher {
     override suspend fun publishMessage(userId: String, message: ClientPacket): Boolean {
         val devices = userDeviceRepository.getUserDevices(userId)
-        sendDataMulti(devices.map { it.fcmToken }, objectMapper.writeValueAsString(message))
+        sendDataMulti(devices.map { it.fcmToken }, message)
         return true
     }
 
-    fun sendDataMulti(fcmTokens: List<String>, payload: String) {
+    fun sendDataMulti(fcmTokens: List<String>, payload: ClientPacket) {
         val message: MulticastMessage = MulticastMessage.builder()
-            .putData("payload", payload)
+            .putData("packetType", payload.packetType.name)
+            .putData("payload", objectMapper.writeValueAsString(payload.payload))
             .addAllTokens(fcmTokens)
-            .setApnsConfig(ApnsConfig.builder().setAps(Aps.builder().build()).build())
+            .setApnsConfig(ApnsConfig.builder().setAps(Aps.builder().setContentAvailable(true).build()).build())
             .build()
         try {
             firebaseMessaging.sendMulticastAsync(message)
