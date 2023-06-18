@@ -2,13 +2,14 @@ package co.bearus.dogsoundcounter.usecases.message
 
 import co.bearus.dogsoundcounter.entities.*
 import co.bearus.dogsoundcounter.usecases.*
+import co.bearus.dogsoundcounter.usecases.user.UserDeviceRepository
 import kotlinx.coroutines.*
 
 class CreateNewMessageUseCase(
     private val identityGenerator: IdentityGenerator,
     private val messageRepository: MessageRepository,
-    private val messagePublisherFactory: MessagePublisherFactory,
-    private val objectSerializer: ObjectSerializer,
+    private val notificationGateway: NotificationGateway,
+    private val userDeviceRepository: UserDeviceRepository,
 ) : UseCase<CreateNewMessageUseCase.Input, Message> {
     data class Input(
         val room: Room,
@@ -37,14 +38,12 @@ class CreateNewMessageUseCase(
         )
         CoroutineScope(Dispatchers.IO).launch {
             roomUserIds.forEach { id ->
-                val publisher = messagePublisherFactory.getSuitableFactory(id)
-                publisher.publishMessage(
-                    id,
-                    ClientPacket(
-                        packetType = PacketType.MESSAGE_RECEIVED,
-                        payload = objectSerializer.serialize(newMessage)
-                    )
+                val device = userDeviceRepository.getUserDevices(id)
+                val notification = Notification(
+                    title = input.room.roomName,
+                    body = input.content,
                 )
+                notificationGateway.sendMulti(device.map { it.fcmToken }, notification)
             }
         }
 
