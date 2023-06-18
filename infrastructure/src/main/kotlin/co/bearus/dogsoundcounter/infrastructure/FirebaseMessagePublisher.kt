@@ -3,6 +3,7 @@ package co.bearus.dogsoundcounter.infrastructure
 import co.bearus.dogsoundcounter.entities.ClientPacket
 import co.bearus.dogsoundcounter.usecases.MessagePublisher
 import co.bearus.dogsoundcounter.usecases.user.UserDeviceRepository
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.messaging.*
 import org.springframework.stereotype.Component
 
@@ -10,27 +11,25 @@ import org.springframework.stereotype.Component
 @Component
 class FirebaseMessagePublisher(
     private val userDeviceRepository: UserDeviceRepository,
+    private val objectMapper: ObjectMapper,
+    private val firebaseMessaging: FirebaseMessaging,
 ): MessagePublisher {
     override suspend fun publishMessage(userId: String, message: ClientPacket): Boolean {
         val devices = userDeviceRepository.getUserDevices(userId)
-        devices.forEach {
-            sendNotification(it.fcmToken, "test1", "test2")
-        }
+        sendDataMulti(devices.map { it.fcmToken }, objectMapper.writeValueAsString(message))
         return true
     }
 
-    fun sendNotification(fcmToken: String, title: String, description: String): String? {
-        println("FWD ${fcmToken} -> $title")
-        val message: Message = Message.builder()
-            .setNotification(Notification.builder().setTitle(title).setBody(description).build())
-            .setToken(fcmToken)
-            .setApnsConfig(ApnsConfig.builder().setAps(Aps.builder().setSound("default").build()).build())
+    fun sendDataMulti(fcmTokens: List<String>, payload: String) {
+        val message: MulticastMessage = MulticastMessage.builder()
+            .putData("payload", payload)
+            .addAllTokens(fcmTokens)
+            .setApnsConfig(ApnsConfig.builder().setAps(Aps.builder().build()).build())
             .build()
-        return try {
-            FirebaseMessaging.getInstance().send(message)
+        try {
+            firebaseMessaging.sendMulticastAsync(message)
         } catch (ex: Exception) {
             ex.printStackTrace()
-            null
         }
     }
 }

@@ -10,6 +10,7 @@ class CreateNewMessageUseCase(
     private val messageRepository: MessageRepository,
     private val notificationGateway: NotificationGateway,
     private val userDeviceRepository: UserDeviceRepository,
+    private val messagePublisherFactory: MessagePublisherFactory,
 ) : UseCase<CreateNewMessageUseCase.Input, Message> {
     data class Input(
         val room: Room,
@@ -39,9 +40,17 @@ class CreateNewMessageUseCase(
         CoroutineScope(Dispatchers.IO).launch {
             input.roomUsers.map { it.userId }.forEach { id ->
                 val device = userDeviceRepository.getUserDevices(id)
+                val publisher = messagePublisherFactory.getSuitableFactory(id)
+                publisher.publishMessage(id, ClientPacket(
+                    packetType = PacketType.MESSAGE_RECEIVED,
+                    payload = newMessage,
+                    )
+                )
+
+                //send noti
                 val notification = Notification(
                     title = input.room.roomName,
-                    body = input.content,
+                    body = "${input.speaker.nickname}: ${input.content}",
                 )
                 notificationGateway.sendMulti(device.map { it.fcmToken }, notification)
             }

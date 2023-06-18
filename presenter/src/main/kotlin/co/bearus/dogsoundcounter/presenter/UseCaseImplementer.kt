@@ -77,12 +77,14 @@ class UseCaseImplementer {
         identityGenerator: IdentityGenerator,
         messageRepository: MessageRepository,
         notificationGateway: NotificationGateway,
-        userDeviceRepository: UserDeviceRepository
+        userDeviceRepository: UserDeviceRepository,
+        messagePublisherFactory: MessagePublisherFactory,
     ) = CreateNewMessageUseCase(
         identityGenerator,
         messageRepository,
         notificationGateway,
         userDeviceRepository,
+        messagePublisherFactory,
     )
 
     @Bean
