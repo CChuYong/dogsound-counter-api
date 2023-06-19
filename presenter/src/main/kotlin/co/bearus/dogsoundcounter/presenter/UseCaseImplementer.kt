@@ -163,4 +163,12 @@ class UseCaseImplementer {
     ) = CreateUserDeviceUseCase(
         userDeviceRepository,
     )
+
+    @Bean
+    fun getRoomUsers(
+        roomUserRepository: RoomUserRepository,
+        userRepository: UserRepository,
+    ) = GetRoomUsersUseCase(
+        roomUserRepository, userRepository
+    )
 }

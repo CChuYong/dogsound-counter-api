@@ -5,7 +5,10 @@ import co.bearus.dogsoundcounter.presenter.RequestUser
 import co.bearus.dogsoundcounter.presenter.dto.CreateNewRoomRequest
 import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.room.CreateNewRoomUseCase
+import co.bearus.dogsoundcounter.usecases.room.GetRoomUsersUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 class RoomController(
     private val createNewRoom: CreateNewRoomUseCase,
     private val getUserById: GetUserByIdUseCase,
+    private val getRoomUsers: GetRoomUsersUseCase,
 ) {
     @PostMapping
     suspend fun createNewRoom(
@@ -30,5 +34,13 @@ class RoomController(
                 param = user.userId,
             )
         ),
+    )
+
+    @GetMapping("/{roomId}/users")
+    suspend fun getUsers(
+        @PathVariable roomId: String,
+    ) = withUseCase(
+        useCase = getRoomUsers,
+        param = roomId
     )
 }
