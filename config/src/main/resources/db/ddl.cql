@@ -23,6 +23,7 @@ CREATE TABLE room
     room_id    text,
     room_nm    text,
     owner_id   text,
+    room_img_url text,
     created_at timestamp,
     PRIMARY KEY (room_id)
 ) WITH COMMENT = 'room table';

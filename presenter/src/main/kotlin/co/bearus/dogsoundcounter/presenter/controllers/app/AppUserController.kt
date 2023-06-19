@@ -144,6 +144,7 @@ class AppUserController(
                     ownerId = room.ownerId,
                     lastMessageAtTs = lastMessage?.createdAtTs ?: room.createdAtTs,
                     unreadMessageCount = unreadMessageCount,
+                    roomImageUrl = room.roomImageUrl,
                     createdAtTs = room.createdAtTs
                 )
             }.sortedByDescending { detail ->

@@ -17,6 +17,9 @@ data class CassandraRoomEntity(
     @field:Column("owner_id")
     val ownerId: String,
 
+    @field:Column("room_img_url")
+    val roomImageUrl: String,
+
     @field:Column("created_at")
     val createdAtTs: Timestamp,
 ) {
@@ -24,6 +27,7 @@ data class CassandraRoomEntity(
         roomId = roomId,
         roomName = roomName,
         ownerId = ownerId,
+        roomImageUrl = roomImageUrl,
         createdAtTs = createdAtTs.time,
     )
 
@@ -32,6 +36,7 @@ data class CassandraRoomEntity(
             roomId = room.roomId,
             roomName = room.roomName,
             ownerId = room.ownerId,
+            roomImageUrl = room.roomImageUrl,
             createdAtTs = Timestamp(room.createdAtTs),
         )
     }

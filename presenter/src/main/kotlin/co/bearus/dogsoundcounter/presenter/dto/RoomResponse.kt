@@ -10,6 +10,7 @@ data class RoomDetailResponse(
     val ownerId: String,
     val lastMessageAtTs: Long,
     val unreadMessageCount: Long,
+    val roomImageUrl: String,
     val createdAtTs: Long,
 )
 
