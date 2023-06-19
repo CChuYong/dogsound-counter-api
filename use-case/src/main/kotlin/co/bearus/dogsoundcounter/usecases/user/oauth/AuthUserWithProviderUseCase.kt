@@ -63,6 +63,7 @@ class AuthUserWithProviderUseCase(
         val newUser = User.newInstance(
             userId = identityGenerator.createIdentity(),
             email = result.email,
+            nickname = result.name,
         )
         return userRepository.persist(newUser)
     }
