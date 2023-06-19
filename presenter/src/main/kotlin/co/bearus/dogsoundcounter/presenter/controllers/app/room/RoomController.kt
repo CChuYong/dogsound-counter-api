@@ -3,6 +3,7 @@ package co.bearus.dogsoundcounter.presenter.controllers.app.room
 import co.bearus.dogsoundcounter.presenter.LoginUser
 import co.bearus.dogsoundcounter.presenter.RequestUser
 import co.bearus.dogsoundcounter.presenter.dto.CreateNewRoomRequest
+import co.bearus.dogsoundcounter.presenter.dto.UserResponse
 import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.room.CreateNewRoomUseCase
 import co.bearus.dogsoundcounter.usecases.room.GetRoomUsersUseCase
@@ -41,6 +42,7 @@ class RoomController(
         @PathVariable roomId: String,
     ) = withUseCase(
         useCase = getRoomUsers,
-        param = roomId
+        param = roomId,
+        mappingFunction = { it.map(UserResponse::from) },
     )
 }
