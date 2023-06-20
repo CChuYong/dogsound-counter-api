@@ -98,15 +98,6 @@ class UseCaseImplementer {
     )
 
     @Bean
-    fun createNewUser(
-        userRepository: UserRepository,
-        identityGenerator: IdentityGenerator,
-    ) = CreateNewUserUseCase(
-        userRepository,
-        identityGenerator,
-    )
-
-    @Bean
     fun getMessageByRoom(
         messageRepository: MessageRepository,
     ) = GetMessagesByRoomUseCase(
