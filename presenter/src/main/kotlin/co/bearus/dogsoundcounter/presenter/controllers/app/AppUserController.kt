@@ -167,5 +167,6 @@ class AppUserController(
             ),
             imageUrl = dto.imageUrl,
         ),
+        mappingFunction = UserResponse::from,
     )
 }
