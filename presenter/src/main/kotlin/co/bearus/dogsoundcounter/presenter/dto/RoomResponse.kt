@@ -20,3 +20,7 @@ data class RoomResponse(
     val ownerId: String,
     val createdAtTs: Long,
 )
+
+data class UpdateRoomImageRequest(
+    val imageUrl: String,
+)

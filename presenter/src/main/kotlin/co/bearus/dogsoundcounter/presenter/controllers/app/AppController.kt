@@ -17,12 +17,12 @@ class AppController(
     private val fileUploadGateway: FileUploadGateway,
     private val identityGenerator: IdentityGenerator,
 ) {
-    @GetMapping("/upload-request", params = ["type=USER"])
+    @GetMapping("/upload-request", params = ["type"])
     suspend fun requestUserUploadUrl(
-        @RequestUser user: LoginUser,
+        @RequestParam type: String,
     ): FileUploadResponse {
         val url = fileUploadGateway.requestUploadUrl(
-            fileChannel = FileChannel.USER_PROFILE_IMAGE,
+            fileChannel = getFileChannel(type),
             key = identityGenerator.createIdentity(),
         )
         return FileUploadResponse(
@@ -31,17 +31,9 @@ class AppController(
         )
     }
 
-    @GetMapping("/upload-request", params = ["type=ROOM", "roomId"])
-    suspend fun requestRoomUploadUrl(
-        @RequestParam roomId: String,
-    ): FileUploadResponse {
-        val url = fileUploadGateway.requestUploadUrl(
-            fileChannel = FileChannel.ROOM_PROFILE_IMAGE,
-            key = identityGenerator.createIdentity(),
-        )
-        return FileUploadResponse(
-            uploadUrl = url.uploadUrl.toExternalForm(),
-            downloadUrl = url.downloadUrl.toExternalForm(),
-        )
+    private fun getFileChannel(type: String) = when (type) {
+        "USER" -> FileChannel.USER_PROFILE_IMAGE
+        "ROOM" -> FileChannel.ROOM_PROFILE_IMAGE
+        else -> throw IllegalArgumentException("Invalid type: $type")
     }
 }

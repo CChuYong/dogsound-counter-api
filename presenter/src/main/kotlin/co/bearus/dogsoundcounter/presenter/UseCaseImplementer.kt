@@ -178,4 +178,11 @@ class UseCaseImplementer {
     ) = UpdateUserImageUseCase(
         userRepository,
     )
+
+    @Bean
+    fun updateRoomImage(
+        roomRepository: RoomRepository,
+    ) = UpdateRoomImageUseCase(
+        roomRepository,
+    )
 }
