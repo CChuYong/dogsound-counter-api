@@ -3,6 +3,7 @@ package co.bearus.dogsoundcounter.usecases.room
 import co.bearus.dogsoundcounter.entities.Room
 import co.bearus.dogsoundcounter.entities.RoomUser
 import co.bearus.dogsoundcounter.entities.User
+import co.bearus.dogsoundcounter.entities.exception.room.RoomNameValidationException
 import co.bearus.dogsoundcounter.usecases.IdentityGenerator
 import co.bearus.dogsoundcounter.usecases.UseCase
 
@@ -14,12 +15,17 @@ class CreateNewRoomUseCase(
     data class Input(
         val roomName: String,
         val owner: User,
+        val roomImageUrl: String,
     )
 
     override suspend fun execute(input: Input): Room {
+        val parsedRoomName = input.roomName.replace(" ", "")
+        if (parsedRoomName.isBlank()) throw RoomNameValidationException()
+
         val newRoom = Room.newInstance(
             roomId = identityGenerator.createIdentity(),
             roomName = input.roomName,
+            roomImageUrl = input.roomImageUrl,
             ownerId = input.owner.userId,
         )
 

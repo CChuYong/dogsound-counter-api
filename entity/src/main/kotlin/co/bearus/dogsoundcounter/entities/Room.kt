@@ -7,7 +7,7 @@ data class Room(
     val roomId: String,
     val roomName: String,
     val ownerId: String,
-    val roomImageUrl: String = "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",
+    val roomImageUrl: String,
     val createdAtTs: Long,
 ) {
     companion object {
@@ -15,11 +15,13 @@ data class Room(
             roomId: String,
             roomName: String,
             ownerId: String,
+            roomImageUrl: String,
         ): Room {
             return Room(
                 roomId = roomId,
                 roomName = roomName,
                 ownerId = ownerId,
+                roomImageUrl = roomImageUrl,
                 createdAtTs = System.currentTimeMillis(),
             )
         }
