@@ -1,7 +1,7 @@
 package co.bearus.dogsoundcounter.presenter.rsockets
 
 import co.bearus.dogsoundcounter.entities.ClientPacket
-import co.bearus.dogsoundcounter.usecases.MessageReceiver
+import co.bearus.dogsoundcounter.usecases.message.MessageReceiver
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.stereotype.Controller
 import reactor.core.publisher.Flux

@@ -1,7 +1,7 @@
 package co.bearus.dogsoundcounter.infrastructure
 
 import co.bearus.dogsoundcounter.entities.ClientPacket
-import co.bearus.dogsoundcounter.usecases.MessagePublisher
+import co.bearus.dogsoundcounter.usecases.message.MessagePublisher
 import com.fasterxml.jackson.databind.ObjectMapper
 import kotlinx.coroutines.reactor.awaitSingle
 import org.apache.kafka.clients.producer.ProducerConfig

@@ -1,7 +1,7 @@
 package co.bearus.dogsoundcounter.infrastructure
 
 import co.bearus.dogsoundcounter.entities.ClientPacket
-import co.bearus.dogsoundcounter.usecases.MessagePublisher
+import co.bearus.dogsoundcounter.usecases.message.MessagePublisher
 import co.bearus.dogsoundcounter.usecases.user.UserDeviceRepository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.messaging.ApnsConfig

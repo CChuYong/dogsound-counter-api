@@ -1,4 +1,4 @@
-package co.bearus.dogsoundcounter.usecases
+package co.bearus.dogsoundcounter.usecases.message
 
 import co.bearus.dogsoundcounter.entities.ClientPacket
 import reactor.core.publisher.Flux

@@ -10,6 +10,10 @@ spring:
     contact-points: scylla-db-client.scylla.svc.cluster.local
 
 app:
+  aws:
+    region: ap-northeast-2
+    bucket-name: bsc-assets-public
+    upload-expiration: 100000 #100 Seconds
   firebase-token: ${GOOGLE_FIREBASE_TOKEN}
   app-tokens:
     secret: thisisverysecretkeysoshouldreplaced

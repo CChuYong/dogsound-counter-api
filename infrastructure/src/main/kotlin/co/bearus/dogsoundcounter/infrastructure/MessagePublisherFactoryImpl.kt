@@ -1,7 +1,7 @@
 package co.bearus.dogsoundcounter.infrastructure
 
-import co.bearus.dogsoundcounter.usecases.MessagePublisher
-import co.bearus.dogsoundcounter.usecases.MessagePublisherFactory
+import co.bearus.dogsoundcounter.usecases.message.MessagePublisher
+import co.bearus.dogsoundcounter.usecases.message.MessagePublisherFactory
 import org.springframework.stereotype.Component
 
 @Component

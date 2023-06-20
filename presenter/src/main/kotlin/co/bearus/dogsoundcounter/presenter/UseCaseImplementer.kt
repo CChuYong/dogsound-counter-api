@@ -1,8 +1,8 @@
 package co.bearus.dogsoundcounter.presenter
 
 import co.bearus.dogsoundcounter.usecases.IdentityGenerator
-import co.bearus.dogsoundcounter.usecases.MessagePublisherFactory
-import co.bearus.dogsoundcounter.usecases.NotificationGateway
+import co.bearus.dogsoundcounter.usecases.message.MessagePublisherFactory
+import co.bearus.dogsoundcounter.usecases.notification.NotificationGateway
 import co.bearus.dogsoundcounter.usecases.message.CreateNewMessageUseCase
 import co.bearus.dogsoundcounter.usecases.message.GetMessagesByRoomUseCase
 import co.bearus.dogsoundcounter.usecases.message.MessageRepository

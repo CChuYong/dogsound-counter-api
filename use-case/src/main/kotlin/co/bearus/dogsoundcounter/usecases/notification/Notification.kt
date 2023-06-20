@@ -1,4 +1,4 @@
-package co.bearus.dogsoundcounter.usecases
+package co.bearus.dogsoundcounter.usecases.notification
 
 data class Notification(
     val title: String,

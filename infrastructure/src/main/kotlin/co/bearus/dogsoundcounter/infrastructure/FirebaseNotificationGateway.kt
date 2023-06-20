@@ -1,7 +1,7 @@
 package co.bearus.dogsoundcounter.infrastructure
 
-import co.bearus.dogsoundcounter.usecases.Notification
-import co.bearus.dogsoundcounter.usecases.NotificationGateway
+import co.bearus.dogsoundcounter.usecases.notification.Notification
+import co.bearus.dogsoundcounter.usecases.notification.NotificationGateway
 import com.google.firebase.messaging.*
 import org.springframework.stereotype.Component
 

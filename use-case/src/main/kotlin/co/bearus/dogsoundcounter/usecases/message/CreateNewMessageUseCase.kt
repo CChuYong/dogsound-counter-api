@@ -2,6 +2,8 @@ package co.bearus.dogsoundcounter.usecases.message
 
 import co.bearus.dogsoundcounter.entities.*
 import co.bearus.dogsoundcounter.usecases.*
+import co.bearus.dogsoundcounter.usecases.notification.Notification
+import co.bearus.dogsoundcounter.usecases.notification.NotificationGateway
 import co.bearus.dogsoundcounter.usecases.user.UserDeviceRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

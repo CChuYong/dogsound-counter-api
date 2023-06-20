@@ -1,7 +1,7 @@
 package co.bearus.dogsoundcounter.infrastructure
 
 import co.bearus.dogsoundcounter.entities.ClientPacket
-import co.bearus.dogsoundcounter.usecases.MessageReceiver
+import co.bearus.dogsoundcounter.usecases.message.MessageReceiver
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.IntegerDeserializer
