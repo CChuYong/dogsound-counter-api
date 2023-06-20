@@ -171,4 +171,11 @@ class UseCaseImplementer {
     ) = GetRoomUsersUseCase(
         roomUserRepository, userRepository
     )
+
+    @Bean
+    fun updateUserImage(
+        userRepository: UserRepository,
+    ) = UpdateUserImageUseCase(
+        userRepository,
+    )
 }

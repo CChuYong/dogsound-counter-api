@@ -32,3 +32,7 @@ data class UserResponse(
         )
     }
 }
+
+data class UpdateUserProfileImageRequest(
+    val imageUrl: String,
+)

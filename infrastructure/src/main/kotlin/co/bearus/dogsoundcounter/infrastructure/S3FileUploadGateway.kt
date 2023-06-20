@@ -1,5 +1,7 @@
 package co.bearus.dogsoundcounter.infrastructure
 
+import co.bearus.dogsoundcounter.entities.UploadableFile
+import co.bearus.dogsoundcounter.usecases.IdentityGenerator
 import co.bearus.dogsoundcounter.usecases.file.FileChannel
 import co.bearus.dogsoundcounter.usecases.file.FileUploadGateway
 import org.springframework.beans.factory.annotation.Value
@@ -16,7 +18,7 @@ class S3FileUploadGateway(
     @Value("\${app.aws.upload-expiration}") private val uploadExpiration: Long,
     private val s3Presigner: S3Presigner,
 ): FileUploadGateway {
-    override suspend fun requestUploadUrl(fileChannel: FileChannel, key: String): URL {
+    override suspend fun requestUploadUrl(fileChannel: FileChannel, key: String): UploadableFile {
         val actualKey = "${fileChannel.folderPath}/$key"
         val putRequest = PutObjectRequest.builder()
             .bucket(bucketName)
@@ -28,8 +30,11 @@ class S3FileUploadGateway(
             .putObjectRequest(putRequest)
             .build()
 
-        return s3Presigner
-            .presignPutObject(presignRequest)
-            .url()
+        return UploadableFile(
+            uploadUrl = s3Presigner
+                .presignPutObject(presignRequest)
+                .url(),
+            downloadUrl = URL("https://$bucketName.s3.amazonaws.com/$actualKey")
+        )
     }
 }

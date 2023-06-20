@@ -22,6 +22,7 @@ class AppUserController(
     private val getUserRooms: GetUserRoomsUseCase,
     private val updateNickname: UpdateNicknameUseCase,
     private val createUserDevice: CreateUserDeviceUseCase,
+    private val updateUserImage: UpdateUserImageUseCase,
     private val tokenProvider: TokenProvider,
     private val messageRepository: MessageRepository,
     private val roomRepository: RoomRepository,
@@ -151,5 +152,20 @@ class AppUserController(
                 detail.lastMessageAtTs
             }
         }
+    )
+
+    @PostMapping("/profile-image")
+    suspend fun updateProfileImage(
+        @RequestUser user: LoginUser,
+        @RequestBody dto: UpdateUserProfileImageRequest,
+    ) = withUseCase(
+        useCase = updateUserImage,
+        param = UpdateUserImageUseCase.Input(
+            user = withUseCase(
+                useCase = getUserById,
+                param = user.userId,
+            ),
+            imageUrl = dto.imageUrl,
+        ),
     )
 }

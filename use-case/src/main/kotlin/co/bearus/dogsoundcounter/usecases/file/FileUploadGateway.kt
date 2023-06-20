@@ -1,7 +1,7 @@
 package co.bearus.dogsoundcounter.usecases.file
 
-import java.net.URL
+import co.bearus.dogsoundcounter.entities.UploadableFile
 
 interface FileUploadGateway {
-    suspend fun requestUploadUrl(fileChannel: FileChannel, key: String): URL
+    suspend fun requestUploadUrl(fileChannel: FileChannel, key: String): UploadableFile
 }
