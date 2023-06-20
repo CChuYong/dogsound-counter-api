@@ -53,6 +53,16 @@ CREATE TABLE user
 
 CREATE INDEX user_idx1 ON test.user (email);
 
+CREATE TABLE user_notification_config
+(
+    user_id             text,
+    social_alert        boolean,
+    bad_sound_alert     boolean,
+    non_bad_sound_alert boolean,
+    notice_alert        boolean,
+    PRIMARY KEY (user_id)
+) WITH COMMENT = 'user notification table';
+
 CREATE TABLE user_device
 (
     user_id     text,

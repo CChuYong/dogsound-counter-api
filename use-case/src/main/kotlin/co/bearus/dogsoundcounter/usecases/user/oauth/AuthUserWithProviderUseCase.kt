@@ -1,11 +1,9 @@
 package co.bearus.dogsoundcounter.usecases.user.oauth
 
-import co.bearus.dogsoundcounter.entities.OAuthResult
-import co.bearus.dogsoundcounter.entities.SocialLoginUser
-import co.bearus.dogsoundcounter.entities.User
-import co.bearus.dogsoundcounter.entities.UserProvider
+import co.bearus.dogsoundcounter.entities.*
 import co.bearus.dogsoundcounter.usecases.IdentityGenerator
 import co.bearus.dogsoundcounter.usecases.UseCase
+import co.bearus.dogsoundcounter.usecases.user.UserNotificationRepository
 import co.bearus.dogsoundcounter.usecases.user.UserRepository
 
 class AuthUserWithProviderUseCase(
@@ -14,6 +12,7 @@ class AuthUserWithProviderUseCase(
     private val userRepository: UserRepository,
     private val identityGenerator: IdentityGenerator,
     private val tokenProvider: TokenProvider,
+    private val userNotificationRepository: UserNotificationRepository,
 ) : UseCase<AuthUserWithProviderUseCase.Input, AuthUserWithProviderUseCase.Output> {
     data class Input(
         val provider: UserProvider,
@@ -65,6 +64,9 @@ class AuthUserWithProviderUseCase(
             email = result.email,
             nickname = result.name,
         )
+
+        val userNotification = UserNotificationConfig.createDefault(newUser.userId)
+        userNotificationRepository.persist(userNotification)
         return userRepository.persist(newUser)
     }
 

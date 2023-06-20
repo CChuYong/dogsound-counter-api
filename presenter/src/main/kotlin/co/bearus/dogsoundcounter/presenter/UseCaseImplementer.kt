@@ -31,12 +31,14 @@ class UseCaseImplementer {
         userRepository: UserRepository,
         identityGenerator: IdentityGenerator,
         tokenProvider: TokenProvider,
+        userNotificationRepository: UserNotificationRepository,
     ) = AuthUserWithProviderUseCase(
         oAuthFactory,
         socialLoginRepository,
         userRepository,
         identityGenerator,
         tokenProvider,
+        userNotificationRepository,
     )
 
     @Bean
