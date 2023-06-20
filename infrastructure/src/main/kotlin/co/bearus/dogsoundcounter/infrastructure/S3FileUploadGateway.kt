@@ -17,7 +17,7 @@ class S3FileUploadGateway(
     private val s3Presigner: S3Presigner,
 ): FileUploadGateway {
     override suspend fun requestUploadUrl(fileChannel: FileChannel, key: String): URL {
-        val actualKey = "$fileChannel/$key"
+        val actualKey = "${fileChannel.folderPath}/$key"
         val putRequest = PutObjectRequest.builder()
             .bucket(bucketName)
             .key(actualKey)
