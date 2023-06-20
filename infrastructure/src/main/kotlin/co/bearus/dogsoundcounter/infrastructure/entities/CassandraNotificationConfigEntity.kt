@@ -1,6 +1,7 @@
 package co.bearus.dogsoundcounter.infrastructure.entities
 
 import co.bearus.dogsoundcounter.entities.UserNotificationConfig
+import org.springframework.data.cassandra.core.mapping.Column
 import org.springframework.data.cassandra.core.mapping.PrimaryKey
 import org.springframework.data.cassandra.core.mapping.Table
 
@@ -9,16 +10,16 @@ class CassandraNotificationConfigEntity(
     @field:PrimaryKey("user_id")
     val userId: String,
 
-    @field:PrimaryKey("social_alert")
+    @field:Column("social_alert")
     val socialAlert: Boolean,
 
-    @field:PrimaryKey("bad_sound_alert")
+    @field:Column("bad_sound_alert")
     val badSoundAlert: Boolean,
 
-    @field:PrimaryKey("non_bad_sound_alert")
+    @field:Column("non_bad_sound_alert")
     val nonBadSoundAlert: Boolean,
 
-    @field:PrimaryKey("notice_alert")
+    @field:Column("notice_alert")
     val noticeAlert: Boolean,
 ) {
     fun toDomain() = UserNotificationConfig(
