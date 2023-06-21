@@ -4,10 +4,12 @@ import co.bearus.dogsoundcounter.entities.*
 import co.bearus.dogsoundcounter.usecases.*
 import co.bearus.dogsoundcounter.usecases.notification.Notification
 import co.bearus.dogsoundcounter.usecases.notification.NotificationGateway
+import co.bearus.dogsoundcounter.usecases.room.RoomUserPriceRepository
 import co.bearus.dogsoundcounter.usecases.user.UserDeviceRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 class CreateNewMessageUseCase(
     private val identityGenerator: IdentityGenerator,
@@ -15,6 +17,7 @@ class CreateNewMessageUseCase(
     private val notificationGateway: NotificationGateway,
     private val userDeviceRepository: UserDeviceRepository,
     private val messagePublisherFactory: MessagePublisherFactory,
+    private val roomUserPriceRepository: RoomUserPriceRepository,
 ) : UseCase<CreateNewMessageUseCase.Input, Message> {
     data class Input(
         val room: Room,
@@ -42,7 +45,18 @@ class CreateNewMessageUseCase(
             content = input.content,
         )
         CoroutineScope(Dispatchers.IO).launch {
-            input.roomUsers.map { it.userId }.forEach { id ->
+            val week = LocalizedWeek(Locale.KOREA)
+            input.roomUsers.forEach {
+                val id = it.userId
+                if (id != input.speaker.userId) {
+                    roomUserPriceRepository.cumulateByRoomUser(
+                        roomUserId = it.roomUserId,
+                        price = price,
+                        startDay = week.firstDay.toString(),
+                        userId = id
+                    )
+                }
+
                 val device = userDeviceRepository.getUserDevices(id)
                 val publisher = messagePublisherFactory.getSuitableFactory(id)
                 publisher.publishMessage(

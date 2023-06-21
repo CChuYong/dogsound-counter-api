@@ -21,6 +21,11 @@ class RoomUserPriceRepositoryImpl(
         return cassandraRoomUserPriceRepository.sumOfPriceByRoomUserId(roomUserId)
     }
 
+    override suspend fun cumulateByRoomUser(roomUserId: String, userId: String, startDay: String, price: Int) {
+        cassandraRoomUserPriceRepository.insertIfNotExists(roomUserId, startDay, userId)
+        cassandraRoomUserPriceRepository.addPriceByRoomUserId(price, roomUserId, startDay)
+    }
+
     override suspend fun persist(roomUserPrice: RoomUserPrice): RoomUserPrice {
         return cassandraRoomUserPriceRepository.save(CassandraRoomUserPriceEntity.fromDomain(roomUserPrice)).toDomain()
     }
