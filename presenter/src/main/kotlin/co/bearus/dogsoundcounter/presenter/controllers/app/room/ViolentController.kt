@@ -7,7 +7,9 @@ import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.room.GetRoomByIdUseCase
 import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
 import co.bearus.dogsoundcounter.usecases.violent.CreateNewViolentUseCase
+import co.bearus.dogsoundcounter.usecases.violent.DeleteViolentUseCase
 import co.bearus.dogsoundcounter.usecases.violent.GetViolentsByRoomUseCase
+import co.bearus.dogsoundcounter.usecases.violent.ViolentRepository
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -17,6 +19,8 @@ class ViolentController(
     private val getUserById: GetUserByIdUseCase,
     private val createNewViolent: CreateNewViolentUseCase,
     private val getViolentsByRoom: GetViolentsByRoomUseCase,
+    private val deleteViolent: DeleteViolentUseCase,
+    private val violentRepository: ViolentRepository,
 ) {
     @PostMapping
     suspend fun createViolent(
@@ -51,5 +55,14 @@ class ViolentController(
                 param = roomId,
             ),
         )
+    )
+
+    @DeleteMapping("/{violentId}")
+    suspend fun deleteViolent(
+        @PathVariable roomId: String,
+        @PathVariable violentId: String,
+    ) = withUseCase(
+        useCase = deleteViolent,
+        param = violentRepository.getById(violentId)
     )
 }

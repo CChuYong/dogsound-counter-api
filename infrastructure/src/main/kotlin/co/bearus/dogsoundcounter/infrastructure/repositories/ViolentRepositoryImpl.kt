@@ -22,4 +22,8 @@ class ViolentRepositoryImpl(
             CassandraViolentEntity.fromDomain(violent)
         ).toDomain()
     }
+
+    override suspend fun deleteByViolentId(violentId: String) {
+        cassandraViolentRepository.deleteById(violentId)
+    }
 }
