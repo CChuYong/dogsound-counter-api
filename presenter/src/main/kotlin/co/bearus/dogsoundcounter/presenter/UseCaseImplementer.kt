@@ -180,4 +180,11 @@ class UseCaseImplementer {
     ) = UpdateRoomImageUseCase(
         roomRepository,
     )
+
+    @Bean
+    fun getUserByTag(
+        userRepository: UserRepository,
+    ) = GetUserByTagUseCase(
+        userRepository,
+    )
 }

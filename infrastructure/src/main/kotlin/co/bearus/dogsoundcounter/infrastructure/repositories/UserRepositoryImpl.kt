@@ -13,6 +13,10 @@ class UserRepositoryImpl(
         return cassandraUserRepository.getByUserId(id).toDomain()
     }
 
+    override suspend fun getByNicknameAndTag(nickname: String, tag: String): User? {
+        return cassandraUserRepository.findFirstByNicknameAndTag(nickname, tag)?.toDomain()
+    }
+
     override suspend fun findUserByEmail(email: String): User? {
         return cassandraUserRepository.findFirstByEmail(email)?.toDomain()
     }

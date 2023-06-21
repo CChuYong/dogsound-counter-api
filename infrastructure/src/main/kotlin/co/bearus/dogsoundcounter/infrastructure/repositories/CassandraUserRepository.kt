@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CassandraUserRepository : CoroutineCrudRepository<CassandraUserEntity, String> {
     suspend fun findFirstByEmail(email: String): CassandraUserEntity?
+    suspend fun findFirstByNicknameAndTag(nickname: String, tag: String): CassandraUserEntity?
     suspend fun getByUserId(userId: String): CassandraUserEntity
 }
