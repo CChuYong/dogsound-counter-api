@@ -5,6 +5,7 @@ import co.bearus.dogsoundcounter.presenter.RequestUser
 import co.bearus.dogsoundcounter.presenter.dto.CreateNewRoomRequest
 import co.bearus.dogsoundcounter.presenter.dto.UpdateRoomImageRequest
 import co.bearus.dogsoundcounter.presenter.dto.UserResponse
+import co.bearus.dogsoundcounter.presenter.parallelMap
 import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.room.CreateNewRoomUseCase
 import co.bearus.dogsoundcounter.usecases.room.GetRoomUsersUseCase
@@ -35,6 +36,12 @@ class RoomController(
                 param = user.userId,
             ),
             roomImageUrl = body.roomImageUrl,
+            initialUsers = body.initialUserIds.parallelMap {
+                withUseCase(
+                    useCase = getUserById,
+                    param = it,
+                )
+            }
         ),
     )
 

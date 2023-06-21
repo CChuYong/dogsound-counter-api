@@ -3,6 +3,7 @@ package co.bearus.dogsoundcounter.presenter.dto
 data class CreateNewRoomRequest(
     val roomName: String,
     val roomImageUrl: String,
+    val initialUserIds: List<String>,
 )
 
 data class RoomDetailResponse(

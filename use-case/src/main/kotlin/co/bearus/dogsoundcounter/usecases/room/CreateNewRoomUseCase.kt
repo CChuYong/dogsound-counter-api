@@ -16,6 +16,7 @@ class CreateNewRoomUseCase(
         val roomName: String,
         val owner: User,
         val roomImageUrl: String,
+        val initialUsers: List<User>,
     )
 
     override suspend fun execute(input: Input): Room {
@@ -37,6 +38,17 @@ class CreateNewRoomUseCase(
             invitedBy = input.owner.userId,
         )
         roomUserRepository.persist(roomUser)
+
+        input.initialUsers.forEach { initialUser ->
+            val initialRoomUser = RoomUser.newInstance(
+                roomUserId = identityGenerator.createIdentity(),
+                roomId = newRoom.roomId,
+                userId = initialUser.userId,
+                nickname = initialUser.nickname,
+                invitedBy = input.owner.userId,
+            )
+            roomUserRepository.persist(initialRoomUser)
+        }
 
         return roomRepository.persist(newRoom)
     }
