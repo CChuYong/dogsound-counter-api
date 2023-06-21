@@ -67,7 +67,7 @@ class AuthUserWithProviderUseCase(
                 nickname = result.name ?: MockNickGenerator.generate(),
                 tag = RandomTagGenerator.generate(),
             )
-        } while (!isUserExists(newUser.nickname, newUser.tag))
+        } while (isUserExists(newUser.nickname, newUser.tag))
 
         val userNotification = UserNotificationConfig.createDefault(newUser.userId)
         userNotificationRepository.persist(userNotification)
