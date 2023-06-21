@@ -13,13 +13,14 @@ data class User(
         fun newInstance(
             userId: String,
             email: String,
-            nickname: String? = null,
+            nickname: String,
+            tag: String,
         ): User {
             return User(
                 userId = userId,
                 email = email,
-                nickname = nickname ?: MockNickGenerator.generate(),
-                tag = RandomTagGenerator.generate(),
+                nickname = nickname,
+                tag = tag,
                 lastSeenAtTs = System.currentTimeMillis(),
                 createdAtTs = System.currentTimeMillis(),
             )

@@ -59,11 +59,15 @@ class AuthUserWithProviderUseCase(
     }
 
     private suspend fun createUser(result: OAuthResult): User {
-        val newUser = User.newInstance(
-            userId = identityGenerator.createIdentity(),
-            email = result.email,
-            nickname = result.name,
-        )
+        var newUser: User
+        do {
+            newUser = User.newInstance(
+                userId = identityGenerator.createIdentity(),
+                email = result.email,
+                nickname = result.name ?: MockNickGenerator.generate(),
+                tag = RandomTagGenerator.generate(),
+            )
+        } while (!isUserExists(newUser.nickname, newUser.tag))
 
         val userNotification = UserNotificationConfig.createDefault(newUser.userId)
         userNotificationRepository.persist(userNotification)
@@ -77,5 +81,9 @@ class AuthUserWithProviderUseCase(
             providerKey = result.id,
         )
         return socialLoginRepository.persist(newSocialUser)
+    }
+
+    private suspend fun isUserExists(nickname: String, tag: String): Boolean {
+        return userRepository.getByNicknameAndTag(nickname, tag) != null
     }
 }
