@@ -19,7 +19,4 @@ interface CassandraRoomUserPriceRepository: CoroutineCrudRepository<CassandraRoo
 
     @Query("INSERT INTO room_user_price (room_user_id, start_day, user_id, cumulated_price) VALUES (?0, ?1, ?2, 0) IF NOT EXISTS")
     suspend fun insertIfNotExists(roomUserId: String, startDay: String, userId: String)
-
-    @Query("UPDATE room_user_price SET room_user_price = room_user_price + ?0 WHERE room_user_id = ?1 AND start_day = ?2")
-    suspend fun addPriceByRoomUserId(price: Int, roomUserId: String, startDay: String)
 }
