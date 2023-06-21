@@ -45,6 +45,7 @@ CREATE TABLE user
     user_id         text,
     email           text,
     nickname        text,
+    tag             text,
     profile_img_url text,
     last_seen_at    timestamp,
     created_at      timestamp,
@@ -52,6 +53,9 @@ CREATE TABLE user
 ) WITH COMMENT = 'user table';
 
 CREATE INDEX user_idx1 ON test.user (email);
+CREATE INDEX user_idx2 ON test.user (nickname);
+CREATE INDEX user_idx3 ON test.user (tag);
+
 
 CREATE TABLE user_friend
 (

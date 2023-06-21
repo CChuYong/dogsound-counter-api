@@ -4,6 +4,7 @@ data class User(
     val userId: String,
     val email: String,
     val nickname: String,
+    val tag: String,
     val profileImgUrl: String = "https://bsc-assets-public.s3.ap-northeast-2.amazonaws.com/default_profile.jpeg",
     val lastSeenAtTs: Long,
     val createdAtTs: Long,
@@ -18,6 +19,7 @@ data class User(
                 userId = userId,
                 email = email,
                 nickname = nickname ?: MockNickGenerator.generate(),
+                tag = RandomTagGenerator.generate(),
                 lastSeenAtTs = System.currentTimeMillis(),
                 createdAtTs = System.currentTimeMillis(),
             )

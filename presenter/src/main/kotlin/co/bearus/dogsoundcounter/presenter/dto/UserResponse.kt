@@ -19,6 +19,7 @@ data class UserResponse(
     val id: String,
     val email: String,
     val nickname: String,
+    val taggedNickname: String,
     val profileImgUrl: String,
     val createdAtTs: Long,
 ) {
@@ -27,6 +28,7 @@ data class UserResponse(
             id = user.userId,
             email = user.email,
             nickname = user.nickname,
+            taggedNickname = "${user.nickname}#${user.tag}",
             profileImgUrl = user.profileImgUrl,
             createdAtTs = user.createdAtTs,
         )
