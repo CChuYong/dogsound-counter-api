@@ -118,8 +118,6 @@ CREATE TABLE room_user_price
 (
     room_user_id    text,
     start_day       text,
-    user_id         text,
-    cumulated_price int,
+    cumulated_price counter,
     PRIMARY KEY (room_user_id, start_day)
 ) WITH COMMENT = 'room user price table';
-CREATE INDEX room_user_price_idx1 ON test.room_user_price (user_id);

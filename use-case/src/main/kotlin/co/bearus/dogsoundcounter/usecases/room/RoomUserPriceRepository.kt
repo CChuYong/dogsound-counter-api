@@ -7,6 +7,6 @@ interface RoomUserPriceRepository {
     suspend fun findAllByRoomUser(roomUserId: String): List<RoomUserPrice>
     suspend fun findAllByUser(userId: String, startDay: String): List<RoomUserPrice>
     suspend fun sumByRoomUser(roomUserId: String): Long
-    suspend fun cumulateByRoomUser(roomUserId: String, userId: String, startDay: String, price: Int)
+    suspend fun cumulateByRoomUser(roomUserId: String, startDay: String, price: Int)
     suspend fun persist(roomUserPrice: RoomUserPrice): RoomUserPrice
 }

@@ -125,8 +125,10 @@ class UseCaseImplementer {
     @Bean
     fun getUserDashBoard(
         userRepository: RoomUserPriceRepository,
+        roomUserRepository: RoomUserRepository,
     ) = GetUserDashboardUseCase(
         userRepository,
+        roomUserRepository,
     )
 
     @Bean

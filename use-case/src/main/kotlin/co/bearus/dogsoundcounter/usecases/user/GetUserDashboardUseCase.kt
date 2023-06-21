@@ -4,12 +4,14 @@ import co.bearus.dogsoundcounter.entities.User
 import co.bearus.dogsoundcounter.usecases.LocalizedWeek
 import co.bearus.dogsoundcounter.usecases.UseCase
 import co.bearus.dogsoundcounter.usecases.room.RoomUserPriceRepository
+import co.bearus.dogsoundcounter.usecases.room.RoomUserRepository
 import java.time.LocalDate
 import java.util.*
 
 
 class GetUserDashboardUseCase(
     private val roomUserPriceRepository: RoomUserPriceRepository,
+    private val roomUserRepository: RoomUserRepository,
 ) : UseCase<GetUserDashboardUseCase.Input, GetUserDashboardUseCase.Output> {
     data class Input(
         val user: User,
@@ -28,8 +30,10 @@ class GetUserDashboardUseCase(
         val week = LocalizedWeek(Locale.KOREA,
             now = input.weekDay ?: LocalDate.now(LocalizedWeek.TZ)
         )
-        val sum = roomUserPriceRepository.findAllByUser(input.user.userId, week.firstDay.toString())
-            .sumOf { it.cumulatedPrice }
+        val users = roomUserRepository.findByUserId(input.user.userId).mapNotNull {
+            roomUserPriceRepository.findByRoomUser(it.roomUserId, week.firstDay.toString())
+        }
+        val sum = users.sumOf { it.cumulatedPrice }
         return Output(
             weeklyPrice = sum,
             currentMonth = week.month(),

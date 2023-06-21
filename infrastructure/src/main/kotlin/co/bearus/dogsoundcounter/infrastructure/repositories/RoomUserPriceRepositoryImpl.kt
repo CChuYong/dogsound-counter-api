@@ -22,17 +22,17 @@ class RoomUserPriceRepositoryImpl(
     }
 
     override suspend fun findAllByUser(userId: String, startDay: String): List<RoomUserPrice> {
-        return cassandraRoomUserPriceRepository.findAllByUserIdAndStartDay(userId, startDay).map { it.toDomain() }
+        return cassandraRoomUserPriceRepository.findAllByRoomUserIdAndStartDay(userId, startDay).map { it.toDomain() }
     }
 
     override suspend fun sumByRoomUser(roomUserId: String): Long {
         return cassandraRoomUserPriceRepository.sumOfPriceByRoomUserId(roomUserId)
     }
 
-    override suspend fun cumulateByRoomUser(roomUserId: String, userId: String, startDay: String, price: Int) {
+    override suspend fun cumulateByRoomUser(roomUserId: String, startDay: String, price: Int) {
         reactiveCassandraTemplate.execute(
             SimpleStatement.newInstance(
-                "INSERT INTO room_user_price (room_user_id, start_day, user_id, cumulated_price) VALUES ('${roomUserId}', '${startDay}', '${userId}', 0) IF NOT EXISTS"
+                "INSERT INTO room_user_price (room_user_id, start_day, cumulated_price) VALUES ('${roomUserId}', '${startDay}', 0) IF NOT EXISTS"
             )
         ).awaitSingleOrNull()
         reactiveCassandraTemplate.execute(

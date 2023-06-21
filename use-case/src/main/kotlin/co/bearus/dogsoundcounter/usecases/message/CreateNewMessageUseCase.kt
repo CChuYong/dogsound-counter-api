@@ -54,14 +54,12 @@ class CreateNewMessageUseCase(
                             roomUserId = it.roomUserId,
                             price = price,
                             startDay = week.firstDay.toString(),
-                            userId = id
                         )
                     } else {
                         roomUserPriceRepository.cumulateByRoomUser(
                             roomUserId = it.roomUserId,
                             price = violent.violentPrice * -1,
                             startDay = week.firstDay.toString(),
-                            userId = id
                         )
                     }
                 }

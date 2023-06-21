@@ -12,7 +12,7 @@ interface CassandraRoomUserPriceRepository: CoroutineCrudRepository<CassandraRoo
     suspend fun findAllByRoomUserId(roomUserId: String): List<CassandraRoomUserPriceEntity>
 
     @AllowFiltering
-    suspend fun findAllByUserIdAndStartDay(userId: String, startDay: String): List<CassandraRoomUserPriceEntity>
+    suspend fun findAllByRoomUserIdAndStartDay(roomUserId: String, startDay: String): List<CassandraRoomUserPriceEntity>
 
     @Query("SELECT SUM(cumulated_price) FROM room_user_price WHERE room_user_id = ?0")
     suspend fun sumOfPriceByRoomUserId(roomUserId: String): Long

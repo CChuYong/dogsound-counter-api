@@ -13,9 +13,6 @@ data class CassandraRoomUserPriceEntity(
     @field:Column("start_day")
     val startDay: String,
 
-    @field:Column("user_id")
-    val userId: String,
-
     @field:Column("cumulated_price")
     val cumulatedPrice: Int,
 ) {
@@ -23,7 +20,6 @@ data class CassandraRoomUserPriceEntity(
         fun fromDomain(roomUserPrice: RoomUserPrice) = CassandraRoomUserPriceEntity(
             roomUserId = roomUserPrice.roomUserId,
             startDay = roomUserPrice.startDay,
-            userId = roomUserPrice.userId,
             cumulatedPrice = roomUserPrice.cumulatedPrice,
         )
     }
@@ -31,7 +27,6 @@ data class CassandraRoomUserPriceEntity(
     fun toDomain() = RoomUserPrice(
         roomUserId = roomUserId,
         startDay = startDay,
-        userId = userId,
         cumulatedPrice = cumulatedPrice,
     )
 }
