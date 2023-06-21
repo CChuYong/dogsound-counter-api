@@ -7,8 +7,11 @@ import java.time.temporal.TemporalAdjusters
 import java.time.temporal.WeekFields
 import java.util.*
 
-class LocalizedWeek(private val locale: Locale) {
-    private val now = LocalDate.now(TZ)
+class LocalizedWeek(
+    private val locale: Locale,
+    private val now: LocalDate = LocalDate.now(TZ),
+) {
+
     private val weekField = WeekFields.of(locale)
     private val firstDayOfWeek: DayOfWeek = WeekFields.of(locale).firstDayOfWeek
     private val lastDayOfWeek: DayOfWeek = DayOfWeek.of((firstDayOfWeek.value + 5) % DayOfWeek.values().size + 1)
@@ -38,6 +41,6 @@ class LocalizedWeek(private val locale: Locale) {
     }
 
     companion object {
-        private val TZ = ZoneId.of("Asia/Seoul")
+        val TZ = ZoneId.of("Asia/Seoul")
     }
 }

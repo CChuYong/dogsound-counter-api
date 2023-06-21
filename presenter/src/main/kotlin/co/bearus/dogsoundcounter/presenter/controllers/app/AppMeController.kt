@@ -10,6 +10,7 @@ import co.bearus.dogsoundcounter.usecases.room.RoomRepository
 import co.bearus.dogsoundcounter.usecases.room.RoomUserPriceRepository
 import co.bearus.dogsoundcounter.usecases.user.*
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDate
 
 @RestController
 @RequestMapping("/app/me")
@@ -54,13 +55,15 @@ class AppMeController(
     @GetMapping("/dashboard")
     suspend fun getDashboard(
         @RequestUser user: LoginUser,
+        @RequestParam(required = false) weekDay: LocalDate?,
     ) = withUseCase(
         useCase = getUserDashboard,
         param = GetUserDashboardUseCase.Input(
-            withUseCase(
+            user = withUseCase(
                 useCase = getUserById,
                 param = user.userId,
-            )
+            ),
+            weekDay = weekDay,
         ),
     )
 

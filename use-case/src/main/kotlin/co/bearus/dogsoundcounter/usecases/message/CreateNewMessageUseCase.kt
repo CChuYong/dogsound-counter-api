@@ -48,14 +48,24 @@ class CreateNewMessageUseCase(
             val week = LocalizedWeek(Locale.KOREA)
             input.roomUsers.forEach {
                 val id = it.userId
-                if (id != input.speaker.userId) {
-                    roomUserPriceRepository.cumulateByRoomUser(
-                        roomUserId = it.roomUserId,
-                        price = price,
-                        startDay = week.firstDay.toString(),
-                        userId = id
-                    )
+                if (violent != null && violent.violentPrice > 0) {
+                    if (id != input.speaker.userId) {
+                        roomUserPriceRepository.cumulateByRoomUser(
+                            roomUserId = it.roomUserId,
+                            price = price,
+                            startDay = week.firstDay.toString(),
+                            userId = id
+                        )
+                    } else {
+                        roomUserPriceRepository.cumulateByRoomUser(
+                            roomUserId = it.roomUserId,
+                            price = violent.violentPrice * -1,
+                            startDay = week.firstDay.toString(),
+                            userId = id
+                        )
+                    }
                 }
+
 
                 val device = userDeviceRepository.getUserDevices(id)
                 val publisher = messagePublisherFactory.getSuitableFactory(id)

@@ -17,6 +17,10 @@ class RoomUserPriceRepositoryImpl(
         return cassandraRoomUserPriceRepository.findAllByRoomUserId(roomUserId).map { it.toDomain() }
     }
 
+    override suspend fun findAllByUser(userId: String, startDay: String): List<RoomUserPrice> {
+        return cassandraRoomUserPriceRepository.findAllByUserIdAndStartDay(userId, startDay).map { it.toDomain() }
+    }
+
     override suspend fun sumByRoomUser(roomUserId: String): Long {
         return cassandraRoomUserPriceRepository.sumOfPriceByRoomUserId(roomUserId)
     }
