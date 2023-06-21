@@ -35,6 +35,10 @@ data class UserResponse(
     }
 }
 
+data class CreateNewFriendRequest(
+    val tag: String,
+)
+
 data class UpdateUserProfileImageRequest(
     val imageUrl: String,
 )

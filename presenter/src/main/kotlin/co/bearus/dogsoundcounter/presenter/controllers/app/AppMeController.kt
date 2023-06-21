@@ -2,10 +2,7 @@ package co.bearus.dogsoundcounter.presenter.controllers.app
 
 import co.bearus.dogsoundcounter.presenter.LoginUser
 import co.bearus.dogsoundcounter.presenter.RequestUser
-import co.bearus.dogsoundcounter.presenter.dto.RoomDetailResponse
-import co.bearus.dogsoundcounter.presenter.dto.UpdateUserNicknameRequest
-import co.bearus.dogsoundcounter.presenter.dto.UpdateUserProfileImageRequest
-import co.bearus.dogsoundcounter.presenter.dto.UserResponse
+import co.bearus.dogsoundcounter.presenter.dto.*
 import co.bearus.dogsoundcounter.presenter.parallelMap
 import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.message.MessageRepository
@@ -26,6 +23,8 @@ class AppMeController(
     private val getUserDashboard: GetUserDashboardUseCase,
     private val getUserRooms: GetUserRoomsUseCase,
     private val updateUserImage: UpdateUserImageUseCase,
+    private val createNewFriend: CreateNewFriendUseCase,
+    private val getUserByTag: GetUserByTagUseCase,
 ) {
     @GetMapping
     suspend fun getMe(
@@ -127,4 +126,22 @@ class AppMeController(
             mappingFunction = UserResponse::from,
         )
     }
+
+    @PostMapping("/friends")
+    suspend fun createFriend(
+        @RequestUser user: LoginUser,
+        @RequestBody dto: CreateNewFriendRequest,
+    ) = withUseCase(
+        useCase = createNewFriend,
+        param = CreateNewFriendUseCase.Input(
+            user1 = withUseCase(
+                useCase = getUserById,
+                param = user.userId,
+            ),
+            user2 = withUseCase(
+                useCase = getUserByTag,
+                param = dto.tag,
+            ),
+        ),
+    )
 }

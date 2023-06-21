@@ -187,4 +187,11 @@ class UseCaseImplementer {
     ) = GetUserByTagUseCase(
         userRepository,
     )
+
+    @Bean
+    fun createNewFriend(
+        friendRepository: FriendRepository,
+    ) = CreateNewFriendUseCase(
+        friendRepository,
+    )
 }
