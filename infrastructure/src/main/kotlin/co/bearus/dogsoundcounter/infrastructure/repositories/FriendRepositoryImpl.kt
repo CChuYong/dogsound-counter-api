@@ -10,7 +10,10 @@ class FriendRepositoryImpl(
     private val cassandraUserFriendRepository: CassandraUserFriendRepository,
 ): FriendRepository {
     override suspend fun getFriends(userId: String): List<String> {
-        val friends = cassandraUserFriendRepository.findAllByUserId1OrUserId2(userId, userId)
+        val friends =
+            cassandraUserFriendRepository.findAllByUserId1(userId) + cassandraUserFriendRepository.findAllByUserId2(
+                userId
+            )
         return friends.map {
             if (it.userId1 == userId) {
                 it.userId2
