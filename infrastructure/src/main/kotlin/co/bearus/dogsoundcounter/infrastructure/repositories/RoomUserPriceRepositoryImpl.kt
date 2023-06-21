@@ -32,11 +32,6 @@ class RoomUserPriceRepositoryImpl(
     override suspend fun cumulateByRoomUser(roomUserId: String, startDay: String, price: Int) {
         reactiveCassandraTemplate.execute(
             SimpleStatement.newInstance(
-                "INSERT INTO room_user_price (room_user_id, start_day, cumulated_price) VALUES ('${roomUserId}', '${startDay}', 0) IF NOT EXISTS"
-            )
-        ).awaitSingleOrNull()
-        reactiveCassandraTemplate.execute(
-            SimpleStatement.newInstance(
                 "UPDATE room_user_price SET cumulated_price = cumulated_price + $price WHERE room_user_id = '${roomUserId}' AND start_day = '${startDay}'",
             )
         ).awaitSingleOrNull()
