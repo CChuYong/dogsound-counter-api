@@ -31,6 +31,7 @@ class AppUserController(
     private val messageRepository: MessageRepository,
     private val roomRepository: RoomRepository,
     private val roomUserPriceRepository: RoomUserPriceRepository,
+    private val roomUserFriendRepository: FriendRepository,
 ) {
     @PostMapping("/oauth")
     suspend fun authenticateUser(
@@ -175,4 +176,15 @@ class AppUserController(
         ),
         mappingFunction = UserResponse::from,
     )
+
+    @GetMapping("/friends")
+    suspend fun getFriends(
+        @RequestUser user: LoginUser,
+    ) = roomUserFriendRepository.getFriends(user.userId).parallelMap {
+        withUseCase(
+            useCase = getUserById,
+            param = it,
+            mappingFunction = UserResponse::from,
+        )
+    }
 }

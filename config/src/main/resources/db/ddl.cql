@@ -53,6 +53,15 @@ CREATE TABLE user
 
 CREATE INDEX user_idx1 ON test.user (email);
 
+CREATE TABLE user_friend
+(
+    user_id_1  text,
+    user_id_2  text,
+    created_at timestamp,
+    PRIMARY KEY (user_id_1, user_id_2)
+) WITH COMMENT = 'user friend table';
+
+
 CREATE TABLE user_notification_config
 (
     user_id             text,
