@@ -12,6 +12,7 @@ data class RoomDetailResponse(
     val lastMessageAtTs: Long,
     val unreadMessageCount: Long,
     val roomImageUrl: String,
+    val cumulatedPrice: Long,
     val createdAtTs: Long,
 )
 

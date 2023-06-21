@@ -5,12 +5,16 @@ import co.bearus.dogsoundcounter.presenter.RequestUser
 import co.bearus.dogsoundcounter.presenter.dto.*
 import co.bearus.dogsoundcounter.presenter.parallelMap
 import co.bearus.dogsoundcounter.presenter.withUseCase
+import co.bearus.dogsoundcounter.usecases.LocalizedWeek
 import co.bearus.dogsoundcounter.usecases.message.MessageRepository
 import co.bearus.dogsoundcounter.usecases.room.RoomRepository
+import co.bearus.dogsoundcounter.usecases.room.RoomUserPriceRepository
 import co.bearus.dogsoundcounter.usecases.user.*
 import co.bearus.dogsoundcounter.usecases.user.oauth.AuthUserWithProviderUseCase
 import co.bearus.dogsoundcounter.usecases.user.oauth.TokenProvider
 import org.springframework.web.bind.annotation.*
+import java.time.ZoneOffset
+import java.util.*
 
 @RestController
 @RequestMapping("/app/users")
@@ -26,6 +30,7 @@ class AppUserController(
     private val tokenProvider: TokenProvider,
     private val messageRepository: MessageRepository,
     private val roomRepository: RoomRepository,
+    private val roomUserPriceRepository: RoomUserPriceRepository,
 ) {
     @PostMapping("/oauth")
     suspend fun authenticateUser(
@@ -132,6 +137,7 @@ class AppUserController(
         ),
         mappingFunction = {
             it.list.parallelMap { roomUser ->
+                val prices = roomUserPriceRepository.sumByRoomUser(roomUserId = roomUser.roomUserId)
                 val room = roomRepository.getById(roomUser.roomId)
                 val lastMessage = messageRepository.getLastMessage(roomUser.roomId)
                 val unreadMessageCount = messageRepository.countUnreadMessage(
@@ -141,12 +147,12 @@ class AppUserController(
                 RoomDetailResponse(
                     roomId = room.roomId,
                     roomName = room.roomName,
-
                     ownerId = room.ownerId,
                     lastMessageAtTs = lastMessage?.createdAtTs ?: room.createdAtTs,
                     unreadMessageCount = unreadMessageCount,
                     roomImageUrl = room.roomImageUrl,
-                    createdAtTs = room.createdAtTs
+                    cumulatedPrice = prices,
+                    createdAtTs = room.createdAtTs,
                 )
             }.sortedByDescending { detail ->
                 detail.lastMessageAtTs

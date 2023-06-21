@@ -101,3 +101,12 @@ CREATE TABLE room_user
 CREATE INDEX room_user_idx1 ON test.room_user (room_id);
 CREATE INDEX room_user_idx2 ON test.room_user (user_id);
 
+CREATE TABLE room_user_price
+(
+    room_user_id    text,
+    start_day       text,
+    user_id         text,
+    cumulated_price int,
+    PRIMARY KEY (room_user_id, start_day)
+) WITH COMMENT = 'room user price table';
+CREATE INDEX room_user_price_idx1 ON test.room_user_price (user_id);
