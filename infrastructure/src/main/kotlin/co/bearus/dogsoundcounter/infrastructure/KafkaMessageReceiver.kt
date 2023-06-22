@@ -18,7 +18,6 @@ class KafkaMessageReceiver(
     @Value("\${app.kafka.servers}") private val bootstrapUrls: String,
 ) : MessageReceiver {
     override fun createChannel(userId: String, deviceId: String): Flux<ClientPacket> {
-        println(bootstrapUrls)
         val receiverOpts = ReceiverOptions.create<Int, String>(getProps(deviceId))
             .subscription(listOf("events:$userId"))
 

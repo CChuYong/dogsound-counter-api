@@ -1,6 +1,7 @@
 package co.bearus.dogsoundcounter.presenter
 
 import co.bearus.dogsoundcounter.usecases.IdentityGenerator
+import co.bearus.dogsoundcounter.usecases.TopicManager
 import co.bearus.dogsoundcounter.usecases.message.MessagePublisherFactory
 import co.bearus.dogsoundcounter.usecases.notification.NotificationGateway
 import co.bearus.dogsoundcounter.usecases.message.CreateNewMessageUseCase
@@ -29,6 +30,7 @@ class UseCaseImplementer {
         identityGenerator: IdentityGenerator,
         tokenProvider: TokenProvider,
         userNotificationRepository: UserNotificationRepository,
+        topicManager: TopicManager,
     ) = AuthUserWithProviderUseCase(
         oAuthFactory,
         socialLoginRepository,
@@ -36,6 +38,7 @@ class UseCaseImplementer {
         identityGenerator,
         tokenProvider,
         userNotificationRepository,
+        topicManager,
     )
 
     @Bean
