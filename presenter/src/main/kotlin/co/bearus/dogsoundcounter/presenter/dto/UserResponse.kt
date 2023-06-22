@@ -39,6 +39,11 @@ data class CreateNewFriendRequest(
     val tag: String,
 )
 
+data class UpdateNotificationRequest(
+    val type: String,
+    val value: Boolean,
+)
+
 data class UpdateUserProfileImageRequest(
     val imageUrl: String,
 )

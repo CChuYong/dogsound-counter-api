@@ -26,6 +26,7 @@ class AppMeController(
     private val updateUserImage: UpdateUserImageUseCase,
     private val createNewFriend: CreateNewFriendUseCase,
     private val getUserByTag: GetUserByTagUseCase,
+    private val updateNotificationConfig: UpdateNotificationConfigUseCase,
     private val userNotificationRepository: UserNotificationRepository,
 ) {
     @GetMapping
@@ -154,5 +155,21 @@ class AppMeController(
         @RequestUser user: LoginUser,
     ) = userNotificationRepository.getByUserId(
         user.userId
+    )
+
+    @PostMapping("/notification")
+    suspend fun updateNotificationConfig(
+        @RequestUser user: LoginUser,
+        @RequestBody dto: UpdateNotificationRequest,
+    ) = withUseCase(
+        useCase = updateNotificationConfig,
+        param = UpdateNotificationConfigUseCase.Input(
+            user = withUseCase(
+                useCase = getUserById,
+                param = user.userId
+            ),
+            type = dto.type,
+            value = dto.value,
+        )
     )
 }

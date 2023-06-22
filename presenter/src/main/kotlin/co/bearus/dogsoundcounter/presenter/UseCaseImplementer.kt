@@ -203,4 +203,11 @@ class UseCaseImplementer {
     ) = DeleteViolentUseCase(
         violentRepository,
     )
+
+    @Bean
+    fun updateNotification(
+        userNotificationRepository: UserNotificationRepository,
+    ) = UpdateNotificationConfigUseCase(
+        userNotificationRepository,
+    )
 }
