@@ -9,6 +9,7 @@ spring:
     local-datacenter: ap-northeast-2
     contact-points: scylla-db-client.scylla.svc.cluster.local
 
+
 app:
   kafka:
     servers: kafka-headless.kafka.svc.cluster.local:9092
@@ -28,3 +29,8 @@ app:
       baseUrl: https://kapi.kakao.com/
     google-oauth:
       baseUrl: https://openidconnect.googleapis.com/
+logging:
+  level:
+    org:
+      apache:
+        kafka: off

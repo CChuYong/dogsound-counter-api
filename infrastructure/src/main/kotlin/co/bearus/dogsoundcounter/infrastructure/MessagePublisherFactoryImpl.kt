@@ -6,11 +6,10 @@ import org.springframework.stereotype.Component
 
 @Component
 class MessagePublisherFactoryImpl(
-    private val kafkaMessagePublisher: KafkaMessagePublisher,
-    private val firebaseMessagePublisher: FirebaseMessagePublisher,
+    private val combinedMessagePublisher: CombinedMessagePublisher
 ) : MessagePublisherFactory {
     override fun getSuitableFactory(userId: String): MessagePublisher {
         //TODO: IF ONLINE -> KAFKA // ELSE -> PUSH
-        return firebaseMessagePublisher
+        return combinedMessagePublisher
     }
 }

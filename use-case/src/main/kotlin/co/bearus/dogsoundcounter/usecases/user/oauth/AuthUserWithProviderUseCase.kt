@@ -78,7 +78,7 @@ class AuthUserWithProviderUseCase(
         userNotificationRepository.persist(userNotification)
 
         CoroutineScope(Dispatchers.IO).launch {
-            topicManager.createTopic("events:${newUser.userId}")
+            topicManager.createTopic("events-${newUser.userId}")
         }
 
         return userRepository.persist(newUser)

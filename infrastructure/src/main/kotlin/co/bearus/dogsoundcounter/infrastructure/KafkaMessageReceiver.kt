@@ -19,7 +19,7 @@ class KafkaMessageReceiver(
 ) : MessageReceiver {
     override fun createChannel(userId: String, deviceId: String): Flux<ClientPacket> {
         val receiverOpts = ReceiverOptions.create<Int, String>(getProps(deviceId))
-            .subscription(listOf("events:$userId"))
+            .subscription(listOf("events-$userId"))
 
         return KafkaReceiver.create(receiverOpts)
             .receive()

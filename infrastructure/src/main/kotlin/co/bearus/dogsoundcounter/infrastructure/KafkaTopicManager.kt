@@ -17,7 +17,7 @@ class KafkaTopicManager(
     override fun createTopic(topicName: String) {
         val client = AdminClient.create(getProps())
         val topic = NewTopic(topicName, 1, 1)
-        client.createTopics(listOf(topic))
+        client.createTopics(listOf(topic)).all().get()
         client.close()
     }
 
