@@ -2,9 +2,13 @@ package co.bearus.dogsoundcounter.usecases.user.oauth
 
 import co.bearus.dogsoundcounter.entities.*
 import co.bearus.dogsoundcounter.usecases.IdentityGenerator
+import co.bearus.dogsoundcounter.usecases.TopicManager
 import co.bearus.dogsoundcounter.usecases.UseCase
 import co.bearus.dogsoundcounter.usecases.user.UserNotificationRepository
 import co.bearus.dogsoundcounter.usecases.user.UserRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AuthUserWithProviderUseCase(
     private val oAuthFactory: OAuthFactory,
@@ -13,6 +17,7 @@ class AuthUserWithProviderUseCase(
     private val identityGenerator: IdentityGenerator,
     private val tokenProvider: TokenProvider,
     private val userNotificationRepository: UserNotificationRepository,
+    private val topicManager: TopicManager,
 ) : UseCase<AuthUserWithProviderUseCase.Input, AuthUserWithProviderUseCase.Output> {
     data class Input(
         val provider: UserProvider,
@@ -71,6 +76,11 @@ class AuthUserWithProviderUseCase(
 
         val userNotification = UserNotificationConfig.createDefault(newUser.userId)
         userNotificationRepository.persist(userNotification)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            topicManager.createTopic("events:${newUser.userId}")
+        }
+
         return userRepository.persist(newUser)
     }
 

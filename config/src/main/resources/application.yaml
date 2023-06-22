@@ -10,6 +10,8 @@ spring:
     contact-points: scylla-db-client.scylla.svc.cluster.local
 
 app:
+  kafka:
+    servers: kafka-headless.kafka.svc.cluster.local:9092
   aws:
     region: ap-northeast-2
     bucket-name: bsc-assets-public

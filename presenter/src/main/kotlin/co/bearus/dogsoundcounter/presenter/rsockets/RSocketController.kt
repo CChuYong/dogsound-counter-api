@@ -15,10 +15,11 @@ class RSocketController(
     @MessageMapping("/v1/event-gateway")
     fun openChannel(request: RSocketSubscribeRequest): Flux<ClientPacket> {
         val userId = tokenProvider.extractUserIdFromToken(request.accessToken) ?: throw RuntimeException()
-        return messageReceiver.createChannel(userId)
+        return messageReceiver.createChannel(userId, request.deviceToken)
     }
 
     data class RSocketSubscribeRequest(
         val accessToken: String,
+        val deviceToken: String,
     )
 }
