@@ -1,7 +1,6 @@
-package co.bearus.dogsoundcounter.infrastructure
+package co.bearus.dogsoundcounter.infrastructure.messages
 
 import co.bearus.dogsoundcounter.usecases.TopicManager
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.apache.kafka.clients.admin.AdminClient
 import org.apache.kafka.clients.admin.NewTopic
 import org.apache.kafka.clients.consumer.ConsumerConfig

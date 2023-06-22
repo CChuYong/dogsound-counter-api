@@ -1,15 +1,12 @@
-package co.bearus.dogsoundcounter.infrastructure
+package co.bearus.dogsoundcounter.infrastructure.messages
 
 import co.bearus.dogsoundcounter.entities.ClientPacket
 import co.bearus.dogsoundcounter.usecases.message.MessagePublisher
 import com.fasterxml.jackson.databind.ObjectMapper
-import kotlinx.coroutines.reactor.awaitSingle
 import kotlinx.coroutines.reactor.awaitSingleOrNull
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.clients.producer.ProducerRecord
-import org.apache.kafka.common.serialization.IntegerDeserializer
 import org.apache.kafka.common.serialization.IntegerSerializer
-import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.common.serialization.StringSerializer
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component

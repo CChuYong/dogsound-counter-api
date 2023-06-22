@@ -1,4 +1,4 @@
-package co.bearus.dogsoundcounter.infrastructure
+package co.bearus.dogsoundcounter.infrastructure.messages
 
 import co.bearus.dogsoundcounter.usecases.notification.Notification
 import co.bearus.dogsoundcounter.usecases.notification.NotificationGateway
