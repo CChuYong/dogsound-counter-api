@@ -26,6 +26,7 @@ class AppMeController(
     private val updateUserImage: UpdateUserImageUseCase,
     private val createNewFriend: CreateNewFriendUseCase,
     private val getUserByTag: GetUserByTagUseCase,
+    private val userNotificationRepository: UserNotificationRepository,
 ) {
     @GetMapping
     suspend fun getMe(
@@ -146,5 +147,12 @@ class AppMeController(
                 param = dto.tag,
             ),
         ),
+    )
+
+    @GetMapping("/notification")
+    suspend fun getNotificationConfig(
+        @RequestUser user: LoginUser,
+    ) = userNotificationRepository.getByUserId(
+        user.userId
     )
 }
