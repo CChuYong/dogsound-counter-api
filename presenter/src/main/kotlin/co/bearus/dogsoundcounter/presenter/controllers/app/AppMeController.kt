@@ -28,6 +28,7 @@ class AppMeController(
     private val getUserByTag: GetUserByTagUseCase,
     private val updateNotificationConfig: UpdateNotificationConfigUseCase,
     private val acceptUserFriendRequest: AcceptUserFriendRequestUseCase,
+    private val denyUserFriendRequest: DenyUserFriendRequestUseCase,
     private val userNotificationRepository: UserNotificationRepository,
 ) {
     @GetMapping
@@ -133,13 +134,31 @@ class AppMeController(
         )
     }
 
-    @PostMapping("/friends")
+    @PostMapping("/friends/requests/accept")
     suspend fun acceptRequest(
         @RequestUser user: LoginUser,
         @RequestBody dto: CreateNewFriendRequest,
     ) = withUseCase(
         useCase = acceptUserFriendRequest,
         param = AcceptUserFriendRequestUseCase.Input(
+            from = withUseCase(
+                useCase = getUserById,
+                param = user.userId,
+            ),
+            target = withUseCase(
+                useCase = getUserByTag,
+                param = dto.tag,
+            ),
+        )
+    )
+
+    @PostMapping("/friends/requests/deny")
+    suspend fun denyRequest(
+        @RequestUser user: LoginUser,
+        @RequestBody dto: CreateNewFriendRequest,
+    ) = withUseCase(
+        useCase = denyUserFriendRequest,
+        param = DenyUserFriendRequestUseCase.Input(
             from = withUseCase(
                 useCase = getUserById,
                 param = user.userId,
