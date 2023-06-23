@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository
 interface CassandraUserFriendRepository : CoroutineCrudRepository<CassandraUserFriendEntity, String>{
     suspend fun findAllByUserId1(userId1: String): List<CassandraUserFriendEntity>
     suspend fun findAllByUserId2(userId2: String): List<CassandraUserFriendEntity>
+    suspend fun findFirstByUserId1AndUserId2(userId1: String, userId2: String): CassandraUserFriendEntity?
 }

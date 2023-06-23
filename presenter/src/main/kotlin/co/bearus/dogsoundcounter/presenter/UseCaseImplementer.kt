@@ -210,4 +210,11 @@ class UseCaseImplementer {
     ) = UpdateNotificationConfigUseCase(
         userNotificationRepository,
     )
+
+    @Bean
+    fun acceptFriendRequest(
+        friendRepository: FriendRepository,
+    ) = AcceptUserFriendRequestUseCase(
+        friendRepository,
+    )
 }

@@ -27,6 +27,7 @@ class AppMeController(
     private val createNewFriend: CreateNewFriendUseCase,
     private val getUserByTag: GetUserByTagUseCase,
     private val updateNotificationConfig: UpdateNotificationConfigUseCase,
+    private val acceptUserFriendRequest: AcceptUserFriendRequestUseCase,
     private val userNotificationRepository: UserNotificationRepository,
 ) {
     @GetMapping
@@ -133,6 +134,35 @@ class AppMeController(
     }
 
     @PostMapping("/friends")
+    suspend fun acceptRequest(
+        @RequestUser user: LoginUser,
+        @RequestBody dto: CreateNewFriendRequest,
+    ) = withUseCase(
+        useCase = acceptUserFriendRequest,
+        param = AcceptUserFriendRequestUseCase.Input(
+            from = withUseCase(
+                useCase = getUserById,
+                param = user.userId,
+            ),
+            target = withUseCase(
+                useCase = getUserByTag,
+                param = dto.tag,
+            ),
+        )
+    )
+
+    @GetMapping("/friends/requests")
+    suspend fun getFriendRequests(
+        @RequestUser user: LoginUser,
+    ) = roomUserFriendRepository.getReceivedRequestIds(user.userId).parallelMap {
+        withUseCase(
+            useCase = getUserById,
+            param = it,
+            mappingFunction = UserResponse::from,
+        )
+    }
+
+    @PostMapping("/friends/requests")
     suspend fun createFriend(
         @RequestUser user: LoginUser,
         @RequestBody dto: CreateNewFriendRequest,

@@ -11,5 +11,7 @@ enum class ErrorCode(
     ROOM_NAME_VALIDATION("RV0001", "방 이름은 한 글자 이상이어야 합니다."),
     USER_NICKNAME_VALIDATION("UN0002", "사용자 닉네임은 한 글자 이상이어야 합니다."),
     FRIEND_CANNOT_BE_MYSELF("FN0001", "자기 자신과는 친구할 수 없습니다"),
+    FRIEND_REQUEST_NOT_VALID("FN0002", "그런 친구에게서 요청이 오지 않았습니다."),
+    ALREADY_FRIEND("FN0003", "이미 그사람과는 친구입니다"),
     UNKNOWN_ERROR("UE0001", "알 수 없는 에러가 발생했습니다"),
 }

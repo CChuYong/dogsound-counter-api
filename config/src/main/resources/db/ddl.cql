@@ -65,6 +65,14 @@ CREATE TABLE user_friend
     PRIMARY KEY (user_id_1, user_id_2)
 ) WITH COMMENT = 'user friend table';
 
+CREATE TABLE user_friend_request
+(
+    from_user_id  text,
+    to_user_id  text,
+    created_at timestamp,
+    PRIMARY KEY (from_user_id, to_user_id)
+) WITH COMMENT = 'user friend request table';
+
 
 CREATE TABLE user_notification_config
 (

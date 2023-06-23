@@ -1,6 +1,7 @@
 package co.bearus.dogsoundcounter.usecases.user
 
 import co.bearus.dogsoundcounter.entities.User
+import co.bearus.dogsoundcounter.entities.exception.user.AlreadyFriendException
 import co.bearus.dogsoundcounter.entities.exception.user.FriendCannotBeMyselfException
 import co.bearus.dogsoundcounter.usecases.UseCase
 
@@ -19,7 +20,10 @@ class CreateNewFriendUseCase(
 
     override suspend fun execute(input: Input): Output {
         if (input.user1.userId == input.user2.userId) throw FriendCannotBeMyselfException()
-        friendRepository.makeFriend(input.user1.userId, input.user2.userId)
+        if (friendRepository.isFriend(input.user1.userId, input.user2.userId)) throw AlreadyFriendException()
+
+        friendRepository.sendRequest(input.user1.userId, input.user2.userId)
+        //sOME ALERT
 
         return Output(
             user1 = input.user1,
