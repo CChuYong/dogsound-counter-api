@@ -224,4 +224,11 @@ class UseCaseImplementer {
     ) = DenyUserFriendRequestUseCase(
         friendRepository,
     )
+
+    @Bean
+    fun breakFriend(
+        friendRepository: FriendRepository
+    ) = BreakFriendUseCase(
+        friendRepository,
+    )
 }

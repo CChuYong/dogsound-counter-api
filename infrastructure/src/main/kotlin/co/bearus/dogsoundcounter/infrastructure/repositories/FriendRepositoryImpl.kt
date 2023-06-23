@@ -40,6 +40,12 @@ class FriendRepositoryImpl(
         return true
     }
 
+    override suspend fun breakFriend(userId1: String, userId2: String): Boolean {
+        val friend = cassandraUserFriendRepository.findFirstByUserId1AndUserId2(userId1, userId2) ?: cassandraUserFriendRepository.findFirstByUserId1AndUserId2(userId2, userId1) ?: return false
+        cassandraUserFriendRepository.delete(friend)
+        return true
+    }
+
     override suspend fun getReceivedRequestIds(userId: String): List<String> {
         return cassandraUserFriendRequestRepository.findAllByToUserId(userId).map { it.fromUserId }
     }

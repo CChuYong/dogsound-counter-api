@@ -39,6 +39,10 @@ data class CreateNewFriendRequest(
     val tag: String,
 )
 
+data class BreakFriendRequest(
+    val userId: String,
+)
+
 data class UpdateNotificationRequest(
     val type: String,
     val value: Boolean,

@@ -29,6 +29,7 @@ class AppMeController(
     private val updateNotificationConfig: UpdateNotificationConfigUseCase,
     private val acceptUserFriendRequest: AcceptUserFriendRequestUseCase,
     private val denyUserFriendRequest: DenyUserFriendRequestUseCase,
+    private val breakFriend: BreakFriendUseCase,
     private val userNotificationRepository: UserNotificationRepository,
 ) {
     @GetMapping
@@ -133,6 +134,24 @@ class AppMeController(
             mappingFunction = UserResponse::from,
         )
     }
+
+    @DeleteMapping("/friends")
+    suspend fun breakFriend(
+        @RequestUser user: LoginUser,
+        @RequestBody dto: BreakFriendRequest,
+    ) = withUseCase(
+        useCase = breakFriend,
+        param = BreakFriendUseCase.Input(
+            me = withUseCase(
+                useCase = getUserById,
+                param = user.userId,
+            ),
+            target = withUseCase(
+                useCase = getUserById,
+                param = dto.userId,
+            ),
+        )
+    )
 
     @PostMapping("/friends/requests/accept")
     suspend fun acceptRequest(
