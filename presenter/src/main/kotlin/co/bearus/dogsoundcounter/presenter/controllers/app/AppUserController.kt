@@ -1,20 +1,10 @@
 package co.bearus.dogsoundcounter.presenter.controllers.app
 
-import co.bearus.dogsoundcounter.presenter.LoginUser
-import co.bearus.dogsoundcounter.presenter.RequestUser
-import co.bearus.dogsoundcounter.presenter.dto.*
-import co.bearus.dogsoundcounter.presenter.parallelMap
+import co.bearus.dogsoundcounter.presenter.dto.UserResponse
 import co.bearus.dogsoundcounter.presenter.withUseCase
-import co.bearus.dogsoundcounter.usecases.LocalizedWeek
-import co.bearus.dogsoundcounter.usecases.message.MessageRepository
-import co.bearus.dogsoundcounter.usecases.room.RoomRepository
-import co.bearus.dogsoundcounter.usecases.room.RoomUserPriceRepository
-import co.bearus.dogsoundcounter.usecases.user.*
-import co.bearus.dogsoundcounter.usecases.user.oauth.AuthUserWithProviderUseCase
-import co.bearus.dogsoundcounter.usecases.user.oauth.TokenProvider
+import co.bearus.dogsoundcounter.usecases.user.GetUserByIdUseCase
+import co.bearus.dogsoundcounter.usecases.user.GetUserByTagUseCase
 import org.springframework.web.bind.annotation.*
-import java.time.ZoneOffset
-import java.util.*
 
 @RestController
 @RequestMapping("/app/users")

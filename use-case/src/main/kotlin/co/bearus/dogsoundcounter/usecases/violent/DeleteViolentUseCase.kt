@@ -5,7 +5,7 @@ import co.bearus.dogsoundcounter.usecases.UseCase
 
 class DeleteViolentUseCase(
     private val violentRepository: ViolentRepository,
-): UseCase<Violent, Unit> {
+) : UseCase<Violent, Unit> {
     override suspend fun execute(input: Violent) {
         violentRepository.deleteByViolentId(input.violentId)
     }

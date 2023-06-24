@@ -10,7 +10,7 @@ import java.sql.Timestamp
 class FriendRepositoryImpl(
     private val cassandraUserFriendRepository: CassandraUserFriendRepository,
     private val cassandraUserFriendRequestRepository: CassandraUserFriendRequestRepository,
-): FriendRepository {
+) : FriendRepository {
     override suspend fun getFriends(userId: String): List<String> {
         val friends =
             cassandraUserFriendRepository.findAllByUserId1(userId) + cassandraUserFriendRepository.findAllByUserId2(
@@ -35,13 +35,14 @@ class FriendRepositoryImpl(
     }
 
     override suspend fun isFriend(userId1: String, userId2: String): Boolean {
-        val friend = cassandraUserFriendRepository.findFirstByUserId1AndUserId2(userId1, userId2) ?:
-            cassandraUserFriendRepository.findFirstByUserId1AndUserId2(userId2, userId1) ?: return false
+        val friend = cassandraUserFriendRepository.findFirstByUserId1AndUserId2(userId1, userId2)
+            ?: cassandraUserFriendRepository.findFirstByUserId1AndUserId2(userId2, userId1) ?: return false
         return true
     }
 
     override suspend fun breakFriend(userId1: String, userId2: String): Boolean {
-        val friend = cassandraUserFriendRepository.findFirstByUserId1AndUserId2(userId1, userId2) ?: cassandraUserFriendRepository.findFirstByUserId1AndUserId2(userId2, userId1) ?: return false
+        val friend = cassandraUserFriendRepository.findFirstByUserId1AndUserId2(userId1, userId2)
+            ?: cassandraUserFriendRepository.findFirstByUserId1AndUserId2(userId2, userId1) ?: return false
         cassandraUserFriendRepository.delete(friend)
         return true
     }

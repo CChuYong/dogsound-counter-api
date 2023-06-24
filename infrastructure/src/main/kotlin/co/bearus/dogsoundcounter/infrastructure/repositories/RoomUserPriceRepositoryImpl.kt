@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository
 class RoomUserPriceRepositoryImpl(
     private val cassandraRoomUserPriceRepository: CassandraRoomUserPriceRepository,
     private val reactiveCassandraTemplate: ReactiveCassandraTemplate,
-): RoomUserPriceRepository {
+) : RoomUserPriceRepository {
     override suspend fun findByRoomUser(roomUserId: String, startDay: String): RoomUserPrice? {
         return cassandraRoomUserPriceRepository.findFirstByRoomUserIdAndStartDay(roomUserId, startDay)?.toDomain()
     }

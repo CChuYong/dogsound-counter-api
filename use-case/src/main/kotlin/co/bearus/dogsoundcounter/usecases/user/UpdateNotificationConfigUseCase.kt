@@ -6,7 +6,7 @@ import co.bearus.dogsoundcounter.usecases.UseCase
 
 class UpdateNotificationConfigUseCase(
     private val userNotificationRepository: UserNotificationRepository,
-): UseCase<UpdateNotificationConfigUseCase.Input, UserNotificationConfig> {
+) : UseCase<UpdateNotificationConfigUseCase.Input, UserNotificationConfig> {
     data class Input(
         val user: User,
         val type: String,
@@ -15,7 +15,7 @@ class UpdateNotificationConfigUseCase(
 
     override suspend fun execute(input: Input): UserNotificationConfig {
         var notification = userNotificationRepository.getByUserId(input.user.userId)
-        when(input.type) {
+        when (input.type) {
             "socialAlert" -> notification = notification.copy(socialAlert = input.value)
             "badSoundAlert" -> notification = notification.copy(badSoundAlert = input.value)
             "nonBadSoundAlert" -> notification = notification.copy(nonBadSoundAlert = input.value)

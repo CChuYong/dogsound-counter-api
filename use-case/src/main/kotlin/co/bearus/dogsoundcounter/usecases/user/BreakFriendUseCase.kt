@@ -6,7 +6,7 @@ import co.bearus.dogsoundcounter.usecases.UseCase
 
 class BreakFriendUseCase(
     private val friendRepository: FriendRepository,
-): UseCase<BreakFriendUseCase.Input, BreakFriendUseCase.Output> {
+) : UseCase<BreakFriendUseCase.Input, BreakFriendUseCase.Output> {
     data class Input(
         val me: User,
         val target: User,

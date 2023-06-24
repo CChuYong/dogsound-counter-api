@@ -19,7 +19,11 @@ class AcceptUserFriendRequestUseCase(
     )
 
     override suspend fun execute(input: Input): Output {
-        if (!friendRepository.clearRequest(input.target.userId, input.from.userId)) throw FriendRequestNotValidException()
+        if (!friendRepository.clearRequest(
+                input.target.userId,
+                input.from.userId
+            )
+        ) throw FriendRequestNotValidException()
         if (friendRepository.isFriend(input.target.userId, input.from.userId)) throw AlreadyFriendException()
         friendRepository.makeFriend(input.from.userId, input.target.userId)
         return Output(

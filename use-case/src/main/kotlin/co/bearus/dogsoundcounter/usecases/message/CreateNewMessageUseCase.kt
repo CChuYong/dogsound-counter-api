@@ -1,7 +1,9 @@
 package co.bearus.dogsoundcounter.usecases.message
 
 import co.bearus.dogsoundcounter.entities.*
-import co.bearus.dogsoundcounter.usecases.*
+import co.bearus.dogsoundcounter.usecases.IdentityGenerator
+import co.bearus.dogsoundcounter.usecases.LocalizedWeek
+import co.bearus.dogsoundcounter.usecases.UseCase
 import co.bearus.dogsoundcounter.usecases.notification.Notification
 import co.bearus.dogsoundcounter.usecases.notification.NotificationGateway
 import co.bearus.dogsoundcounter.usecases.room.RoomUserPriceRepository

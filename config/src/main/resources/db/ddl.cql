@@ -3,7 +3,8 @@ KEYSPACE test;
 CREATE
 KEYSPACE test
             WITH replication = {'class': 'SimpleStrategy', 'replication_factor' : 3};
-USE test;
+USE
+test;
 
 CREATE TABLE message
 (
@@ -20,11 +21,11 @@ CREATE TABLE message
 
 CREATE TABLE room
 (
-    room_id    text,
-    room_nm    text,
-    owner_id   text,
+    room_id      text,
+    room_nm      text,
+    owner_id     text,
     room_img_url text,
-    created_at timestamp,
+    created_at   timestamp,
     PRIMARY KEY (room_id)
 ) WITH COMMENT = 'room table';
 
@@ -67,9 +68,9 @@ CREATE TABLE user_friend
 
 CREATE TABLE user_friend_request
 (
-    from_user_id  text,
-    to_user_id  text,
-    created_at timestamp,
+    from_user_id text,
+    to_user_id   text,
+    created_at   timestamp,
     PRIMARY KEY (from_user_id, to_user_id)
 ) WITH COMMENT = 'user friend request table';
 

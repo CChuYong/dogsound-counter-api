@@ -27,7 +27,8 @@ class GetUserDashboardUseCase(
     )
 
     override suspend fun execute(input: Input): Output {
-        val week = LocalizedWeek(Locale.KOREA,
+        val week = LocalizedWeek(
+            Locale.KOREA,
             now = input.weekDay ?: LocalDate.now(LocalizedWeek.TZ)
         )
         val users = roomUserRepository.findByUserId(input.user.userId).mapNotNull {

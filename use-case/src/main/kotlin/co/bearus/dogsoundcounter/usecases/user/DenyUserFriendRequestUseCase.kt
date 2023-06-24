@@ -1,7 +1,6 @@
 package co.bearus.dogsoundcounter.usecases.user
 
 import co.bearus.dogsoundcounter.entities.User
-import co.bearus.dogsoundcounter.entities.exception.user.AlreadyFriendException
 import co.bearus.dogsoundcounter.entities.exception.user.FriendRequestNotValidException
 import co.bearus.dogsoundcounter.usecases.UseCase
 
@@ -19,7 +18,11 @@ class DenyUserFriendRequestUseCase(
     )
 
     override suspend fun execute(input: Input): Output {
-        if (!friendRepository.clearRequest(input.target.userId, input.from.userId)) throw FriendRequestNotValidException()
+        if (!friendRepository.clearRequest(
+                input.target.userId,
+                input.from.userId
+            )
+        ) throw FriendRequestNotValidException()
         return Output(
             user1 = input.from,
             user2 = input.target,

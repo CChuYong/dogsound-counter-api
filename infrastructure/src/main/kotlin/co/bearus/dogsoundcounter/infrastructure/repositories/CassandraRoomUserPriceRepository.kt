@@ -7,7 +7,7 @@ import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface CassandraRoomUserPriceRepository: CoroutineCrudRepository<CassandraRoomUserPriceEntity, String> {
+interface CassandraRoomUserPriceRepository : CoroutineCrudRepository<CassandraRoomUserPriceEntity, String> {
     suspend fun findFirstByRoomUserIdAndStartDay(roomUserId: String, startDay: String): CassandraRoomUserPriceEntity?
     suspend fun findAllByRoomUserId(roomUserId: String): List<CassandraRoomUserPriceEntity>
 

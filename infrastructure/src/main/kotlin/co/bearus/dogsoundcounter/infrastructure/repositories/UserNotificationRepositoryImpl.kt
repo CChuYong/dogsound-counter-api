@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class UserNotificationRepositoryImpl(
     private val cassandraNotificationConfigRepository: CassandraNotificationConfigRepository,
-): UserNotificationRepository {
+) : UserNotificationRepository {
     override suspend fun getByUserId(userId: String): UserNotificationConfig {
         return cassandraNotificationConfigRepository.findById(userId)?.toDomain() ?: throw RuntimeException()
     }

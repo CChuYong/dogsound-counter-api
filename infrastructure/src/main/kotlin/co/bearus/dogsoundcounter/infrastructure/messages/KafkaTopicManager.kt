@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 @Component
 class KafkaTopicManager(
     @Value("\${app.kafka.servers}") private val bootstrapUrls: String,
-): TopicManager {
+) : TopicManager {
     override fun createTopic(topicName: String) {
         val client = AdminClient.create(getProps())
         val topic = NewTopic(topicName, 1, 1)

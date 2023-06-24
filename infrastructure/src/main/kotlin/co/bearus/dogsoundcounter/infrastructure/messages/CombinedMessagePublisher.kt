@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 class CombinedMessagePublisher(
     private val kafkaMessagePublisher: KafkaMessagePublisher,
     private val firebaseMessagePublisher: FirebaseMessagePublisher,
-): MessagePublisher {
+) : MessagePublisher {
     override suspend fun publishMessage(userId: String, message: ClientPacket): Boolean {
         val result = kafkaMessagePublisher.publishMessage(userId, message)
         firebaseMessagePublisher.publishMessage(userId, message)

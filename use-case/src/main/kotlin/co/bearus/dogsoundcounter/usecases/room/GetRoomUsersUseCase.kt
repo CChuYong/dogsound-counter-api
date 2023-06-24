@@ -7,7 +7,7 @@ import co.bearus.dogsoundcounter.usecases.user.UserRepository
 class GetRoomUsersUseCase(
     private val roomUserRepository: RoomUserRepository,
     private val userRepository: UserRepository,
-): UseCase<String, List<User>> {
+) : UseCase<String, List<User>> {
     override suspend fun execute(input: String): List<User> {
         val users = roomUserRepository.findByRoomId(input)
         return users.map {
