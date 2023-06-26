@@ -6,3 +6,7 @@ data class CreateNewMessageRequest(
     val catcherId: String,
     val content: String,
 )
+
+data class UpdateLastReadMessageIdRequest(
+    val messageId: String,
+)

@@ -4,6 +4,7 @@ import co.bearus.dogsoundcounter.entities.Message
 import co.bearus.dogsoundcounter.presenter.LoginUser
 import co.bearus.dogsoundcounter.presenter.RequestUser
 import co.bearus.dogsoundcounter.presenter.dto.CreateNewMessageRequest
+import co.bearus.dogsoundcounter.presenter.dto.UpdateLastReadMessageIdRequest
 import co.bearus.dogsoundcounter.presenter.withUseCase
 import co.bearus.dogsoundcounter.usecases.message.CreateNewMessageUseCase
 import co.bearus.dogsoundcounter.usecases.message.GetMessagesByRoomUseCase
@@ -64,7 +65,7 @@ class MessageController(
             ),
             limit = limit ?: 100,
         )
-    ).updateUserLastIndex(roomId, user.userId)
+    )
 
     @GetMapping(params = ["fetchType=FORWARD", "baseId"])
     suspend fun getMessagesAfter(
@@ -85,7 +86,7 @@ class MessageController(
             ),
             limit = limit ?: 100,
         )
-    ).updateUserLastIndex(roomId, user.userId)
+    )
 
     @GetMapping(params = ["fetchType=BACKWARD", "baseId"])
     suspend fun getMessagesBefore(
@@ -106,19 +107,20 @@ class MessageController(
             ),
             limit = limit ?: 100,
         )
-    ).updateUserLastIndex(roomId, user.userId)
+    )
 
-    private suspend fun List<Message>.updateUserLastIndex(roomId: String, userId: String): List<Message> {
-        if (isNotEmpty()) {
-            val maxId = maxOf { it.messageId }
-            withUseCase(
-                useCase = updateRoomUserLastMessageId,
-                param = UpdateRoomUserLastMessageIdUseCase.Input(
-                    roomUser = roomUserRepository.findRoomUser(roomId, userId),
-                    newLastIndex = maxId,
-                )
+    @PostMapping("/last-id")
+    suspend fun updateLastMessageId(
+        @RequestUser user: LoginUser,
+        @PathVariable roomId: String,
+        @RequestBody dto: UpdateLastReadMessageIdRequest,
+    ) {
+        withUseCase(
+            useCase = updateRoomUserLastMessageId,
+            param = UpdateRoomUserLastMessageIdUseCase.Input(
+                roomUser = roomUserRepository.findRoomUser(roomId, user.userId),
+                newLastIndex = dto.messageId,
             )
-        }
-        return this
+        )
     }
 }
