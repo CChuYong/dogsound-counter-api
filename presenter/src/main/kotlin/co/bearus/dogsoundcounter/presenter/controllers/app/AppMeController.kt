@@ -200,6 +200,17 @@ class AppMeController(
         )
     }
 
+    @GetMapping("/friends/requests/sent")
+    suspend fun getSentFriendRequests(
+        @RequestUser user: LoginUser,
+    ) = roomUserFriendRepository.getSentRequestIds(user.userId).parallelMap {
+        withUseCase(
+            useCase = getUserById,
+            param = it,
+            mappingFunction = UserResponse::from,
+        )
+    }
+
     @PostMapping("/friends/requests")
     suspend fun createFriend(
         @RequestUser user: LoginUser,
