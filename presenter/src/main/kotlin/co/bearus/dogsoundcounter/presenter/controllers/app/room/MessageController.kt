@@ -1,6 +1,5 @@
 package co.bearus.dogsoundcounter.presenter.controllers.app.room
 
-import co.bearus.dogsoundcounter.entities.Message
 import co.bearus.dogsoundcounter.presenter.LoginUser
 import co.bearus.dogsoundcounter.presenter.RequestUser
 import co.bearus.dogsoundcounter.presenter.dto.CreateNewMessageRequest
