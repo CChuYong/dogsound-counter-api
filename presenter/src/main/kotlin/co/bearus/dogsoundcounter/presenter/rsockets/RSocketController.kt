@@ -16,7 +16,6 @@ class RSocketController(
     val logger = LoggerFactory.getLogger(RSocketController::class.java)
     @MessageMapping("/v1/event-gateway")
     fun openChannel(request: RSocketSubscribeRequest): Flux<ClientPacket> {
-        logger.info("Device Connected to WS Gateway!")
         val userId = tokenProvider.extractUserIdFromToken(request.accessToken) ?: throw RuntimeException()
         return messageReceiver.createChannel(userId, request.deviceToken)
     }
