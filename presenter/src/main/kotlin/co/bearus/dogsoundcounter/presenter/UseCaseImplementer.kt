@@ -81,6 +81,7 @@ class UseCaseImplementer {
         userDeviceRepository: UserDeviceRepository,
         messagePublisherFactory: MessagePublisherFactory,
         roomUserPriceRepository: RoomUserPriceRepository,
+        userNotificationRepository: UserNotificationRepository,
     ) = CreateNewMessageUseCase(
         identityGenerator,
         messageRepository,
@@ -88,6 +89,7 @@ class UseCaseImplementer {
         userDeviceRepository,
         messagePublisherFactory,
         roomUserPriceRepository,
+        userNotificationRepository,
     )
 
     @Bean
@@ -193,8 +195,15 @@ class UseCaseImplementer {
     @Bean
     fun createNewFriend(
         friendRepository: FriendRepository,
+        userNotificationRepository: UserNotificationRepository,
+        notificationGateway: NotificationGateway,
+        userDeviceRepository: UserDeviceRepository,
+
     ) = CreateNewFriendUseCase(
         friendRepository,
+        userNotificationRepository,
+        notificationGateway,
+        userDeviceRepository,
     )
 
     @Bean
@@ -214,8 +223,14 @@ class UseCaseImplementer {
     @Bean
     fun acceptFriendRequest(
         friendRepository: FriendRepository,
+        userNotificationRepository: UserNotificationRepository,
+        userDeviceRepository: UserDeviceRepository,
+        notificationGateway: NotificationGateway,
     ) = AcceptUserFriendRequestUseCase(
         friendRepository,
+        userNotificationRepository,
+        userDeviceRepository,
+        notificationGateway,
     )
 
     @Bean

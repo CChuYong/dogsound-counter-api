@@ -8,6 +8,7 @@ import co.bearus.dogsoundcounter.usecases.notification.Notification
 import co.bearus.dogsoundcounter.usecases.notification.NotificationGateway
 import co.bearus.dogsoundcounter.usecases.room.RoomUserPriceRepository
 import co.bearus.dogsoundcounter.usecases.user.UserDeviceRepository
+import co.bearus.dogsoundcounter.usecases.user.UserNotificationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -20,6 +21,7 @@ class CreateNewMessageUseCase(
     private val userDeviceRepository: UserDeviceRepository,
     private val messagePublisherFactory: MessagePublisherFactory,
     private val roomUserPriceRepository: RoomUserPriceRepository,
+    private val userNotificationRepository: UserNotificationRepository
 ) : UseCase<CreateNewMessageUseCase.Input, Message> {
     data class Input(
         val room: Room,
@@ -66,8 +68,6 @@ class CreateNewMessageUseCase(
                     }
                 }
 
-
-                val device = userDeviceRepository.getUserDevices(id)
                 val publisher = messagePublisherFactory.getSuitableFactory(id)
                 publisher.publishMessage(
                     id, ClientPacket(
@@ -77,11 +77,21 @@ class CreateNewMessageUseCase(
                 )
 
                 //send noti
-                val notification = Notification(
-                    title = input.room.roomName,
-                    body = "${input.speaker.nickname}: ${input.content}",
-                )
-                notificationGateway.sendMulti(device.map { it.fcmToken }, notification)
+                val notificationConfig = userNotificationRepository.getByUserId(id)
+                val device = userDeviceRepository.getUserDevices(id)
+                if(notificationConfig.badSoundAlert && price > 0){
+                    val notification = Notification(
+                        title = input.room.roomName,
+                        body = "${input.speaker.nickname}: ${input.content}",
+                    )
+                    notificationGateway.sendMulti(device.map { it.fcmToken }, notification)
+                } else if (notificationConfig.nonBadSoundAlert && price == 0) {
+                    val notification = Notification(
+                        title = input.room.roomName,
+                        body = "${input.speaker.nickname}의 나쁜말: ${input.content}",
+                    )
+                    notificationGateway.sendMulti(device.map { it.fcmToken }, notification)
+                }
             }
         }
 
